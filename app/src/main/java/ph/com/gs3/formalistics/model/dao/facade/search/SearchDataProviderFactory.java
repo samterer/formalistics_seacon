@@ -20,7 +20,7 @@ public class SearchDataProviderFactory {
                 activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.GATER_POSITION_ID ||
                         activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.INSPECTOR_POSITION_ID ||
                         activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.CRANE_OPERATOR_ID)) {
-            return new SeaconSearchDataProvider();
+            return new SeaconSearchDataProvider(context, activeUser);
         } else {
             return new DefaultSearchDataProvider(context, activeUser);
         }

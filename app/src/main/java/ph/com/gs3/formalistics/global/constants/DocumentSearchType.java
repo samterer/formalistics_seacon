@@ -11,6 +11,7 @@ public enum DocumentSearchType {
     // Custom Implementation Searches
     SEACON_EIR_INCOMING,
     SEACON_EIR_RETURN,
-    SEACON_EIR_OUTGOING
+    SEACON_EIR_OUTGOING,
+    SEACON_JOB_ORDERS
 
 }

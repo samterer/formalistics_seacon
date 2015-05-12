@@ -163,6 +163,7 @@ public class DocumentListViewFragment extends Fragment {
     //<editor-fold desc="Functional View Methods">
     public void setViewDocuments(List<DocumentSummary> documentSummaryList) {
         viewingMode = ViewingMode.EXISTING_DOCUMENTS;
+        lvDocuments.setAdapter(documentListViewAdapter);
         documentListViewAdapter.setDisplayItems(documentSummaryList);
     }
 

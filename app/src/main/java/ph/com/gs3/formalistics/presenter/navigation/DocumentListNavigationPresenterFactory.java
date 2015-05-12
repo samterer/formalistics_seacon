@@ -21,9 +21,7 @@ public class DocumentListNavigationPresenterFactory {
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON && (
                 activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.GATER_POSITION_ID ||
                         activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.INSPECTOR_POSITION_ID ||
-                        activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.CRANE_OPERATOR_ID
-        )
-                ) {
+                        activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.CRANE_OPERATOR_ID)) {
             return new SeaconDocumentListNavigationPresenter(
                     context, activeUser, documentListNavigationPresenterEventsListener
             );

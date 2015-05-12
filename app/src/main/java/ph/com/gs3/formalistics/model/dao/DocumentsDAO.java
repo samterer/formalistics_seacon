@@ -233,6 +233,10 @@ public class DocumentsDAO extends DataAccessObject {
 
     }
 
+    public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, String genericStringFilter) throws JSONException {
+        return searchForUserDocumentSummaries(user, forms, null, null, genericStringFilter);
+    }
+
     public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, List<SearchCondition> searchConditions, String manualConditions, String genericStringFilter) throws JSONException {
 
         int userId = user.getId();

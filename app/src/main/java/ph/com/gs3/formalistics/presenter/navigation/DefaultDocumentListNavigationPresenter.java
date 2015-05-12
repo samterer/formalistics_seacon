@@ -1,9 +1,6 @@
 package ph.com.gs3.formalistics.presenter.navigation;
 
 import android.content.Context;
-import android.widget.Toast;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -112,64 +109,23 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
         } else if (navigationDrawerItem == openDeveloperOptionsCommandNavItem && currentlySelectedNavigationDrawerPosition != position) {
             documentListNavigationPresenterEventsListener.onOpenDeveloperOptionsCommand();
         } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.resetDataCommandNavItem) {
-            documentListNavigationPresenterEventsListener.onResetDataCommand();
+//            documentListNavigationPresenterEventsListener.onResetDataCommand();
         } else if (navigationDrawerItem == fullSynchronizeCommandNavItem) {
             documentListNavigationPresenterEventsListener.onFullSynchronizeCommand();
+        } else if (navigationDrawerItem == openInboxNavItem) {
+            documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(
+                    navigationDrawerItem, EnumSet.of(DocumentSearchType.DEFAULT_INBOX)
+            );
+        } else if (navigationDrawerItem == openStarredNavItem) {
+            documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(
+                    navigationDrawerItem, EnumSet.of(DocumentSearchType.DEFAULT_INBOX, DocumentSearchType.DEFAULT_STARRED)
+            );
         } else if (navigationDrawerItem == openOutboxNavItem) {
             List<DisplayReadyAction> displayReadyActions = outgoingActionsDAO.getAllDisplayReadyOutgoingActions(activeUser.getId());
             documentListNavigationPresenterEventsListener.onDisplayOutgoingActions(navigationDrawerItem, displayReadyActions);
-        } else if (navigationDrawerItem == openInboxNavItem) {
-            documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.DEFAULT_INBOX));
-        } else {
-
-            processChangeDocumentList(navigationDrawerItem);
-
-//            try {
-//                List<Form> formList = formsDAO.getCompanyForms(activeUser.getCompany().getId());
-//                List<SearchCondition> searchConditions = new ArrayList<>();
-//
-//                ViewFilter viewFilter = new ViewFilter();
-//                viewFilter.setForms(formList);
-//
-//                if (navigationDrawerItem == openOutboxNavItem) {
-//                    viewFilter.setViewContentType(ViewFilter.ViewContentType.OUTGOING_ACTIONS);
-//                    viewFilter.setSearchConditionList(searchConditions);
-//                } else {
-//                    if (navigationDrawerItem == openStarredNavItem) {
-//                        searchConditions.add(new SearchCondition("ud.is_starred", "=", "1"));
-//                    }
-//
-//                    viewFilter.setViewContentType(ViewFilter.ViewContentType.EXISTING_DOCUMENTS);
-//                    viewFilter.setSearchConditionList(searchConditions);
-//                }
-//
-//                documentListNavigationPresenterEventsListener.onChangeViewContentsCommand(navigationDrawerItem, viewFilter);
-//            } catch (DataAccessObject.DataAccessObjectException e) {
-//                e.printStackTrace();
-//            }
         }
 
         currentlySelectedNavigationDrawerPosition = position;
-
-    }
-
-    private void processChangeDocumentList(NavigationDrawerItem selectedNavigationDrawerItem) {
-
-        if (selectedNavigationDrawerItem == openInboxNavItem) {
-            try {
-                List<DocumentSummary> documentSummaries = documentsDAO.getUserDocumentSummaries(activeUser.getId(), 0, 20);
-                documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(selectedNavigationDrawerItem, documentSummaries);
-            } catch (JSONException e) {
-                Toast.makeText(context, "Failed to fetch documents: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        } else if (selectedNavigationDrawerItem == openStarredNavItem) {
-            try {
-                List<DocumentSummary> documentSummaries = documentsDAO.getStarredDocumentSummaries(activeUser.getId(), 0, 20);
-                documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(selectedNavigationDrawerItem, documentSummaries);
-            } catch (JSONException e) {
-                Toast.makeText(context, "Failed to fetch starred documents: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
 
     }
 

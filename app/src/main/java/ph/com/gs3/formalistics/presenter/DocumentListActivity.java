@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -159,13 +160,13 @@ public class DocumentListActivity extends Activity implements
                 DocumentListActivity.this
         );
 
-//        navigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
-//                .findFragmentById(R.id.DocumentList_fNavigationDrawer);
-//        // Set up the drawer.
-//        navigationDrawerFragment.setUp(
-//                R.id.DocumentList_fNavigationDrawer,
-//                (DrawerLayout) findViewById(R.id.DocumentList_dlDrawerLayout),
-//                documentListNavigationManager);
+        navigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+                .findFragmentById(R.id.DocumentList_fNavigationDrawer);
+        // Set up the drawer.
+        navigationDrawerFragment.setUp(
+                R.id.DocumentList_fNavigationDrawer,
+                (DrawerLayout) findViewById(R.id.DocumentList_dlDrawerLayout),
+                documentListNavigationManager);
     }
 
     @Override
@@ -511,7 +512,8 @@ public class DocumentListActivity extends Activity implements
     private void filterView(String filterString) {
         currentFilter = filterString;
         currentViewFilter.setGenericStringFilter(filterString);
-        onChangeViewContentsCommand(currentlySelectedNavigationDrawerItem, currentViewFilter);
+//        onChangeViewContentsCommand(currentlySelectedNavigationDrawerItem, currentViewFilter);
+        onDisplayDocumentSummaries(currentlySelectedNavigationDrawerItem, documentSearchTypes);
     }
 
     private void submitDocumentAction(int documentId, String action) {
@@ -843,10 +845,6 @@ public class DocumentListActivity extends Activity implements
         navigateToDeveloperOptionsActivity();
     }
 
-    @Override
-    public void onResetDataCommand() {
-
-    }
 
     @Override
     public void onDisplayDocumentSummaries(NavigationDrawerItem navigationDrawerItem, EnumSet<DocumentSearchType> documentSearchTypes) {
@@ -857,16 +855,23 @@ public class DocumentListActivity extends Activity implements
 
         documentListViewFragment.setViewDocuments(documentSummaries);
 
-    }
-
-    @Override
-    public void onDisplayDocumentSummaries(NavigationDrawerItem navigationDrawerItem, List<DocumentSummary> documentSummaries) {
-        documentListViewFragment.setViewDocuments(documentSummaries);
-
         if (navigationDrawerItem != null) {
             setTitle(navigationDrawerItem.getLabel());
             getActionBar().setIcon(navigationDrawerItem.getImageResourceId());
         }
+
+        if (documentSummaries.size() == 0) {
+            if (currentViewFilter.getGenericStringFilter() != null && !currentViewFilter.getGenericStringFilter().trim().isEmpty()) {
+                documentListViewFragment.showCenterMessage("No documents found, try synchronizing by swiping the view down and searching again", false);
+            } else {
+                documentListViewFragment.showCenterMessage("No documents found, try synchronizing by swiping the view down", false);
+            }
+        }
+
+        if (documentListViewFragment.getViewItemCount() == 0 && !documentListViewFragment.isCenterMessageShowing()) {
+            documentListViewFragment.showCenterMessage("No documents to display", false);
+        }
+
     }
 
     @Override
@@ -877,60 +882,6 @@ public class DocumentListActivity extends Activity implements
             setTitle(navigationDrawerItem.getLabel());
             getActionBar().setIcon(navigationDrawerItem.getImageResourceId());
         }
-    }
-
-    @Override
-    public void onChangeViewContentsCommand(NavigationDrawerItem navigationDrawerItem, ViewFilter viewFilter) {
-
-//        currentlySelectedNavigationDrawerItem = navigationDrawerItem;
-//
-//        currentViewFilter.setViewContentType(viewFilter.getViewContentType());
-//        currentViewFilter.setForms(viewFilter.getForms());
-//        currentViewFilter.setManualJoins(viewFilter.getManualJoins());
-//        currentViewFilter.setManualConditions(viewFilter.getManualConditions());
-//        currentViewFilter.setSearchConditionList(viewFilter.getSearchConditionList());
-//
-//        documentListViewFragment.hideCenterMessage();
-//
-//        if (viewFilter.getViewContentType() == ViewFilter.ViewContentType.OUTGOING_ACTIONS) {
-//            List<DisplayReadyAction> displayReadyActions = outgoingActionsDAO.getAllDisplayReadyOutgoingActions(activeUser.getId());
-//            documentListViewFragment.setOutgoingViewDocuments(displayReadyActions);
-//        } else if (viewFilter.getViewContentType() == ViewFilter.ViewContentType.EXISTING_DOCUMENTS) {
-//            List<DocumentSummary> documentSummaryList = null;
-//            try {
-//                documentSummaryList = documentsDAO.searchForUserDocumentSummaries(activeUser,
-//                        viewFilter.getForms(),
-//                        viewFilter.getSearchConditionList(),
-//                        viewFilter.getManualJoins(),
-//                        viewFilter.getManualConditions(),
-//                        viewFilter.getGenericStringFilter()
-//                );
-//                documentListViewFragment.setViewDocuments(documentSummaryList);
-//
-//                if (documentSummaryList.size() == 0) {
-//                    if (currentViewFilter.getGenericStringFilter() != null && !currentViewFilter.getGenericStringFilter().trim().isEmpty()) {
-//                        documentListViewFragment.showCenterMessage("No documents found, try synchronizing by swiping the view down and searching again", false);
-//                    } else {
-//                        documentListViewFragment.showCenterMessage("No documents found, try synchronizing by swiping the view down", false);
-//                    }
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//                FLLogger.e(TAG, "Failed to display documents: " + e.getMessage());
-//                Toast.makeText(DocumentListActivity.this, "Failed to display documents.", Toast.LENGTH_LONG).show();
-//            }
-//
-//        }
-//
-//        if (documentListViewFragment.getViewItemCount() == 0 && !documentListViewFragment.isCenterMessageShowing()) {
-//            documentListViewFragment.showCenterMessage("No documents to display", false);
-//        }
-//
-//        if (navigationDrawerItem != null) {
-//            setTitle(navigationDrawerItem.getLabel());
-//            getActionBar().setIcon(navigationDrawerItem.getImageResourceId());
-//        }
-
     }
 
     @Override

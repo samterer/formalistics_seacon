@@ -26,8 +26,8 @@ public class FormalisticsApplication extends Application {
     // public static final ApplicationMode APPLICATION_MODE = ApplicationMode.QA;
 //    public static final ApplicationMode APPLICATION_MODE = ApplicationMode.PRODUCTION;
 
-//    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.SEACON);
-    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.DEFAULT);
+    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.SEACON);
+//    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.DEFAULT);
 
     @Override
     public void onCreate() {
