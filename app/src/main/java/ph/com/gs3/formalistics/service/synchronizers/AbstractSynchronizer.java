@@ -5,8 +5,8 @@ import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 
 public abstract class AbstractSynchronizer {
 
-    protected LoggingType loggingType;
-    protected String tag;
+    protected final LoggingType loggingType;
+    protected final String tag;
 
     public AbstractSynchronizer(String tag, LoggingType loggingType) {
         this.tag = tag;

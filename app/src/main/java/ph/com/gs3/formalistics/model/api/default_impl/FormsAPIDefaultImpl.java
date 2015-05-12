@@ -31,7 +31,7 @@ public class FormsAPIDefaultImpl extends API implements FormsAPI {
 
     public static final String TAG = FormsAPIDefaultImpl.class.getSimpleName();
 
-    private List<UnparseableObject> unparseableForms;
+    private final List<UnparseableObject> unparseableForms;
 
     public FormsAPIDefaultImpl(HttpCommunicator communicator, String server) {
         super(communicator, server);

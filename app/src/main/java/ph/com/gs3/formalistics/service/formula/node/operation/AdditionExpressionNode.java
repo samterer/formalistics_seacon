@@ -9,11 +9,8 @@ import ph.com.gs3.formalistics.service.formula.node.SequenceExpressionNode;
  */
 public class AdditionExpressionNode extends SequenceExpressionNode {
 
-    public AdditionExpressionNode() {
-    }
-
-    public AdditionExpressionNode(ExpressionNode expressionNode) {
-        super(expressionNode);
+    public AdditionExpressionNode(ExpressionNode leftSideExpressionNode) {
+        super(leftSideExpressionNode);
     }
 
     @Override

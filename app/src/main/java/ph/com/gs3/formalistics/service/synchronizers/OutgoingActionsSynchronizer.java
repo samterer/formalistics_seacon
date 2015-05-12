@@ -36,14 +36,14 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
     public static final String TAG = OutgoingActionsSynchronizer.class.getSimpleName();
     public static LoggingType LOGGING_TYPE;
 
-    private User activeUser;
+    private final User activeUser;
 
-    private DocumentsAPI documentsAPI;
-    private OutgoingActionsDAO outgoingActionsDAO;
-    private FormsDAO formsDAO;
-    private FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
+    private final DocumentsAPI documentsAPI;
+    private final OutgoingActionsDAO outgoingActionsDAO;
+    private final FormsDAO formsDAO;
+    private final FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
 
-    private OutgoingActionsDataWriterFacade outgoingActionsDataWriterFacade;
+    private final OutgoingActionsDataWriterFacade outgoingActionsDataWriterFacade;
 
     public OutgoingActionsSynchronizer(Context context, User activeUser) {
         super(TAG, LOGGING_TYPE == null ? LoggingType.DISABLED : LOGGING_TYPE);

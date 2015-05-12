@@ -20,12 +20,6 @@ import ph.com.gs3.formalistics.presenter.navigation.SeaconDocumentListNavigation
  */
 public class APIFactory {
 
-    private HttpCommunicator defaultHttpCommunicator;
-
-    public String getVersion() {
-        return FormalisticsApplication.FORMALISTICS_API_VERSION;
-    }
-
     public HttpCommunicator getDefaultHttpCommunicator() {
         return new HttpCommunicator();
     }

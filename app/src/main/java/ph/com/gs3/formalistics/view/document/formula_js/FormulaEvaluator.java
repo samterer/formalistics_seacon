@@ -20,8 +20,8 @@ public class FormulaEvaluator {
 
     public static final String TAG = FormulaEvaluator.class.getSimpleName();
 
-    private DocumentHeaderData documentHeaderData;
-    private JSONObject fieldValues;
+    private final DocumentHeaderData documentHeaderData;
+    private final JSONObject fieldValues;
 
     public FormulaEvaluator(User activeUser, DocumentHeaderData documentHeaderData, JSONObject fieldValues) {
         this.documentHeaderData = documentHeaderData;

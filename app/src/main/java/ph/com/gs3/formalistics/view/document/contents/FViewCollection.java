@@ -15,7 +15,7 @@ public class FViewCollection implements List<FView> {
 
     public static final String TAG = FViewCollection.class.getSimpleName();
 
-    private List<FView> viewList;
+    private final List<FView> viewList;
 
     public FViewCollection() {
         viewList = new ArrayList<>();

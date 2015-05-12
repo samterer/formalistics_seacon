@@ -17,11 +17,11 @@ public class UsersSynchronizer {
 
     public static final String TAG = UsersSynchronizer.class.getSimpleName();
 
-    private UsersDAO usersDAO;
-    private UsersDataWriterFacade usersDataWriterFacade;
+    private final UsersDAO usersDAO;
+    private final UsersDataWriterFacade usersDataWriterFacade;
     private Map<Integer, User> userCache;
 
-    private User activeUser;
+    private final User activeUser;
 
     public UsersSynchronizer(Context context, User activeUser) {
 
@@ -55,7 +55,7 @@ public class UsersSynchronizer {
     protected void loadUserCache() {
         List<User> users = usersDAO.getCompanyUsers(activeUser.getCompany().getId());
 
-        userCache = new HashMap<Integer, User>();
+        userCache = new HashMap<>();
 
         for (User user : users) {
             userCache.put(user.getWebId(), user);

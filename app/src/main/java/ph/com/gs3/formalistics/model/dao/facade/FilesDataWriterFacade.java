@@ -14,8 +14,8 @@ import ph.com.gs3.formalistics.model.values.application.FileInfo;
 public class FilesDataWriterFacade {
 
 
-    private FilesDAO filesDAO;
-    private FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
+    private final FilesDAO filesDAO;
+    private final FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
 
     public FilesDataWriterFacade(Context context) {
         filesDAO = new FilesDAO(context);

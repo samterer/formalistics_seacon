@@ -33,8 +33,8 @@ public class FormulaEvaluator {
 
     private FormulaVariableParser formulaVariableParser;
 
-    private DocumentHeaderData documentHeaderData;
-    private JSONObject fieldValues;
+    private final DocumentHeaderData documentHeaderData;
+    private final JSONObject fieldValues;
 
     private LookupRequestListener lookupRequestListener;
 

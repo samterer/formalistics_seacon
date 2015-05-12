@@ -2,8 +2,6 @@ package ph.com.gs3.formalistics.model.tables;
 
 public class DocumentsTable {
 
-    public static final String TAG = DocumentsTable.class.getSimpleName();
-
     // Table name
     public static final String NAME = "Documents";
 

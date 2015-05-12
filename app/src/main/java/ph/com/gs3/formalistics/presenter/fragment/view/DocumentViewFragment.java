@@ -27,7 +27,7 @@ import ph.com.gs3.formalistics.view.document.DocumentViewContentsManager;
  */
 public class DocumentViewFragment extends Fragment {
 
-    public static String TAG = DocumentViewFragment.class.getSimpleName();
+    public static final String TAG = DocumentViewFragment.class.getSimpleName();
 
     //<editor-fold desc="View Fields">
     private LinearLayout llActionsContainer;

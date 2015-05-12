@@ -30,11 +30,11 @@ public class DocumentListViewAdapter extends BaseAdapter {
 
     public static final String TAG = DocumentListViewAdapter.class.getSimpleName();
 
-    private Context context;
-    private ImageManager imageManager;
+    private final Context context;
+    private final ImageManager imageManager;
 
-    private User activeUser;
-    private List<DocumentSummary> documentSummaryList;
+    private final User activeUser;
+    private final List<DocumentSummary> documentSummaryList;
     private DocumentListItemActionListener documentListItemActionListener;
 
     public DocumentListViewAdapter(Context context, User activeUser) {
@@ -178,18 +178,18 @@ public class DocumentListViewAdapter extends BaseAdapter {
 
     private static class DocumentListViewItemHolder {
 
-        ImageView ivAvatar;
+        final ImageView ivAvatar;
 
-        TextView tvHeader;
-        TextView tvBody;
-        TextView tvFooter;
-        TextView tvSubFooter;
-        TextView tvDate;
-        TextView tvCommentCount;
+        final TextView tvHeader;
+        final TextView tvBody;
+        final TextView tvFooter;
+        final TextView tvSubFooter;
+        final TextView tvDate;
+        final TextView tvCommentCount;
 
-        ImageButton ibActions;
-        ImageButton ibStar;
-        ImageButton ibComments;
+        final ImageButton ibActions;
+        final ImageButton ibStar;
+        final ImageButton ibComments;
 
         DocumentListViewItemHolder(View view) {
 

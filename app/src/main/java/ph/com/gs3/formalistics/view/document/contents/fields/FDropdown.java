@@ -17,8 +17,8 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FDropdown extends FField {
 
-    private Spinner spinner;
-    private List<String> options;
+    private final Spinner spinner;
+    private final List<String> options;
 
     private boolean changeListenerInitialized = false;
 
@@ -28,7 +28,7 @@ public class FDropdown extends FField {
         this.options = options;
         spinner = (Spinner) findViewById(R.id.FField_spDropdownField);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, options);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);

@@ -14,7 +14,7 @@ public class FLPersistentLogger {
     public static final String INFORMATION_LOG_FILE = "information";
     public static final String DEBUG_LOG_FILE = "debug";
 
-    private Context context;
+    private final Context context;
 
     public FLPersistentLogger(Context context) {
         this.context = context;

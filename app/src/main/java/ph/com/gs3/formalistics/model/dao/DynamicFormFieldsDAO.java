@@ -69,7 +69,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
 		// @formatter:on
 
         // Merge the default fields with the required result field names
-        Set<String> resultFieldNamesSet = new HashSet<String>(defaultFields);
+        Set<String> resultFieldNamesSet = new HashSet<>(defaultFields);
         resultFieldNamesSet.addAll(resultFieldNames);
 
         List<String> mergedResultFields = new ArrayList<>(resultFieldNamesSet);
@@ -160,12 +160,12 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
     }
 
     public JSONObject getDocumentFieldValues(
-            int documentId, String tableName, List<FormFieldData> formFields) throws JSONException {
+            int documentId, String tableName, List<FormFieldData> formFields) {
         return getFieldValues(documentId, tableName, formFields, FieldValuesType.DOCUMENT);
     }
 
     public JSONObject getOutgoingActionFieldValues(
-            int outgoingActionId, String tableName, List<FormFieldData> formFields) throws JSONException {
+            int outgoingActionId, String tableName, List<FormFieldData> formFields) {
         return getFieldValues(outgoingActionId, tableName, formFields, FieldValuesType.OUTGOING_ACTION);
     }
 
@@ -286,8 +286,6 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
                 // Throws JSONException
                 return getOutgoingActionFieldValues(outgoingActionId, tableName, formFields);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         } finally {
             close();
         }

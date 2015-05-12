@@ -18,10 +18,10 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FDateTimePicker extends FField {
 
-    private PickerType pickerType;
-    private DateTimePickerListener listener;
+    private final PickerType pickerType;
+    private final DateTimePickerListener listener;
 
-    private EditText etDateText;
+    private final EditText etDateText;
 
     public enum PickerType {
         DATE, TIME, DATETIME

@@ -5,7 +5,7 @@ package ph.com.gs3.formalistics.service.formula.node;
  */
 public class ConstantExpressionNode implements ExpressionNode {
 
-    private String value;
+    private final String value;
 
     public ConstantExpressionNode(String value) {
         this.value = value;

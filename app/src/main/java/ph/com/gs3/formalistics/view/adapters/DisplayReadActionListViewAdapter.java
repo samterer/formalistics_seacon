@@ -24,8 +24,8 @@ public class DisplayReadActionListViewAdapter extends BaseAdapter {
 
     public static final String TAG = DisplayReadActionListViewAdapter.class.getSimpleName();
 
-    private Context context;
-    private List<DisplayReadyAction> displayReadyActionList;
+    private final Context context;
+    private final List<DisplayReadyAction> displayReadyActionList;
 
     public DisplayReadActionListViewAdapter(Context context) {
         this.context = context;
@@ -109,17 +109,17 @@ public class DisplayReadActionListViewAdapter extends BaseAdapter {
 
     private static class DocumentListViewItemHolder {
 
-        ImageView ivAvatar;
+        final ImageView ivAvatar;
 
-        TextView tvHeader;
-        TextView tvBody;
-        TextView tvFooter;
-        TextView tvSubFooter;
-        TextView tvDate;
+        final TextView tvHeader;
+        final TextView tvBody;
+        final TextView tvFooter;
+        final TextView tvSubFooter;
+        final TextView tvDate;
 
-        ImageButton ibActions;
-        ImageButton ibStar;
-        ImageButton ibComments;
+        final ImageButton ibActions;
+        final ImageButton ibStar;
+        final ImageButton ibComments;
 
         DocumentListViewItemHolder(View view) {
 

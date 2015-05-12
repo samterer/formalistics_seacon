@@ -10,9 +10,9 @@ public class DateTimePickerDialogBuilder {
 
 	public static final String TAG = DateTimePickerDialogBuilder.class.getSimpleName();
 
-	private Context context;
+	private final Context context;
 
-	private String title;
+	private final String title;
 
 	public DateTimePickerDialogBuilder(DateTimePickerType dateTimePickerType, Context context) {
 

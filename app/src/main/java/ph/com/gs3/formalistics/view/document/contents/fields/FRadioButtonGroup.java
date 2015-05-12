@@ -15,7 +15,7 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FRadioButtonGroup extends FField {
 
-    private RadioGroup radioGroup;
+    private final RadioGroup radioGroup;
     private List<String> options;
     private boolean enabled;
     private boolean changeListenerInitialized = false;
@@ -103,7 +103,7 @@ public class FRadioButtonGroup extends FField {
         int collectionChildCount = radioGroup.getChildCount();
         for (int index = 0; index < collectionChildCount; index++) {
             if (radioGroup.getChildAt(index) instanceof RadioButton) {
-                ((RadioButton) radioGroup.getChildAt(index)).setEnabled(enabled);
+                radioGroup.getChildAt(index).setEnabled(enabled);
             }
         }
     }

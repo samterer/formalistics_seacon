@@ -26,11 +26,11 @@ public class FEmbeddedView extends FView {
 
     public static final String TAG = FEmbeddedView.class.getSimpleName();
 
-    private Button bCreateChildDocument;
-    private TableLayout tlEmbeddedViewDocuments;
+    private final Button bCreateChildDocument;
+    private final TableLayout tlEmbeddedViewDocuments;
 
     private EmbeddedViewEventsListener listener;
-    private EmbeddedViewData embeddedViewData;
+    private final EmbeddedViewData embeddedViewData;
 
     public FEmbeddedView(Context context, EmbeddedViewData embeddedViewData) {
         super(context);
@@ -59,6 +59,8 @@ public class FEmbeddedView extends FView {
         });
 
         clearView();
+
+        setCreateChildDocumentActionLabel(embeddedViewData.getCreateDocumentActionLabel());
 
     }
 
@@ -150,7 +152,7 @@ public class FEmbeddedView extends FView {
         this.listener = listener;
     }
 
-    private OnClickListener onRowClickListener = new OnClickListener() {
+    private final OnClickListener onRowClickListener = new OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -168,10 +170,7 @@ public class FEmbeddedView extends FView {
                 try {
                     documentId = rowData.getInt("Document_Id");
                     outgoingActionId = rowData.getInt("Outgoing_Action_Id");
-                } catch (NumberFormatException e) {
-                    FLLogger.w(TAG, "Failed to convert document/outgoing action id: " + e.getMessage()
-                            + ", a document failed to be opened because of this");
-                } catch (JSONException e) {
+                } catch (NumberFormatException | JSONException e) {
                     FLLogger.w(TAG, "Failed to convert document/outgoing action id: " + e.getMessage()
                             + ", a document failed to be opened because of this");
                 }

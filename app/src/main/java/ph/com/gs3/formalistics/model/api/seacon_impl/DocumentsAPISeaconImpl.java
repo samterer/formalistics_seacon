@@ -16,7 +16,7 @@ import ph.com.gs3.formalistics.model.values.business.User;
  */
 public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
 
-    private User activeUser;
+    private final User activeUser;
 
     public DocumentsAPISeaconImpl(HttpCommunicator communicator, User activeUser) {
         super(communicator, activeUser.getCompany().getServer());
@@ -54,7 +54,7 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
             e.printStackTrace();
         }
 
-        Map<String, String> requestParams = new HashMap<String, String>();
+        Map<String, String> requestParams = new HashMap<>();
         requestParams.put("form_id", Integer.toString(formWebId));
         requestParams.put("search_parameters", searchParameters.toString());
 

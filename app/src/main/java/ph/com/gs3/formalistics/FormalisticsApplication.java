@@ -14,9 +14,6 @@ import ph.com.gs3.formalistics.service.synchronizers.OutgoingActionsSynchronizer
 
 public class FormalisticsApplication extends Application {
 
-    //  Default Version
-    public static String FORMALISTICS_API_VERSION = "4.0.01";
-
     /**
      * Set the application mode here, some behavior of the application will be changed
      * depending on the application mode. These behaviors include logging and availability
@@ -26,7 +23,7 @@ public class FormalisticsApplication extends Application {
     // public static final ApplicationMode APPLICATION_MODE = ApplicationMode.QA;
 //    public static final ApplicationMode APPLICATION_MODE = ApplicationMode.PRODUCTION;
 
-    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.SEACON);
+    public static final VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.SEACON);
 //    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.DEFAULT);
 
     @Override
@@ -38,7 +35,7 @@ public class FormalisticsApplication extends Application {
         sessionManager.startListeningToNetworkChanges();
 
         DataSynchronizationManager dataSynchronizationManager = DataSynchronizationManager.createApplicationInstance(getApplicationContext());
-        dataSynchronizationManager.LOGGING_TYPE = LoggingType.ENABLED;
+        DataSynchronizationManager.LOGGING_TYPE = LoggingType.ENABLED;
 
 //        FormsSynchronizer.LOGGING_TYPE = LoggingType.ENABLED;
         OutgoingActionsSynchronizer.LOGGING_TYPE = LoggingType.ENABLED;

@@ -27,7 +27,7 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
     private Map<String, List<String>> fieldDependencyMap;
     private FViewCollection viewCollection;
 
-    private FieldComputationRequestListener fieldComputationRequestListener;
+    private final FieldComputationRequestListener fieldComputationRequestListener;
 
     public DocumentDynamicFieldsChangeDependencyMapper(FieldComputationRequestListener fieldComputationRequestListener) {
         this.fieldComputationRequestListener = fieldComputationRequestListener;

@@ -16,7 +16,7 @@ import android.graphics.Bitmap;
  */
 public class MemoryCache {
 
-	private Map<String, Bitmap> cache = Collections.synchronizedMap(new LinkedHashMap<String, Bitmap>(10, 1.5f, true));
+	private final Map<String, Bitmap> cache = Collections.synchronizedMap(new LinkedHashMap<String, Bitmap>(10, 1.5f, true));
 
 	private long size = 0;// current allocated size
 	private long limit = 1000000;// max memory in bytes

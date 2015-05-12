@@ -20,14 +20,14 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FCodeScannerField extends FField {
 
-    private EditText etScannedCode;
-    private Button bScanCode;
+    private final EditText etScannedCode;
+    private final Button bScanCode;
 
     private Timer timer = new Timer();
     private final long ON_CHANGE_DELAY = 1000; // Milliseconds
     private boolean changeListenerInitialized = false;
 
-    private CodeType codeType;
+    private final CodeType codeType;
 
     public enum CodeType {
         BAR_CODE, QR_CODE

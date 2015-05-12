@@ -13,7 +13,7 @@ import ph.com.gs3.formalistics.model.values.business.form.Form;
 
 public class FormSelectionDialogFragment extends DialogFragment {
 
-    public static String TAG = FormSelectionDialogFragment.class.getSimpleName();
+    public static final String TAG = FormSelectionDialogFragment.class.getSimpleName();
 
     public enum FormsAvailability {
         CURRENTLY_UPDATING, NO_FORMS_TO_SHOW, HAS_FORMS

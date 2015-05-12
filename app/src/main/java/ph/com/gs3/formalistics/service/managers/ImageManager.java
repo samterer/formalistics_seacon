@@ -24,14 +24,14 @@ public class ImageManager {
 
     public static final String IMAGE_CACHE_PATH = ".formalistics/img_cache";
 
-    public ImageLoader imageLoader;
+    public final ImageLoader imageLoader;
 
-    private Map<String, List<ImageView>> queuedImageViews;
-    private Map<String, String> downloadedImages;
+    private final Map<String, List<ImageView>> queuedImageViews;
+    private final Map<String, String> downloadedImages;
 
-    private int imageNotAvailableStub = R.drawable.icons_user;
+    private final int imageNotAvailableStub = R.drawable.icons_user;
 
-    private UsersDAO usersDAO;
+    private final UsersDAO usersDAO;
 
     private static ImageManager defaultInstance;
 
@@ -50,8 +50,8 @@ public class ImageManager {
         imageLoader = new ImageLoader(context, IMAGE_CACHE_PATH);
         imageLoader.setImageNotAvailableResource(imageNotAvailableStub);
 
-        queuedImageViews = new HashMap<String, List<ImageView>>();
-        downloadedImages = new HashMap<String, String>();
+        queuedImageViews = new HashMap<>();
+        downloadedImages = new HashMap<>();
 
         usersDAO = new UsersDAO(context);
     }
@@ -80,7 +80,7 @@ public class ImageManager {
                 queuedImageViews.get(userDbId).add(imageView);
             } else {
                 // Create a new list for this user and request for the user's data
-                List<ImageView> userImageViewQueue = new ArrayList<ImageView>();
+                List<ImageView> userImageViewQueue = new ArrayList<>();
                 userImageViewQueue.add(imageView);
                 queuedImageViews.put(userDbId, userImageViewQueue);
 

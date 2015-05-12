@@ -14,7 +14,7 @@ import ph.com.gs3.formalistics.model.values.business.User;
  */
 public class UsersDataWriterFacade {
 
-    private UsersDAO usersDAO;
+    private final UsersDAO usersDAO;
 
     public UsersDataWriterFacade(Context context) {
         usersDAO = new UsersDAO(context);

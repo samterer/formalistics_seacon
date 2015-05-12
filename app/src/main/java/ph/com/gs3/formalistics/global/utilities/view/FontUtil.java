@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class FontUtil {
 
-	public static final Map<String, Typeface> FONTS = new HashMap<String, Typeface>();
+	public static final Map<String, Typeface> FONTS = new HashMap<>();
 
 	public static Typeface getTypeface(Context context, String TypefaceName) {
 

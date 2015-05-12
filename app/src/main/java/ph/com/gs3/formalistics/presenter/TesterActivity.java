@@ -206,7 +206,7 @@ public class TesterActivity extends Activity implements TesterViewFragment.Teste
 
     }
 
-    private LookupRequestListener lookupRequestListener = new LookupRequestListener() {
+    private final LookupRequestListener lookupRequestListener = new LookupRequestListener() {
 
         @Override
         public String onLookupCommand(String formName, String returnFieldName, String compareToOtherFormFieldName, String compareToThisFormFieldValue) {

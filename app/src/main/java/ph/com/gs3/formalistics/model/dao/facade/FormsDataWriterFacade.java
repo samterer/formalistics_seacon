@@ -15,10 +15,10 @@ public class FormsDataWriterFacade {
 
     public static final String TAG = FormsDataWriterFacade.class.getSimpleName();
 
-    protected FormTableReferenceDAO formTableReferenceDAO;
-    protected DynamicFormFieldsDAO dynamicFormFieldsDAO;
-    protected FormsDAO formsDAO;
-    protected WorkflowObjectsDAO workflowObjectsDAO;
+    protected final FormTableReferenceDAO formTableReferenceDAO;
+    protected final DynamicFormFieldsDAO dynamicFormFieldsDAO;
+    protected final FormsDAO formsDAO;
+    protected final WorkflowObjectsDAO workflowObjectsDAO;
 
     public FormsDataWriterFacade(Context context) {
         formTableReferenceDAO = new FormTableReferenceDAO(context);

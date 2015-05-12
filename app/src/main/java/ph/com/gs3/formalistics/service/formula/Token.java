@@ -10,8 +10,8 @@ package ph.com.gs3.formalistics.service.formula;
  * @author Ervinne Sodusta
  */
 public class Token {
-    public TokenType type;
-    public String data;
+    public final TokenType type;
+    public final String data;
 
     public Token(TokenType type, String data) {
         this.type = type;

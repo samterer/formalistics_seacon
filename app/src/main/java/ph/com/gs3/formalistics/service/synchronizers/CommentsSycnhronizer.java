@@ -41,16 +41,16 @@ public class CommentsSycnhronizer extends AbstractSynchronizer {
     public static final String TAG = CommentsSycnhronizer.class.getSimpleName();
     public static LoggingType LOGGING_TYPE;
 
-    private UsersSynchronizer usersSynchronizer;
-    private CommentsAPI commentsAPI;
+    private final UsersSynchronizer usersSynchronizer;
+    private final CommentsAPI commentsAPI;
 
-    private CommentsDataWriterFacade commentsDataWriterFacade;
+    private final CommentsDataWriterFacade commentsDataWriterFacade;
 
-    private FormsDAO formsDAO;
-    private DocumentsDAO documentsDAO;
-    private CommentsDAO commentsDAO;
+    private final FormsDAO formsDAO;
+    private final DocumentsDAO documentsDAO;
+    private final CommentsDAO commentsDAO;
 
-    private User activeUser;
+    private final User activeUser;
 
     public CommentsSycnhronizer(Context context, User activeUser) {
         super(TAG, LOGGING_TYPE == null ? LoggingType.DISABLED : LOGGING_TYPE);

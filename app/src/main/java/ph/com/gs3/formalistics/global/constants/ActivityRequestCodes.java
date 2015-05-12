@@ -5,7 +5,7 @@ public class ActivityRequestCodes {
 	public static final int PICK_DATE = 101;
 	public static final int PICK_TIME = 102;
 	public static final int PICK_DATE_TIME = 103;
-	public static final int PICKLIST = 104;
+	public static final int PICK_LIST = 104;
 	public static final int PICK_IMAGE = 105;
 	
 	public static final int OPEN_DOCUMENT = 105;

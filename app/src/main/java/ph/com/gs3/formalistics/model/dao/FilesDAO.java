@@ -107,8 +107,6 @@ public class FilesDAO extends DataAccessObject {
 
             // delete the original file
             originalFile.delete();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

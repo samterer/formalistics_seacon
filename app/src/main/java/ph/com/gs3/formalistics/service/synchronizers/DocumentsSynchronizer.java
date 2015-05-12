@@ -41,24 +41,24 @@ import ph.com.gs3.formalistics.service.synchronizers.exceptions.SynchronizationP
  */
 public class DocumentsSynchronizer extends AbstractSynchronizer {
 
-    public static String TAG = DocumentsSynchronizer.class.getSimpleName();
+    public static final String TAG = DocumentsSynchronizer.class.getSimpleName();
     public static LoggingType LOGGING_TYPE;
 
-    private User activeUser;
+    private final User activeUser;
 
-    private Context context;
+    private final Context context;
 
-    private DocumentsAPI documentsAPI;
+    private final DocumentsAPI documentsAPI;
 
-    private UserDocumentsDAO userDocumentsDAO;
-    private FormsDAO formsDAO;
+    private final UserDocumentsDAO userDocumentsDAO;
+    private final FormsDAO formsDAO;
 
     private DocumentsDataWriterFacade documentsDataWriterFacade;
-    private FilesDataWriterFacade filesDataWriterFacade;
+    private final FilesDataWriterFacade filesDataWriterFacade;
 
     private UsersSynchronizer usersSynchronizer;
 
-    protected DocumentsSynchronizerEventListener eventListener;
+    protected final DocumentsSynchronizerEventListener eventListener;
 
     public DocumentsSynchronizer(Context context, User currentUser, DocumentsSynchronizerEventListener eventListener) {
         super(TAG, LOGGING_TYPE == null ? LoggingType.DISABLED : LOGGING_TYPE);

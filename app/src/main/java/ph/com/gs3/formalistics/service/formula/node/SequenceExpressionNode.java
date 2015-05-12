@@ -8,7 +8,7 @@ import java.util.List;
  */
 public abstract class SequenceExpressionNode implements ExpressionNode {
 
-    protected LinkedList<ExpressionNode> expressionNodes;
+    protected final LinkedList<ExpressionNode> expressionNodes;
 
     public SequenceExpressionNode() {
         this.expressionNodes = new LinkedList<>();

@@ -38,11 +38,11 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
     private Form EIRForm;
     private Form jobOrderForm;
 
-    private FormsDAO formsDAO;
-    private DocumentsDAO documentsDAO;
+    private final FormsDAO formsDAO;
+    private final DocumentsDAO documentsDAO;
 
-    private Context context;
-    private User activeUser;
+    private final Context context;
+    private final User activeUser;
 
     public SeaconSearchDataProvider(Context context, User activeUser) {
         formsDAO = new FormsDAO(context);
@@ -87,9 +87,7 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
             }
 
             String manualJoins = "";
-            String manualConditions = "((wo.processor_type = 2 AND wo.processor = " + activeUser.getPositionId() + ") " +
-                    "OR (wo.processor_type = 3 AND wo.processor = " + activeUser.getWebId() + ") " +
-                    "OR (wo.processor_type = 4 AND d.author_id = " + activeUser.getWebId() + ")) ";
+            String manualConditions = DocumentsDAO.getForApprovalWhereClause(activeUser);
 
             if (activeUser.getPositionId() == CRANE_OPERATOR_ID) {
 
@@ -121,9 +119,7 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
                     activeUser, formList, searchConditions, manualJoins, manualConditions, searchFilter
             );
 
-        } catch (DataAccessObject.DataAccessObjectException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (DataAccessObject.DataAccessObjectException | JSONException e) {
             e.printStackTrace();
         }
 

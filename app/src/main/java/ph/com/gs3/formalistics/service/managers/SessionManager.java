@@ -39,12 +39,12 @@ public class SessionManager {
     // =====================================================================
     // Dependencies
 
-    protected CompaniesDAO companiesDAO;
-    protected UsersDAO usersDAO;
+    protected final CompaniesDAO companiesDAO;
+    protected final UsersDAO usersDAO;
     protected UsersAPI usersAPI;
 
-    protected CompaniesDataWriterFacade companiesDataWriterFacade;
-    protected UsersDataWriterFacade usersDataWriterFacade;
+    protected final CompaniesDataWriterFacade companiesDataWriterFacade;
+    protected final UsersDataWriterFacade usersDataWriterFacade;
 
     // State Fields
 
@@ -58,15 +58,15 @@ public class SessionManager {
     protected int connectivityType;
 
     private boolean isCurrentlyNotifyingListeners;
-    private List<SessionManagerEventListener> listenerAddQueue;
-    private List<SessionManagerEventListener> listenerRemoveQueue;
+    private final List<SessionManagerEventListener> listenerAddQueue;
+    private final List<SessionManagerEventListener> listenerRemoveQueue;
 
-    private List<CallbackCommand<CheckConnectionResult>> checkConnectionMainThreadCallbackList;
-    private List<CallbackCommand<CheckConnectionResult>> checkConnectionCallbackList;
+    private final List<CallbackCommand<CheckConnectionResult>> checkConnectionMainThreadCallbackList;
+    private final List<CallbackCommand<CheckConnectionResult>> checkConnectionCallbackList;
 
     //==================================================
     protected BroadcastReceiver networkChangeBroadcastReceiver;
-    protected List<SessionManagerEventListener> listeners;
+    protected final List<SessionManagerEventListener> listeners;
 
     public static SessionManager createApplicationInstance(Context applicationContext) {
 
@@ -93,9 +93,9 @@ public class SessionManager {
 
         sessionMode = SessionMode.OFFLINE;
 
-        listeners = new ArrayList<SessionManagerEventListener>();
-        listenerAddQueue = new ArrayList<SessionManagerEventListener>();
-        listenerRemoveQueue = new ArrayList<SessionManagerEventListener>();
+        listeners = new ArrayList<>();
+        listenerAddQueue = new ArrayList<>();
+        listenerRemoveQueue = new ArrayList<>();
 
         isAuthenticated = false;
         isCurrentlyCheckingServerConnection = false;

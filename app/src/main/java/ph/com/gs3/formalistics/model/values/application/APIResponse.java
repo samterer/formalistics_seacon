@@ -30,8 +30,7 @@ public class APIResponse {
             } else if ("ERROR".equals(rawStatus)) {
                 status = APIStatus.ERROR;
             } else {
-                throw new InvalidResponseException(
-                        "Invalid status key, it must be SUCCESS or ERROR only.");
+                throw new InvalidResponseException("Invalid status key, it must be SUCCESS or ERROR only.");
             }
 
             currentKey = "error";
@@ -86,8 +85,6 @@ public class APIResponse {
 
     public static final class InvalidResponseException extends Exception {
 
-        private static final long serialVersionUID = -3474666959648063230L;
-
         private static final String DEFAULT_MESSAGE = "The server gave an invalid response.";
 
         private String rawResponseString;
@@ -106,10 +103,6 @@ public class APIResponse {
 
         public InvalidResponseException(String message, Throwable throwable) {
             super(message, throwable);
-        }
-
-        public String getRawResponseString() {
-            return rawResponseString;
         }
 
         public void setRawResponseString(String rawResponseString) {

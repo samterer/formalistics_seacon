@@ -28,14 +28,14 @@ public class FormsSynchronizer extends AbstractSynchronizer{
     public static final String TAG = FormsSynchronizer.class.getSimpleName();
     public static LoggingType LOGGING_TYPE;
 
-    private User currentUser;
+    private final User currentUser;
 
     // <editor-fold desc="Dependencies">
 
-    private FormsDataWriterFacade formsDataWriterFacade;
-    private FormsAPI formsAPI;
-    private FormsDAO formsDAO;
-    private UsersDAO usersDAO;
+    private final FormsDataWriterFacade formsDataWriterFacade;
+    private final FormsAPI formsAPI;
+    private final FormsDAO formsDAO;
+    private final UsersDAO usersDAO;
 
     // </editor-fold>
 

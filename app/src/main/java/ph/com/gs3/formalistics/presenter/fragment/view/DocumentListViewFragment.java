@@ -280,7 +280,7 @@ public class DocumentListViewFragment extends Fragment {
     }
 
     //<editor-fold desc="Anonymous Implementation Classes">
-    private InfiniteScrollListener infiniteScrollListener = new InfiniteScrollListener(DOCUMENT_FETCH_COUNT) {
+    private final InfiniteScrollListener infiniteScrollListener = new InfiniteScrollListener(DOCUMENT_FETCH_COUNT) {
         @Override
         public void loadMore(int page, int totalItemsCount) {
             actionListener.onLoadMore(page, totalItemsCount);

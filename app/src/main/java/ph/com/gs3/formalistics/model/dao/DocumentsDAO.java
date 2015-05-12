@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ph.com.gs3.formalistics.global.constants.ProcessorType;
+import ph.com.gs3.formalistics.global.constants.StarMark;
 import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.api.default_impl.parsers.json.WorkflowActionJSONParser;
 import ph.com.gs3.formalistics.model.tables.DocumentsTable;
@@ -228,52 +230,13 @@ public class DocumentsDAO extends DataAccessObject {
 
     public List<DocumentSummary> getStarredDocumentSummaries(int userId, int rangeFrom, int fetchCount) throws JSONException {
 
-        String whereClause = "ud.user_id = " + userId + " AND ud.is_starred = 1";
+        String whereClause = "ud.user_id = " + userId + " AND ud.is_starred = " + StarMark.STARRED;
         return getUserDocumentSummaries(null, whereClause, rangeFrom, fetchCount);
 
     }
 
     public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, String genericStringFilter) throws JSONException {
-        return searchForUserDocumentSummaries(user, forms, null, null, genericStringFilter);
-    }
-
-    public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, List<SearchCondition> searchConditions, String manualConditions, String genericStringFilter) throws JSONException {
-
-        int userId = user.getId();
-
-        List<SearchCondition> formFilterSearchConditions = new ArrayList<>();
-        List<SearchCondition> genericFilterSearchConditions = new ArrayList<>();
-        List<SearchCondition> otherSearchConditions = new ArrayList<>();
-        otherSearchConditions.add(new SearchCondition("ud.user_id", "=", Integer.toString(userId)));
-
-        for (Form form : forms) {
-            formFilterSearchConditions.add(new SearchCondition("d.form_id", "=", Integer.toString(form.getId())));
-        }
-
-        if (searchConditions != null) {
-            otherSearchConditions.addAll(searchConditions);
-        }
-
-        if (genericStringFilter != null && !genericStringFilter.trim().isEmpty()) {
-            genericFilterSearchConditions.addAll(generateConditionsFromGenericStringFilter(genericStringFilter, forms));
-        }
-
-        String joinClause = generateJoinClauseFromForms(forms, "d._id", "document_id");
-        String whereClause = generateWhereClauseFromConditions(otherSearchConditions);
-        if (genericFilterSearchConditions.size() > 0) {
-            whereClause += " AND " + generateWhereClauseFromConditions(genericFilterSearchConditions, "OR");
-        }
-
-        if (formFilterSearchConditions.size() > 0) {
-            whereClause += " AND " + generateWhereClauseFromConditions(formFilterSearchConditions, "OR");
-        }
-
-        if (manualConditions != null && !"".equals(manualConditions.trim())) {
-            whereClause += " AND " + manualConditions;
-        }
-
-        return getUserDocumentSummaries(joinClause, whereClause);
-
+        return searchForUserDocumentSummaries(user, forms, null, null, null, genericStringFilter);
     }
 
     public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, List<SearchCondition> searchConditions, String manualJoins, String manualConditions, String genericStringFilter) throws JSONException {
@@ -383,61 +346,6 @@ public class DocumentsDAO extends DataAccessObject {
         return documentSummaries;
 
     }
-
-    public List<DocumentSummary> getUserDocumentSummaries(
-            int userId, String whereClause, String[] whereArgs) throws JSONException {
-
-        List<DocumentSummary> documentSummaries = new ArrayList<>();
-
-        if (whereClause != null && !whereClause.isEmpty()) {
-            whereClause = "AND " + whereClause;
-        }
-
-        // @formatter:off
-		String query = "SELECT 	d._id AS document_id, "
-						+ "d.tracking_number, "
-        				+ "d.status, "
-        				+ "f._id AS form_id, "
-        				+ "f.name AS form_name, "
-        				+ "d.author_id, "
-        				+ "d.processor, "
-        				+ "d.processor_type, "
-        				+ "author.display_name AS author_display_name, "
-        				+ "ud.is_starred, "
-        				+ "wo.actions, "
-                        + "d.field_values, "
-        				+ "d.date_updated, "
-                        + "oa._id AS outgoing_action_id, "
-        				+ "(SELECT COUNT(_id) FROM comments WHERE document_id = d._id) AS comment_count "
-    				+ "FROM Documents d	"
-        				+ "LEFT JOIN User_Documents ud ON d._id = ud.document_id "
-        				+ "LEFT JOIN Forms f ON d.form_id = f._id "
-        				+ "LEFT JOIN Users author ON d.author_id = author._id "
-                        + "LEFT JOIN Outgoing_Actions oa ON d._id = oa.document_id "
-                        + "LEFT JOIN Forms_Workflow_Objects wo ON "
-                            + "(d.workflow_node_id = wo.node_id AND d.workflow_id = wo.workflow_id) "
-    				+ "WHERE ud.user_id='" + userId + "' " + whereClause + " "
-    				+ "ORDER BY date_updated DESC";
-		// @formatter:on
-
-        try {
-            open();
-            Cursor cursor = database.rawQuery(query, whereArgs);
-            cursor.moveToFirst();
-
-            while (!cursor.isAfterLast()) {
-                documentSummaries.add(cursorToDocumentSummary(cursor));
-                cursor.moveToNext();
-            }
-
-            cursor.close();
-        } finally {
-            close();
-        }
-
-        return documentSummaries;
-
-    }
     // </editor-fold>
 
     //<editor-fold desc="Other Query Methods">
@@ -508,40 +416,29 @@ public class DocumentsDAO extends DataAccessObject {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Parsers">
+    /**
+     * Generates a where clause for fetching documents that are under the specified user's approval
+     *
+     * @param user
+     * @return
+     */
+    public static String getForApprovalWhereClause(User user) {
 
-    protected static String generateMultiInsertRowClauseFromDocument(Document document) {
+        String whereClause = "((wo.processor_type = %d AND wo.processor = %d) " +
+                "OR (wo.processor_type = %d AND wo.processor = %d) " +
+                "OR (wo.processor_type = %d AND d.author_id = %d)) ";
 
-        String clause = "";
-
-        clause += "(";
-        clause += escapeValue(document.getWebId()) + ", ";
-        clause += escapeValue(document.getTrackingNumber()) + ", ";
-
-        clause += escapeValue(document.getFormId()) + ", ";
-
-        clause += escapeValue(document.getWorkflowNodeId()) + ", ";
-        clause += escapeValue(document.getWorkflowId()) + ", ";
-
-        clause += escapeValue(document.getStatus()) + ", ";
-
-        clause += escapeValue(document.getProcessor()) + ", ";
-        clause += escapeValue(document.getProcessorType()) + ", ";
-        clause += escapeValue(document.getProcessorType()) + ", ";
-
-        clause += escapeValue(document.getAuthorId()) + ", ";
-
-        clause += escapeValue(document.getDateCreated()) + ", ";
-        clause += escapeValue(document.getDateUpdated()) + ", ";
-
-        clause += escapeValue(document.getFieldValuesJSONString()) + ", ";
-        clause += escapeValue(document.getCommentsLastUpdateDate());
-        clause += ")";
-        return clause;
+        return String.format(whereClause,
+                ProcessorType.COMPANY_POSITION, user.getPositionId(),
+                ProcessorType.PERSON, user.getWebId(),
+                ProcessorType.AUTHOR, user.getWebId()
+        );
 
     }
 
-    protected static ContentValues createCVFromDocument(Document document) throws DataAccessObjectException {
+    //<editor-fold desc="Parsers">
+
+    protected static ContentValues createCVFromDocument(Document document) {
 
         ContentValues cv = new ContentValues();
 

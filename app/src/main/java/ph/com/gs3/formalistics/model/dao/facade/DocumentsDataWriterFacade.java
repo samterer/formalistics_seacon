@@ -21,9 +21,9 @@ public class DocumentsDataWriterFacade {
 
     public static final String TAG = DocumentsDataWriterFacade.class.getSimpleName();
 
-    private DynamicFormFieldsDAO dynamicFormFieldsDAO;
-    private DocumentsDAO documentsDAO;
-    private UserDocumentsDAO userDocumentsDAO;
+    private final DynamicFormFieldsDAO dynamicFormFieldsDAO;
+    private final DocumentsDAO documentsDAO;
+    private final UserDocumentsDAO userDocumentsDAO;
 
     public DocumentsDataWriterFacade(Context context) {
         dynamicFormFieldsDAO = new DynamicFormFieldsDAO(context);

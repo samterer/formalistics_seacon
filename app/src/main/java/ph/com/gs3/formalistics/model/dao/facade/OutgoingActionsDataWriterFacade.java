@@ -25,12 +25,12 @@ public class OutgoingActionsDataWriterFacade {
 
     public static final String TAG = OutgoingActionsDataWriterFacade.class.getSimpleName();
 
-    private OutgoingActionsDAO outgoingActionsDAO;
-    private DynamicFormFieldsDAO dynamicFormFieldsDAO;
+    private final OutgoingActionsDAO outgoingActionsDAO;
+    private final DynamicFormFieldsDAO dynamicFormFieldsDAO;
 
-    private FormsDAO formsDAO;
+    private final FormsDAO formsDAO;
 
-    private FilesDataWriterFacade filesDataWriterFacade;
+    private final FilesDataWriterFacade filesDataWriterFacade;
 
     public OutgoingActionsDataWriterFacade(Context context) {
         outgoingActionsDAO = new OutgoingActionsDAO(context);

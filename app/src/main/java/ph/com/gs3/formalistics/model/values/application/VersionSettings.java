@@ -26,7 +26,7 @@ public class VersionSettings {
      * the rest of the forms will only synchronize their documents with a separate option on the
      * navigation drawer
      */
-    public List<Integer> formIdListToSynchronize = new ArrayList<>();
+    public final List<Integer> formIdListToSynchronize = new ArrayList<>();
 
     public enum AvailableVersion {
         DEFAULT, SEACON, SMARTMATIC

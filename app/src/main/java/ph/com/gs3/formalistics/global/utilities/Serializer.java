@@ -1,6 +1,7 @@
 package ph.com.gs3.formalistics.global.utilities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Serializer {
@@ -49,15 +50,13 @@ public class Serializer {
 	public static List<String> unserializeList(String serializedValues) {
 
 		if (serializedValues == null || serializedValues.trim().isEmpty()) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		String[] valuesArray = serializedValues.split(",");
 		List<String> values = new ArrayList<>();
 
-		for (String value : valuesArray) {
-			values.add(value);
-		}
+		Collections.addAll(values, valuesArray);
 
 		return values;
 

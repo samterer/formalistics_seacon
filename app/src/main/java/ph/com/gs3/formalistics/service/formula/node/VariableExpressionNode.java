@@ -5,7 +5,7 @@ package ph.com.gs3.formalistics.service.formula.node;
  */
 public class VariableExpressionNode implements ExpressionNode {
 
-    private String name;
+    private final String name;
     private String value;
     private boolean isValueSet;
 

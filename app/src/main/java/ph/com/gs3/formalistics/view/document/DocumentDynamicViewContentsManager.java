@@ -44,11 +44,11 @@ public class DocumentDynamicViewContentsManager implements DocumentViewContentsM
     public static final String TAG = DocumentDynamicViewContentsManager.class.getSimpleName();
 
     private DocumentHeaderData documentHeaderData;
-    private FViewCollection documentViewContents;
-    private Context context;
-    private User currentUser;
+    private final FViewCollection documentViewContents;
+    private final Context context;
+    private final User currentUser;
 
-    private DocumentDynamicFieldsChangeDependencyMapper documentDynamicFieldsChangeDependencyMapper;
+    private final DocumentDynamicFieldsChangeDependencyMapper documentDynamicFieldsChangeDependencyMapper;
 
     // Field Listeners
     private PickListFieldListener pickListFieldListener;

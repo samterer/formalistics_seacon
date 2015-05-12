@@ -23,7 +23,7 @@ public class FTextField extends FField {
     }
 
     private EditText etValue;
-    private TextFieldType textFieldType;
+    private final TextFieldType textFieldType;
 
     private Timer timer = new Timer();
     private final long ON_CHANGE_DELAY = 1000; // Milliseconds

@@ -15,13 +15,13 @@ import ph.com.gs3.formalistics.model.values.application.APIResponse.InvalidRespo
  */
 public abstract class API {
 
-    private static final String TAG = API.class.getSimpleName();
+//    private static final String TAG = API.class.getSimpleName();
 
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd";
     public static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String SERVER_TIME_FORMAT = "HH:mm:ss";
 
-    private HttpCommunicator communicator;
+    private final HttpCommunicator communicator;
     private String server;
     private String lastSuccessfulRequestServerDate;
 
@@ -108,28 +108,5 @@ public abstract class API {
     }
 
     // </editor-fold>
-
-    public static final class ParameterException extends Exception {
-
-        private static final long serialVersionUID = 2213351795240131088L;
-
-        private static final String DEFAULT_MESSAGE = "You have not provided the correct parameters for this request";
-
-        public ParameterException() {
-            super(DEFAULT_MESSAGE);
-        }
-
-        public ParameterException(Exception e) {
-            super(DEFAULT_MESSAGE, e);
-        }
-
-        public ParameterException(String message) {
-            super(message);
-        }
-
-        public ParameterException(String message, Throwable throwable) {
-            super(message, throwable);
-        }
-    }
 
 }

@@ -95,7 +95,7 @@ public class PicklistPickerActivity extends Activity implements PicklistPickerAc
             Intent resultIntent = new Intent();
             resultIntent.putExtra(EXTRA_FIELD_ID, fieldId);
             resultIntent.putExtra(EXTRA_PICKED_RESULT, selectedData.getString(resultFieldName));
-            setResult(ActivityRequestCodes.PICKLIST, resultIntent);
+            setResult(ActivityRequestCodes.PICK_LIST, resultIntent);
             finish();
         } catch (JSONException e) {
             // TODO Auto-generated catch block

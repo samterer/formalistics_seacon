@@ -26,11 +26,11 @@ public class FilesSynchronizer extends AbstractSynchronizer {
     public static final String TAG = FilesSynchronizer.class.getSimpleName();
     public static LoggingType LOGGING_TYPE;
 
-    private User activeUser;
-    private FilesDAO filesDAO;
+    private final User activeUser;
+    private final FilesDAO filesDAO;
 
-    private FileUploader fileUploader;
-    private FileDownloader fileDownloader;
+    private final FileUploader fileUploader;
+    private final FileDownloader fileDownloader;
 
     public FilesSynchronizer(Context context, User activeUser) {
         super(TAG, LOGGING_TYPE);

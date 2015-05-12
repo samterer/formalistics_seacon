@@ -17,10 +17,10 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FCheckBoxGroup extends FField {
 
-    private LinearLayout llCheckboxContainer;
+    private final LinearLayout llCheckboxContainer;
 
-    private List<String> options;
-    private List<CheckBox> groupCheckboxes;
+    private final List<String> options;
+    private final List<CheckBox> groupCheckboxes;
 
     private boolean enabled;
 
@@ -71,7 +71,7 @@ public class FCheckBoxGroup extends FField {
         }
 
         String[] selectedOptionsRaw = value.split(MULTI_VALUE_SEPARATOR_ESCAPED);
-        List<String> selectedOptions = new ArrayList<String>(Arrays.asList(selectedOptionsRaw));
+        List<String> selectedOptions = new ArrayList<>(Arrays.asList(selectedOptionsRaw));
 
         int optionSize = options.size();
 

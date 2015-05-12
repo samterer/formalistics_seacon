@@ -20,10 +20,10 @@ import ph.com.gs3.formalistics.model.values.business.form.Form;
  */
 public class DefaultSearchDataProvider implements SearchDataProvider {
 
-    private User activeUser;
+    private final User activeUser;
 
-    private FormsDAO formsDAO;
-    private DocumentsDAO documentsDAO;
+    private final FormsDAO formsDAO;
+    private final DocumentsDAO documentsDAO;
 
     public DefaultSearchDataProvider(Context context, User activeUser) {
         this.activeUser = activeUser;

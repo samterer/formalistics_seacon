@@ -16,15 +16,14 @@ public abstract class FField extends FView {
 
     public static final String PROMPT_FIELD_REQUIRED = "This field is required";
 
-    public static final int GROUP_VIEWS_RIGHT_PADDING = 19;
     public static final String MULTI_VALUE_SEPARATOR_ESCAPED = "\\|\\^\\|";
     public static final String MULTI_VALUE_SEPARATOR = "|^|";
 
-    protected List<AbstractFieldChangeListener> changeListeners;
+    protected final List<AbstractFieldChangeListener> changeListeners;
 
-    private TextView tvLabel;
+    private final TextView tvLabel;
 
-    private FormFieldData formFieldData;
+    private final FormFieldData formFieldData;
 
     private boolean enableFieldValueChangeNotification;
 

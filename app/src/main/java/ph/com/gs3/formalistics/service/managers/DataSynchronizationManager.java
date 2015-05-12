@@ -25,9 +25,9 @@ public class DataSynchronizationManager {
 
     public static final String TAG = DataSynchronizationManager.class.getSimpleName();
 
-    private Context applicationContext;
+    private final Context applicationContext;
 
-    private SessionManager sessionManager;
+    private final SessionManager sessionManager;
     private DataSynchronizationManagerEventsListener eventsListener;
     private DocumentsSynchronizerEventListener documentsSynchronizerEventListener;
 
@@ -168,27 +168,21 @@ public class DataSynchronizationManager {
         try {
             outgoingActionsSynchronizer = new OutgoingActionsSynchronizer(applicationContext, user);
             outgoingActionsSynchronizer.synchronize();
-        } catch (SynchronizationFailedException e) {
-            e.printStackTrace();
-        } catch (SynchronizationPrematureException e) {
+        } catch (SynchronizationFailedException | SynchronizationPrematureException e) {
             e.printStackTrace();
         }
 
         try {
             documentsSynchronizer = new DocumentsSynchronizer(applicationContext, user, documentsSynchronizerEventListener);
             documentsSynchronizer.synchronize(syncType, partialSyncFormIds);
-        } catch (SynchronizationFailedException e) {
-            e.printStackTrace();
-        } catch (SynchronizationPrematureException e) {
+        } catch (SynchronizationFailedException | SynchronizationPrematureException e) {
             e.printStackTrace();
         }
 
         try {
             commentsSycnhronizer = new CommentsSycnhronizer(applicationContext, user);
             commentsSycnhronizer.synchronize(syncType, partialSyncFormIds);
-        } catch (SynchronizationFailedException e) {
-            e.printStackTrace();
-        } catch (SynchronizationPrematureException e) {
+        } catch (SynchronizationFailedException | SynchronizationPrematureException e) {
             e.printStackTrace();
         }
 

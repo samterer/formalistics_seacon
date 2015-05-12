@@ -14,7 +14,7 @@ public class CompaniesDataWriterFacade {
 
     public static final String TAG = CompaniesDataWriterFacade.class.getSimpleName();
 
-    private CompaniesDAO companiesDAO;
+    private final CompaniesDAO companiesDAO;
 
     public CompaniesDataWriterFacade(Context context) {
         companiesDAO = new CompaniesDAO(context);

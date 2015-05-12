@@ -15,10 +15,10 @@ import java.net.URL;
  */
 public class FileDownloader {
 
-    public static int CONNECTION_TIMEOUT = 10000; // 10s
-    public static int READ_TIMEOUT = 60000; // 1min
+    public static final int CONNECTION_TIMEOUT = 10000; // 10s
+    public static final int READ_TIMEOUT = 60000; // 1min
 
-    private String fileDestinationLocation;
+    private final String fileDestinationLocation;
 
     public FileDownloader(Context context) {
         this.fileDestinationLocation = context.getFilesDir().toString();
@@ -70,18 +70,15 @@ public class FileDownloader {
         }
     }
 
-    private void copyStream(InputStream is, OutputStream os) {
+    private void copyStream(InputStream is, OutputStream os) throws IOException {
 
         final int buffer_size = 1024;
-        try {
-            byte[] bytes = new byte[buffer_size];
-            for (; ; ) {
-                int count = is.read(bytes, 0, buffer_size);
-                if (count == -1)
-                    break;
-                os.write(bytes, 0, count);
-            }
-        } catch (Exception ex) {
+        byte[] bytes = new byte[buffer_size];
+        for (; ; ) {
+            int count = is.read(bytes, 0, buffer_size);
+            if (count == -1)
+                break;
+            os.write(bytes, 0, count);
         }
 
     }

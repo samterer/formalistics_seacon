@@ -470,7 +470,7 @@ public class DocumentListActivity extends Activity implements
 
         List<WorkflowAction> actions = source.getActions();
 
-        List<String> actionStringList = new ArrayList<String>();
+        List<String> actionStringList = new ArrayList<>();
 
         for (WorkflowAction action : actions) {
             // remove save
@@ -761,7 +761,7 @@ public class DocumentListActivity extends Activity implements
 
     // <editor-fold desc="Event Listeners">
 
-    private BroadcastReceiver outgoingActionsBroadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver outgoingActionsBroadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -775,7 +775,7 @@ public class DocumentListActivity extends Activity implements
 
     };
 
-    private BroadcastReceiver dataSyncBroadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver dataSyncBroadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -809,7 +809,7 @@ public class DocumentListActivity extends Activity implements
 
     // }}
 
-    private SessionManagerEventListener sessionManagerEventListener = new SessionManagerEventListener() {
+    private final SessionManagerEventListener sessionManagerEventListener = new SessionManagerEventListener() {
 
         @Override
         public void onSessionLost() {

@@ -15,7 +15,7 @@ public class PersistentCache {
 
 	public static final String TAG = PersistentCache.class.getSimpleName();
 
-	private File cacheDir;
+	private final File cacheDir;
 
 	public PersistentCache(Context context, String path) {
 

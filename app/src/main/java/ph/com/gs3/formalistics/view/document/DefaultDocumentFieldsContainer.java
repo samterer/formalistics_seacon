@@ -12,7 +12,7 @@ import ph.com.gs3.formalistics.view.document.contents.fields.FTextField;
 
 public class DefaultDocumentFieldsContainer extends ScrollView {
 
-    private LinearLayout llFieldsContainer;
+    private final LinearLayout llFieldsContainer;
 
     public DefaultDocumentFieldsContainer(Context context, DocumentDynamicViewContentsManager documentViewContentsManager) {
         super(context);

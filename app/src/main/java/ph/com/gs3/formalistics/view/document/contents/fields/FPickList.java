@@ -15,9 +15,9 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FPickList extends FField {
 
-    private EditText etPicker;
-    private PickListFieldListener listener;
-    private FormFieldData formFieldData;
+    private final EditText etPicker;
+    private final PickListFieldListener listener;
+    private final FormFieldData formFieldData;
 
     public FPickList(Context context, FormFieldData formFieldData, PickListFieldListener listener) {
         super(context, R.layout.field_pick_list, formFieldData);

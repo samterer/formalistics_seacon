@@ -2,9 +2,6 @@ package ph.com.gs3.formalistics.global.utilities.logging;
 
 import android.util.Log;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import ph.com.gs3.formalistics.FormalisticsApplication;
 import ph.com.gs3.formalistics.global.constants.ApplicationMode;
 
@@ -20,10 +17,6 @@ public class FLLogger {
     public enum LogType {
         ERROR, WARNING, DEBUG, INFORMATION
     }
-
-//    public static final void log(LogType logType, String log) {
-//        log(TAG, logType, log);
-//    }
 
     public static void log(String source, LogType logType, String log) {
 
@@ -93,15 +86,6 @@ public class FLLogger {
     }
 
     //<editor-fold desc="Other utility methods">
-    public static String getStringStackTrace(Throwable exception) {
-
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        exception.printStackTrace(pw);
-        return sw.toString();
-
-    }
-
     public static String getFormattedStackTrace() {
 
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
@@ -143,13 +127,6 @@ public class FLLogger {
     //</editor-fold>
 
     //<editor-fold desc="Getters & Setters">
-    public static void setMode(ApplicationMode mode) {
-        FLLogger.mode = mode;
-    }
-
-    public static ApplicationMode getMode() {
-        return FLLogger.mode;
-    }
 
     public static FLPersistentLogger getPersistentLogger() {
         return persistentLogger;

@@ -241,7 +241,7 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
                 }
             }
             break;
-            case ActivityRequestCodes.PICKLIST: {
+            case ActivityRequestCodes.PICK_LIST: {
 
                 if (data != null && data.hasExtra(PicklistPickerActivity.EXTRA_PICKED_RESULT)) {
                     String fieldId = data.getStringExtra(PicklistPickerActivity.EXTRA_FIELD_ID);
@@ -465,7 +465,7 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
                 .getWorkflowObject()
                 .getWorkflowActions();
 
-        List<String> actionStringList = new ArrayList<String>();
+        List<String> actionStringList = new ArrayList<>();
 
         for (WorkflowAction action : actions) {
             actionStringList.add(action.getLabel());
@@ -626,7 +626,7 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
         intent.putExtra(PicklistPickerActivity.EXTRA_FIELD_ID, source.getFieldName());
         intent.putExtra(PicklistPickerActivity.EXTRA_ACTIVE_USER, documentWorkerFragment.getActiveUser());
         intent.putExtra(PicklistPickerActivity.EXTRA_PICKLIST_SEARCH_AND_RESULT_DATA, data);
-        startActivityForResult(intent, ActivityRequestCodes.PICKLIST);
+        startActivityForResult(intent, ActivityRequestCodes.PICK_LIST);
 
     }
 
@@ -889,7 +889,7 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
         return computedValue;
     }
 
-    private LookupRequestListener lookupRequestListener = new LookupRequestListener() {
+    private final LookupRequestListener lookupRequestListener = new LookupRequestListener() {
         @Override
         public String onLookupCommand(String formName, String returnFieldName, String compareToOtherFormFieldName, String compareToThisFormFieldValue) {
 

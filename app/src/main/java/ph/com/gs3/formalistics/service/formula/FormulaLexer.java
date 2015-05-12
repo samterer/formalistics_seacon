@@ -18,10 +18,10 @@ import ph.com.gs3.formalistics.global.utilities.Serializer;
  */
 public class FormulaLexer {
 
-    private List<TokenPattern> tokenPatterns;
+    private final List<TokenPattern> tokenPatterns;
 
-    private List<String> reservedKeywords;
-    private List<String> functions;
+    private final List<String> reservedKeywords;
+    private final List<String> functions;
 
     public FormulaLexer() {
 
@@ -119,8 +119,8 @@ public class FormulaLexer {
 
     private class TokenPattern {
 
-        Pattern regex;
-        TokenType tokenType;
+        final Pattern regex;
+        final TokenType tokenType;
 
         TokenPattern(String patternString, TokenType tokenType) {
             this.regex = Pattern.compile("^(" + patternString + ")");

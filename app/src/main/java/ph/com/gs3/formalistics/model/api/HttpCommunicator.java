@@ -63,7 +63,7 @@ public class HttpCommunicator {
     /**
      * Maintains session in cookie in the whole application
      */
-    private static CookieManager cookieManager = new CookieManager();
+    private static final CookieManager cookieManager = new CookieManager();
 
     /**
      * Checks connection to the specified URL.
@@ -175,7 +175,7 @@ public class HttpCommunicator {
                 } catch (IOException e) {
 
                     // check if the server is simply unreachable
-                    if (e.getMessage().indexOf("EHOSTUNREACH") >= 0) {
+                    if (e.getMessage().contains("EHOSTUNREACH")) {
                         throw new CommunicationException("Host " + urlString
                                 + " is currently unreachable, please contact your administrator.",
                                 e);
@@ -272,8 +272,7 @@ public class HttpCommunicator {
      * @throws java.io.IOException
      * @throws java.io.UnsupportedEncodingException
      */
-    public static String parseInputStream(InputStream stream) throws IOException,
-            UnsupportedEncodingException {
+    public static String parseInputStream(InputStream stream) throws IOException {
 
         StringBuilder sbuilder = new StringBuilder();
         BufferedReader bufferedReader = null;

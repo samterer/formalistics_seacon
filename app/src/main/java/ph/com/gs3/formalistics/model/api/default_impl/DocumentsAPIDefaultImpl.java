@@ -23,7 +23,7 @@ public class DocumentsAPIDefaultImpl extends API implements DocumentsAPI {
 
     public static final String TAG = DocumentsAPIDefaultImpl.class.getSimpleName();
 
-    private List<UnparseableObject> lastUnparseableDocuments;
+    private final List<UnparseableObject> lastUnparseableDocuments;
 
     public DocumentsAPIDefaultImpl(HttpCommunicator communicator, String server) {
         super(communicator, server);
@@ -64,7 +64,7 @@ public class DocumentsAPIDefaultImpl extends API implements DocumentsAPI {
             e.printStackTrace();
         }
 
-        Map<String, String> requestParams = new HashMap<String, String>();
+        Map<String, String> requestParams = new HashMap<>();
         requestParams.put("form_id", Integer.toString(formWebId));
         requestParams.put("search_parameters", searchParameters.toString());
 
@@ -92,7 +92,7 @@ public class DocumentsAPIDefaultImpl extends API implements DocumentsAPI {
         requestParams.put("action", action);
 
         FLLogger.d(TAG, "url: " + url);
-        FLLogger.d(TAG, "document data: " + requestData.toString());
+        FLLogger.d(TAG, "document data: " + requestData);
 
         APIResponse response = request(url, requestParams);
 
@@ -115,7 +115,7 @@ public class DocumentsAPIDefaultImpl extends API implements DocumentsAPI {
             url = getServer() + "/API/unstar-document";
         }
 
-        Map<String, String> requestParams = new HashMap<String, String>();
+        Map<String, String> requestParams = new HashMap<>();
 
         requestParams.put("form_id", Integer.toString(formId));
         requestParams.put("request_id", Integer.toString(requestId));

@@ -14,9 +14,7 @@ import ph.com.gs3.formalistics.model.values.business.view.ViewColumn;
 
 public class EmbeddedViewDataJSONParser {
 
-    public static final String TAG = EmbeddedViewDataJSONParser.class.getSimpleName();
-
-    private static Map<String, String> fieldNameConversion = new HashMap<>();
+    private static final Map<String, String> fieldNameConversion = new HashMap<>();
 
     public static void lazyloadFieldNameConversion() {
 

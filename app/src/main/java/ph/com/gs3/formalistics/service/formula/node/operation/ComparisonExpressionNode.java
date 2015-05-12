@@ -8,9 +8,9 @@ import ph.com.gs3.formalistics.service.formula.node.ExpressionNode;
  */
 public class ComparisonExpressionNode implements ExpressionNode {
 
-    private ExpressionNode leftArgument;
+    private final ExpressionNode leftArgument;
     private ExpressionNode rightArgument;
-    private String conditionalOperator;
+    private final String conditionalOperator;
 
     public ComparisonExpressionNode(ExpressionNode leftArgument, String conditionalOperator) {
         this.leftArgument = leftArgument;

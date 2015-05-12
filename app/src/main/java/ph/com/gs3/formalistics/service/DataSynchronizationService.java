@@ -27,8 +27,8 @@ public class DataSynchronizationService extends IntentService {
     public static final String EXTRA_SYNC_TYPE = "sync_type";
     public static final String EXTRA_PARTIAL_SYNC_FORM_IDS = "partial_sync_form_ids";
 
-    private DataSynchronizationManager fullUpdateManager;
-    private SessionManager sessionManager;
+    private final DataSynchronizationManager fullUpdateManager;
+    private final SessionManager sessionManager;
     private Broadcaster broadcaster;
 
     private static boolean fullUpdateOngoing;
@@ -88,7 +88,7 @@ public class DataSynchronizationService extends IntentService {
                             }
 
                         } else {
-                            broadcaster.broadcastFullUpdateNotStarted("Full update service not started, disconnected to server.");
+                            broadcaster.broadcastFullUpdateNotStarted();
                         }
 
                     }
@@ -108,7 +108,7 @@ public class DataSynchronizationService extends IntentService {
 
     // <editor-fold desc="Event Listeners">
 
-    private DocumentsSynchronizerEventListener documentsSynchronizerEventListener = new DocumentsSynchronizerEventListener() {
+    private final DocumentsSynchronizerEventListener documentsSynchronizerEventListener = new DocumentsSynchronizerEventListener() {
 
         @Override
         public void onNewDocumentsDownloaded() {
@@ -121,7 +121,7 @@ public class DataSynchronizationService extends IntentService {
         }
     };
 
-    private DataSynchronizationManagerEventsListener eventsListener = new DataSynchronizationManagerEventsListener() {
+    private final DataSynchronizationManagerEventsListener eventsListener = new DataSynchronizationManagerEventsListener() {
 
         @Override
         public void onReAuthenticationNeeded() {

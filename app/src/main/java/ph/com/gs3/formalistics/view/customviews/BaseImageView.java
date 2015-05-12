@@ -18,8 +18,6 @@ import java.lang.ref.WeakReference;
 public abstract class BaseImageView extends ImageView {
     private static final String TAG = BaseImageView.class.getSimpleName();
 
-    protected Context mContext;
-
     private static final Xfermode sXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
 //    private BitmapShader mBitmapShader;
     private Bitmap mMaskBitmap;
@@ -42,7 +40,6 @@ public abstract class BaseImageView extends ImageView {
     }
 
     private void sharedConstructor(Context context) {
-        mContext = context;
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
@@ -86,7 +83,7 @@ public abstract class BaseImageView extends ImageView {
 //                        mPaint.setShader(mBitmapShader);
                         bitmapCanvas.drawBitmap(mMaskBitmap, 0.0f, 0.0f, mPaint);
 
-                        mWeakBitmap = new WeakReference<Bitmap>(bitmap);
+                        mWeakBitmap = new WeakReference<>(bitmap);
                     }
                 }
 

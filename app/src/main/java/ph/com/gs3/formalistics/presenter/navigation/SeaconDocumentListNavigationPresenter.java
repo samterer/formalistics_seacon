@@ -13,8 +13,6 @@ import ph.com.gs3.formalistics.global.constants.DocumentSearchType;
 import ph.com.gs3.formalistics.model.dao.FormsDAO;
 import ph.com.gs3.formalistics.model.values.application.NavigationDrawerItem;
 import ph.com.gs3.formalistics.model.values.business.User;
-import ph.com.gs3.formalistics.model.values.business.document.DocumentSummary;
-import ph.com.gs3.formalistics.model.values.business.view.DisplayReadyAction;
 
 /**
  * Created by Ervinne on 4/24/2015.
@@ -38,11 +36,11 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
     public static final int JOB_ORDER_FORM_WEB_ID = 12;
     public static final int SETUP_EQUIPMENT_FORM_CRANE_OPERATORS_FORM_WEB_ID = 46;
 
-    private Context context;
-    private User activeUser;
-    private DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
+    private final Context context;
+    private final User activeUser;
+    private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
 
-    private FormsDAO formsDAO;
+    private final FormsDAO formsDAO;
 
     private int currentlySelectedNavigationDrawerItemPosition;
 
@@ -94,16 +92,6 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
         navItems.add(DefaultDocumentListNavigationPresenter.logoutNavCommandItem);
 
         return navItems;
-    }
-
-    @Override
-    public List<DocumentSummary> getDisplayableDocumentSummaries() {
-        return null;
-    }
-
-    @Override
-    public List<DisplayReadyAction> getDisplayableOutgoingActions() {
-        return null;
     }
 
     @Override

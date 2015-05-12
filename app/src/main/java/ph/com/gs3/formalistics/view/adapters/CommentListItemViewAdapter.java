@@ -24,10 +24,10 @@ public class CommentListItemViewAdapter extends BaseAdapter {
 
     public static final String TAG = CommentListItemViewAdapter.class.getSimpleName();
 
-    private Context context;
+    private final Context context;
 
     private List<Comment> comments;
-    private ImageManager imageManager;
+    private final ImageManager imageManager;
 
     public CommentListItemViewAdapter(Context context) {
 
@@ -75,13 +75,13 @@ public class CommentListItemViewAdapter extends BaseAdapter {
 
         // view objects will have default access so they can only be accessed inside this
         // adapter
-        RelativeLayout rlCommentContainer;
+        final RelativeLayout rlCommentContainer;
 
-        TextView tvAuthorName;
-        TextView tvDateCreated;
-        TextView tvText;
+        final TextView tvAuthorName;
+        final TextView tvDateCreated;
+        final TextView tvText;
 
-        ImageView ivAvatar;
+        final ImageView ivAvatar;
 
         public CommentListItemViewHolder(View view) {
 

@@ -18,16 +18,16 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FDynamicImage extends FField {
 
-    private LinearLayout llActionsContainer;
-    private TextView tvNotificationMessage;
-    private ImageView ivDynamicImage;
-    private Button bBrowseImage;
-    private Button bTakeNewimage;
+    private final LinearLayout llActionsContainer;
+    private final TextView tvNotificationMessage;
+    private final ImageView ivDynamicImage;
+    private final Button bBrowseImage;
+    private final Button bTakeNewimage;
 
     private String imageLocalPath;
     private String imageURL;
 
-    private DynamicImageFieldActionListener listener;
+    private final DynamicImageFieldActionListener listener;
 
     public FDynamicImage(Context context, FormFieldData formFieldData, final DynamicImageFieldActionListener listener) {
         super(context, R.layout.field_dynamic_image, formFieldData);

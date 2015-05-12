@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 public class NavigationDrawerListViewAdapter extends BaseAdapter {
 
-	private Context context;
-	private List<NavigationDrawerItem> navigationDrawerItems;
+	private final Context context;
+	private final List<NavigationDrawerItem> navigationDrawerItems;
 
 	public NavigationDrawerListViewAdapter(Context context) {
 		this.context = context;
@@ -46,8 +46,8 @@ public class NavigationDrawerListViewAdapter extends BaseAdapter {
 
 	private static class NavigationDrawerItemViewHolder {
 
-		ImageView ivIcon;
-		TextView tvLabel;
+		final ImageView ivIcon;
+		final TextView tvLabel;
 
 		NavigationDrawerItemViewHolder(View rootView) {
 

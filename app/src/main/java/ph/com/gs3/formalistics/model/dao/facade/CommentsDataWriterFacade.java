@@ -11,7 +11,7 @@ import ph.com.gs3.formalistics.model.values.business.Comment;
  */
 public class CommentsDataWriterFacade {
 
-    private CommentsDAO commentsDAO;
+    private final CommentsDAO commentsDAO;
 
     public CommentsDataWriterFacade(Context context) {
         commentsDAO = new CommentsDAO(context);

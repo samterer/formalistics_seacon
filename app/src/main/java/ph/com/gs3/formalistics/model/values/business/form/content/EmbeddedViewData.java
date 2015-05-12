@@ -9,8 +9,6 @@ import ph.com.gs3.formalistics.model.values.business.view.ViewColumn;
 
 public class EmbeddedViewData extends FormViewContentData implements Serializable {
 
-    private static final long serialVersionUID = -8689339287105541046L;
-
     private int searchFormWebId;
     private String searchFieldId;
     private String searchConditionalOperator;
@@ -22,7 +20,7 @@ public class EmbeddedViewData extends FormViewContentData implements Serializabl
     private boolean enableCreateDocumentAction;
     private String createDocumentActionLabel;
 
-    private List<EmbeddedViewDataSendingItem> dataSendingItems = new ArrayList<>();
+    private final List<EmbeddedViewDataSendingItem> dataSendingItems = new ArrayList<>();
 
     // =========================================================================
     // {{ Getters & Setters
@@ -83,10 +81,6 @@ public class EmbeddedViewData extends FormViewContentData implements Serializabl
         this.createDocumentActionLabel = createDocumentActionLabel;
     }
 
-    public boolean isEnableDataSendingToNewDocuments() {
-        return enableDataSendingToNewDocuments;
-    }
-
     public void setEnableDataSendingToNewDocuments(boolean enableDataSendingToNewDocuments) {
         this.enableDataSendingToNewDocuments = enableDataSendingToNewDocuments;
     }
@@ -106,9 +100,6 @@ public class EmbeddedViewData extends FormViewContentData implements Serializabl
         private String destinationField;
         private String sourceField;
 
-        public EmbeddedViewDataSendingItem() {
-        }
-
         public EmbeddedViewDataSendingItem(String sourceField, String destinationField) {
             this.sourceField = sourceField;
             this.destinationField = destinationField;
@@ -118,16 +109,8 @@ public class EmbeddedViewData extends FormViewContentData implements Serializabl
             return destinationField;
         }
 
-        public void setDestinationField(String destinationField) {
-            this.destinationField = destinationField;
-        }
-
         public String getSourceField() {
             return sourceField;
-        }
-
-        public void setSourceField(String sourceField) {
-            this.sourceField = sourceField;
         }
 
     }

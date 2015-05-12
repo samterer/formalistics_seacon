@@ -13,7 +13,7 @@ public class LookupExpressionNode implements ExpressionNode {
     private ExpressionNode compareToOtherFormFieldNameExpression;
     private ExpressionNode compareToThisFormFieldValueExpression;
 
-    private LookupRequestListener listener;
+    private final LookupRequestListener listener;
 
     public LookupExpressionNode(LookupRequestListener listener) {
         this.listener = listener;

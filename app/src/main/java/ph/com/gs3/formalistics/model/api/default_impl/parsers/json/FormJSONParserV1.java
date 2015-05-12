@@ -100,7 +100,7 @@ public class FormJSONParserV1 {
     public static List<FormViewContentData> createFormContentsFromJSON(JSONArray raw)
             throws JSONException, InvalidFormFieldException {
 
-        List<FormViewContentData> contents = new ArrayList<FormViewContentData>();
+        List<FormViewContentData> contents = new ArrayList<>();
         for (int i = 0; i < raw.length(); i++) {
             // Throws InvalidFormOldFieldException
             FormViewContentData formContent = FormViewContentDataJSONParser.createFromJSON(raw.getJSONObject(i));

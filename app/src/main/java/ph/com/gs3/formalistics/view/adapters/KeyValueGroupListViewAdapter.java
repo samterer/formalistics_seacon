@@ -25,12 +25,12 @@ public class KeyValueGroupListViewAdapter extends BaseAdapter {
 
 	public static final int ROW_VIEW_PADDING = 8;
 
-	private List<JSONObject> data;
-	private List<ViewColumn> viewColumns;
+	private final List<JSONObject> data;
+	private final List<ViewColumn> viewColumns;
 
-	private Context context;
+	private final Context context;
 
-	private LayoutParams picklistItemLayout = new LayoutParams(LayoutParams.MATCH_PARENT,
+	private final LayoutParams picklistItemLayout = new LayoutParams(LayoutParams.MATCH_PARENT,
 	        LayoutParams.MATCH_PARENT);
 
 	public KeyValueGroupListViewAdapter(Context context) {
@@ -71,9 +71,9 @@ public class KeyValueGroupListViewAdapter extends BaseAdapter {
 
 	public static class PicklistItemContainerHolder {
 
-		List<TextView> tvKeyNames = new ArrayList<>();
-		List<TextView> tvValues = new ArrayList<>();
-		private LayoutInflater inflater;
+		final List<TextView> tvKeyNames = new ArrayList<>();
+		final List<TextView> tvValues = new ArrayList<>();
+		private final LayoutInflater inflater;
 
 		public PicklistItemContainerHolder(Context context, LinearLayout container,
 		        int dataColumnCount) {

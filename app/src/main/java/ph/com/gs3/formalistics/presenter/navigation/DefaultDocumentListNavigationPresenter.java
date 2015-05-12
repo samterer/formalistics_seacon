@@ -15,7 +15,6 @@ import ph.com.gs3.formalistics.model.dao.FormsDAO;
 import ph.com.gs3.formalistics.model.dao.OutgoingActionsDAO;
 import ph.com.gs3.formalistics.model.values.application.NavigationDrawerItem;
 import ph.com.gs3.formalistics.model.values.business.User;
-import ph.com.gs3.formalistics.model.values.business.document.DocumentSummary;
 import ph.com.gs3.formalistics.model.values.business.view.DisplayReadyAction;
 
 /**
@@ -36,14 +35,14 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
     public static final NavigationDrawerItem navigateToUserViewCommandNavItem = new NavigationDrawerItem(9, R.drawable.user, "User");
     public static final NavigationDrawerItem logoutNavCommandItem = new NavigationDrawerItem(10, R.drawable.logout, "Logout");
 
-    private Context context;
+    private final Context context;
 
-    private User activeUser;
-    private DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
+    private final User activeUser;
+    private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
 
-    private FormsDAO formsDAO;
-    private DocumentsDAO documentsDAO;
-    private OutgoingActionsDAO outgoingActionsDAO;
+    private final FormsDAO formsDAO;
+    private final DocumentsDAO documentsDAO;
+    private final OutgoingActionsDAO outgoingActionsDAO;
 
     private int currentlySelectedNavigationDrawerPosition;
 
@@ -86,16 +85,6 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
         navItems.add(logoutNavCommandItem);
 
         return navItems;
-    }
-
-    @Override
-    public List<DocumentSummary> getDisplayableDocumentSummaries() {
-        return null;
-    }
-
-    @Override
-    public List<DisplayReadyAction> getDisplayableOutgoingActions() {
-        return null;
     }
 
     @Override

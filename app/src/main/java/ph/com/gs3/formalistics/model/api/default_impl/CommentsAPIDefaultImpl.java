@@ -22,7 +22,7 @@ import ph.com.gs3.formalistics.model.values.business.Comment;
  */
 public class CommentsAPIDefaultImpl extends API implements CommentsAPI {
 
-    private List<UnparseableObject> unparseableComments;
+    private final List<UnparseableObject> unparseableComments;
 
     public CommentsAPIDefaultImpl(HttpCommunicator communicator, String server) {
         super(communicator, server);
@@ -32,8 +32,7 @@ public class CommentsAPIDefaultImpl extends API implements CommentsAPI {
     private APIResponse getFormDocumentsCommentUpdatesAPIresponse(
             int formWebId, int[] documentWebIdArray, String lastUpdateDate, int rangeFrom, int rangeTo
     ) throws HttpCommunicator.CommunicationException,
-            APIResponse.InvalidResponseException,
-            APIResponse.ServerErrorException {
+            APIResponse.InvalidResponseException {
 
         commonValidation();
 

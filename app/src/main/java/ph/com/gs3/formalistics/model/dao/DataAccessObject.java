@@ -19,7 +19,7 @@ import ph.com.gs3.formalistics.model.values.business.form.FormFieldData;
  */
 public abstract class DataAccessObject {
 
-    protected Context context;
+    protected final Context context;
 
     // Database Fields
     protected SQLiteDatabase database;
