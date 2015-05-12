@@ -25,14 +25,14 @@ public class FormContentTypeGroupings {
 
     public static final FormContentType[] VIEW = {FormContentType.EMBEDDED_VIEW};
 
-    public static final boolean isField(FormContentType formContentType) {
+    public static boolean isField(FormContentType formContentType) {
 
         List<FormContentType> formContentTypes = new ArrayList<>(Arrays.asList(FIELDS));
         return formContentTypes.contains(formContentType);
 
     }
 
-    public static final boolean isView(FormContentType formContentType) {
+    public static boolean isView(FormContentType formContentType) {
 
         List<FormContentType> formContentTypes = new ArrayList<>(Arrays.asList(VIEW));
         return formContentTypes.contains(formContentType);

@@ -17,7 +17,7 @@ public class FLLogger {
     private static FLPersistentLogger persistentLogger;
     private static boolean traceEnabled = false;
 
-    public static enum LogType {
+    public enum LogType {
         ERROR, WARNING, DEBUG, INFORMATION
     }
 
@@ -25,7 +25,7 @@ public class FLLogger {
 //        log(TAG, logType, log);
 //    }
 
-    public static final void log(String source, LogType logType, String log) {
+    public static void log(String source, LogType logType, String log) {
 
         if (traceEnabled) {
             log = log + "\nTrace:\n" + getFormattedStackTrace();
@@ -45,7 +45,7 @@ public class FLLogger {
 
     }
 
-    private static final void logAll(String source, LogType logType, String log) {
+    private static void logAll(String source, LogType logType, String log) {
         switch (logType) {
             case ERROR:
                 Log.e(source, log);
@@ -93,7 +93,7 @@ public class FLLogger {
     }
 
     //<editor-fold desc="Other utility methods">
-    public static final String getStringStackTrace(Throwable exception) {
+    public static String getStringStackTrace(Throwable exception) {
 
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -125,19 +125,19 @@ public class FLLogger {
     //</editor-fold>
 
     //<editor-fold desc="Shortcut Methods">
-    public static final void w(String source, String log) {
+    public static void w(String source, String log) {
         log(source, LogType.WARNING, log);
     }
 
-    public static final void e(String source, String log) {
+    public static void e(String source, String log) {
         log(source, LogType.ERROR, log);
     }
 
-    public static final void d(String source, String log) {
+    public static void d(String source, String log) {
         log(source, LogType.DEBUG, log);
     }
 
-    public static final void i(String source, String log) {
+    public static void i(String source, String log) {
         log(source, LogType.INFORMATION, log);
     }
     //</editor-fold>

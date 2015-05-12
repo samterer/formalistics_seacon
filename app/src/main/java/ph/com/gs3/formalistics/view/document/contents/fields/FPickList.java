@@ -75,8 +75,8 @@ public class FPickList extends FField {
     }
 
 
-    public static interface PickListFieldListener {
-        public void onOpenPicklistCommand(FPickList source);
+    public interface PickListFieldListener {
+        void onOpenPicklistCommand(FPickList source);
     }
 
 }

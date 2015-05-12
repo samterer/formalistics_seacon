@@ -8,15 +8,15 @@ import ph.com.gs3.formalistics.model.values.business.User;
  */
 public interface UsersAPI {
 
-    public User login(String email, String password) throws LoginException;
+    User login(String email, String password) throws LoginException;
 
     // <editor-fold desc="Constants & Exceptions" >
 
-    public static enum LoginField {
+    enum LoginField {
         SERVER, EMAIL, PASSWORD
     }
 
-    public static class LoginException extends Exception {
+    class LoginException extends Exception {
 
         public static final String SERVER_ERROR_USER_NOT_FOUND = "User Not Found";
 

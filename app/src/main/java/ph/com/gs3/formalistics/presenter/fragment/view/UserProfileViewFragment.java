@@ -73,11 +73,11 @@ public class UserProfileViewFragment extends Fragment {
 
     }
 
-    public static interface UserProfileViewActionListener {
+    public interface UserProfileViewActionListener {
 
-        public void onViewReady();
+        void onViewReady();
 
-        public void onLogoutCommand();
+        void onLogoutCommand();
 
     }
 

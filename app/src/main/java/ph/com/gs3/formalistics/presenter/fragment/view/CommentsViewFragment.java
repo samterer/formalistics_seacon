@@ -121,9 +121,9 @@ public class CommentsViewFragment extends Fragment {
         return commentListItemViewAdapter.getViewData();
     }
 
-    public static interface CommentListViewActionListener {
-        public void onViewReady();
+    public interface CommentListViewActionListener {
+        void onViewReady();
 
-        public void onSubmitCommentCommand(String commentText);
+        void onSubmitCommentCommand(String commentText);
     }
 }

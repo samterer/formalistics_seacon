@@ -135,16 +135,16 @@ public class DocumentViewFragment extends Fragment {
         return documentViewContentsManager;
     }
 
-    public static interface DocumentViewActionListener {
+    public interface DocumentViewActionListener {
 //        public void onMarkDocumentStarCommand(StarMark star);
 //
 //        public void onOpenCommentsCommand();
 //
 //        public void onOpenIssuedOutgoingActionCommand();
 
-        public void onFailedOpeningDocumentData(String message);
+        void onFailedOpeningDocumentData(String message);
 
-        public void onViewReady();
+        void onViewReady();
     }
 
     public static class DocumentViewFragmentParameterBundle {

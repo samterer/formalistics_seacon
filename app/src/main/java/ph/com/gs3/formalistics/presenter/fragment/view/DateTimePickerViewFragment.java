@@ -159,10 +159,10 @@ public class DateTimePickerViewFragment extends Fragment {
 
 	}
 
-	public static interface DateTimePickerViewActionListener {
-		public void onDateTimeSelected(Date dateSelected);
+	public interface DateTimePickerViewActionListener {
+		void onDateTimeSelected(Date dateSelected);
 
-		public void onCancel();
+		void onCancel();
 	}
 
 }

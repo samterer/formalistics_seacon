@@ -15,7 +15,7 @@ import ph.com.gs3.formalistics.model.values.business.form.FormFieldData;
 public class DocumentsJSONParser {
     public static final String TAG = DocumentsJSONParser.class.getSimpleName();
 
-    public static final Document createFromJSON(JSONObject raw, List<FormFieldData> formFields) throws JSONException {
+    public static Document createFromJSON(JSONObject raw, List<FormFieldData> formFields) throws JSONException {
 
         Document document = new Document();
 

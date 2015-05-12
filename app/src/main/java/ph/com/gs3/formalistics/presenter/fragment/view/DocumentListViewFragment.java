@@ -65,11 +65,11 @@ public class DocumentListViewFragment extends Fragment {
 
     private ViewingMode viewingMode;
 
-    public static enum ViewingMode {
+    public enum ViewingMode {
         EXISTING_DOCUMENTS, OUTGOING_ACTIONS
     }
 
-    public static final DocumentListViewFragment createInstance(User activeUser) {
+    public static DocumentListViewFragment createInstance(User activeUser) {
         DocumentListViewFragment instance = new DocumentListViewFragment();
         instance.activeUser = activeUser;
         return instance;

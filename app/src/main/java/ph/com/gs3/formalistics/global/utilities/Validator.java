@@ -9,7 +9,7 @@ public class Validator {
 	public static final int TOO_SHORT = 3;
 	public static final int EMPTY = 4;
 
-	public static final int validateNonEmpty(CharSequence target) {
+	public static int validateNonEmpty(CharSequence target) {
 
 		int result = EMPTY;
 
@@ -20,7 +20,7 @@ public class Validator {
 		return result;
 	}
 
-	public static final int validateEmail(CharSequence target) {
+	public static int validateEmail(CharSequence target) {
 		if (TextUtils.isEmpty(target)) {
 			return EMPTY;
 		} else {
@@ -28,7 +28,7 @@ public class Validator {
 		}
 	}
 
-	public static final int validatePassword(CharSequence target) {
+	public static int validatePassword(CharSequence target) {
 
 		if (TextUtils.isEmpty(target)) {
 			return EMPTY;

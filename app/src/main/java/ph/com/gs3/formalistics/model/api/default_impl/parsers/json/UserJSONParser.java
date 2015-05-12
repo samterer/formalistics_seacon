@@ -7,7 +7,7 @@ import ph.com.gs3.formalistics.model.values.business.User;
 
 public class UserJSONParser {
 
-	public static final User createFromLoginJSON(JSONObject raw) throws JSONException {
+	public static User createFromLoginJSON(JSONObject raw) throws JSONException {
 
 		User user = new User();
 
@@ -23,7 +23,7 @@ public class UserJSONParser {
 
 	}
 
-	public static final User createAuthorFromDocumentJSON(JSONObject raw) throws JSONException {
+	public static User createAuthorFromDocumentJSON(JSONObject raw) throws JSONException {
 
 		User user = new User();
 
@@ -46,7 +46,7 @@ public class UserJSONParser {
 
 	}
 
-	public static final User createProcessorFromDocumentJSON(JSONObject raw) throws JSONException {
+	public static User createProcessorFromDocumentJSON(JSONObject raw) throws JSONException {
 
 		User user = new User();
 

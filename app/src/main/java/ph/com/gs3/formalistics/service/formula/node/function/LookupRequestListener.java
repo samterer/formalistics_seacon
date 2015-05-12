@@ -5,6 +5,6 @@ package ph.com.gs3.formalistics.service.formula.node.function;
  */
 public interface LookupRequestListener {
 
-    public String onLookupCommand(String formName, String returnFieldName, String compareToOtherFormFieldName, String compareToThisFormFieldValue);
+    String onLookupCommand(String formName, String returnFieldName, String compareToOtherFormFieldName, String compareToThisFormFieldValue);
 
 }

@@ -11,10 +11,10 @@ import ph.com.gs3.formalistics.model.values.business.form.Form;
  */
 public interface FormsAPI {
 
-    public List<Form> getForms(String fromDate) throws
+    List<Form> getForms(String fromDate) throws
             APIResponse.InvalidResponseException,
             HttpCommunicator.CommunicationException;
 
-    public List<UnparseableObject> getUnparseableForms();
+    List<UnparseableObject> getUnparseableForms();
 
 }

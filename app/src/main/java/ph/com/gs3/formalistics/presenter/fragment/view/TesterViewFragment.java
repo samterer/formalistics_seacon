@@ -76,13 +76,13 @@ public class TesterViewFragment extends Fragment {
         return rootView;
     }
 
-    public static interface TesterViewFragmentActionListener {
+    public interface TesterViewFragmentActionListener {
 
-        public void onTestFormulaCommand(String formula);
+        void onTestFormulaCommand(String formula);
 
-        public void onTestFormula2Command(String formula);
+        void onTestFormula2Command(String formula);
 
-        public void onTestFormula3Command(String formula);
+        void onTestFormula3Command(String formula);
 
     }
 

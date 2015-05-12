@@ -36,7 +36,6 @@ public class CommentsActivity extends Activity implements CommentsViewFragment.C
     private int formWebId;
 
     private CommentsDAO commentsDAO;
-    private CommentsDataWriterFacade commentsDataWriterFacade;
 
     private CommentsViewFragment commentsViewFragment;
 
@@ -49,7 +48,7 @@ public class CommentsActivity extends Activity implements CommentsViewFragment.C
         initializeStateTransferredFields();
 
         commentsDAO = new CommentsDAO(this);
-        commentsDataWriterFacade = new CommentsDataWriterFacade(this);
+        CommentsDataWriterFacade commentsDataWriterFacade = new CommentsDataWriterFacade(this);
 
         commentsViewFragment = (CommentsViewFragment) getFragmentManager().findFragmentByTag(CommentsViewFragment.TAG);
 

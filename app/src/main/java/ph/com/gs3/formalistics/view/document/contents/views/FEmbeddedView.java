@@ -185,15 +185,15 @@ public class FEmbeddedView extends FView {
         }
     };
 
-    public static interface EmbeddedViewEventsListener {
+    public interface EmbeddedViewEventsListener {
 
-        public void onCreateChildDocument(int formWebId, List<EmbeddedViewData.EmbeddedViewDataSendingItem> dataSendingItems, FEmbeddedView source);
+        void onCreateChildDocument(int formWebId, List<EmbeddedViewData.EmbeddedViewDataSendingItem> dataSendingItems, FEmbeddedView source);
 
-        public void onSearchForEmbeddedViewRequested(String searchCompareToFieldValue, FEmbeddedView source);
+        void onSearchForEmbeddedViewRequested(String searchCompareToFieldValue, FEmbeddedView source);
 
-        public void onOpenDocumentCommand(int formWebId, int documentId, FEmbeddedView source);
+        void onOpenDocumentCommand(int formWebId, int documentId, FEmbeddedView source);
 
-        public void onOpenOutgoingActionCommand(int formWebId, int outgoingActionId, FEmbeddedView source);
+        void onOpenOutgoingActionCommand(int formWebId, int outgoingActionId, FEmbeddedView source);
 
     }
 

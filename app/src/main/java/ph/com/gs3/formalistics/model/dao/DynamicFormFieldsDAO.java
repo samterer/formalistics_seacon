@@ -38,7 +38,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
             FORM_TABLE_COL_ID, FORM_TABLE_COL_DOCUMENT_ID, FORM_TABLE_COL_OUTGOING_ACTION_ID
     };
 
-    public static enum FieldValuesType {
+    public enum FieldValuesType {
         DOCUMENT, OUTGOING_ACTION
     }
 

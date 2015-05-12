@@ -18,7 +18,7 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FTextField extends FField {
 
-    public static enum TextFieldType {
+    public enum TextFieldType {
         MULTI_LINE, SINGLE_LINE
     }
 

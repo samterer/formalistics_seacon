@@ -5,7 +5,7 @@ package ph.com.gs3.formalistics.model.values.business.form;
  */
 public class Formula {
 
-    public static enum FormulaType {
+    public enum FormulaType {
         MIDDLEWARE, STATIC, COMPUTED, NOT_APPLICABLE
     }
 

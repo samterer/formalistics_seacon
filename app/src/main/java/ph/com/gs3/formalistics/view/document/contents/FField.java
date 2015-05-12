@@ -100,8 +100,8 @@ public abstract class FField extends FView {
         }
     }
 
-    public static interface AbstractFieldChangeListener {
-        public void onChange(FField source, String newValue);
+    public interface AbstractFieldChangeListener {
+        void onChange(FField source, String newValue);
     }
 
     public boolean isFieldValueChangeNotificationEnabled() {

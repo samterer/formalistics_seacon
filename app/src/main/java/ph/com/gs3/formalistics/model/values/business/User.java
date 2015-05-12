@@ -40,11 +40,7 @@ public class User implements Serializable {
             return false;
         }
 
-        if (this.company.getId() != user.company.getId()) {
-            return false;
-        }
-
-        return true;
+        return this.company.getId() == user.company.getId();
 
     }
 

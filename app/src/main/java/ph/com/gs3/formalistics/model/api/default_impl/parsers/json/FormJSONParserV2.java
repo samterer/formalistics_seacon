@@ -16,7 +16,7 @@ import ph.com.gs3.formalistics.model.values.business.form.FormViewContentData;
  */
 public class FormJSONParserV2 {
 
-    public static final Form createFromJSON(JSONObject raw) throws JSONException, FormFieldData.InvalidFormFieldException {
+    public static Form createFromJSON(JSONObject raw) throws JSONException, FormFieldData.InvalidFormFieldException {
 
         Form form = new Form();
 

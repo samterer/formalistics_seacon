@@ -23,7 +23,7 @@ public class FDateTimePicker extends FField {
 
     private EditText etDateText;
 
-    public static enum PickerType {
+    public enum PickerType {
         DATE, TIME, DATETIME
     }
 
@@ -186,9 +186,9 @@ public class FDateTimePicker extends FField {
 
     }
 
-    public static interface DateTimePickerListener {
-        public void onOpenPickerViewCommand(FDateTimePicker source, PickerType pickerType,
-                                            String currentFieldValue);
+    public interface DateTimePickerListener {
+        void onOpenPickerViewCommand(FDateTimePicker source, PickerType pickerType,
+                                     String currentFieldValue);
     }
 
 }

@@ -463,10 +463,10 @@ public class SessionManager {
 
     }
 
-    public static interface SessionManagerEventListener {
-        public void onModeChanged(SessionMode mode);
+    public interface SessionManagerEventListener {
+        void onModeChanged(SessionMode mode);
 
-        public void onSessionLost();
+        void onSessionLost();
     }
 
     // </editor-fold>

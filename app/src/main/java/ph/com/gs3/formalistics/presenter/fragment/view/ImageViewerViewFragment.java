@@ -42,9 +42,9 @@ public class ImageViewerViewFragment extends Fragment {
         ivImage.setImageBitmap(bitmap);
     }
 
-    public static interface ImageViewerViewEventListener {
+    public interface ImageViewerViewEventListener {
 
-        public void onViewReady();
+        void onViewReady();
 
     }
 

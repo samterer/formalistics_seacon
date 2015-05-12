@@ -130,11 +130,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
     //</editor-fold>
 
@@ -255,10 +251,10 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
-    public static interface NavigationDrawerActionListener {
+    public interface NavigationDrawerActionListener {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        public void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(int position);
     }
 }

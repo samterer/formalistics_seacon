@@ -28,7 +28,7 @@ public class UsersDAO extends DataAccessObject {
      * Represents (last) update fields used for determining when's the last time the
      * forms, documents, or comments are updated for this user.
      */
-    public static enum UpdateField {
+    public enum UpdateField {
         ALL_FORMS, ALL_DOCUMENTS, ALL_COMMENTS
     }
 

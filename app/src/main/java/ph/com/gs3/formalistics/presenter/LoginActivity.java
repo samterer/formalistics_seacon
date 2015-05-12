@@ -32,7 +32,7 @@ public class LoginActivity extends Activity implements LoginViewActionListener,
 
     private LoginWorkerFragment loginWorkerFragment;
 
-    private static enum LoginView {
+    private enum LoginView {
         LOGIN, SPLASH
     }
 

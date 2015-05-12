@@ -168,8 +168,8 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
         }
     }
 
-    public static interface FieldComputationRequestListener {
-        public String onRecomputeRequested(FField fieldToRecompute);
+    public interface FieldComputationRequestListener {
+        String onRecomputeRequested(FField fieldToRecompute);
     }
 
 }

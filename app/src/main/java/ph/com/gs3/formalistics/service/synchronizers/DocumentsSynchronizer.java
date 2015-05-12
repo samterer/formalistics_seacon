@@ -310,10 +310,10 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
 
     }
 
-    public static interface DocumentsSynchronizerEventListener {
-        public void onNewDocumentsDownloaded();
+    public interface DocumentsSynchronizerEventListener {
+        void onNewDocumentsDownloaded();
 
-        public void onAllFormsDownloaded();
+        void onAllFormsDownloaded();
     }
 
 }

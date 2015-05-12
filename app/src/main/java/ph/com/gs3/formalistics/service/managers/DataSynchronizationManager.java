@@ -37,7 +37,7 @@ public class DataSynchronizationManager {
 
     // <editor-fold desc="Constants & Enums">
 
-    public static enum UpdateMode {
+    public enum UpdateMode {
         NO_REAUTHENTICATION, REAUTHENTICATE_FIRST
     }
     // </editor-fold>
@@ -230,17 +230,17 @@ public class DataSynchronizationManager {
         this.documentsSynchronizerEventListener = documentsSynchronizerEventListener;
     }
 
-    public static interface DataSynchronizationManagerEventsListener {
+    public interface DataSynchronizationManagerEventsListener {
 
-        public void onFormsSynchronized();
+        void onFormsSynchronized();
 
-        public void onReAuthenticationNeeded();
+        void onReAuthenticationNeeded();
 
-        public void onFullUpdateDone();
+        void onFullUpdateDone();
 
-        public void onOutgoingActionsSent();
+        void onOutgoingActionsSent();
 
-        public void onDocumentsSynchronized();
+        void onDocumentsSynchronized();
 
     }
 

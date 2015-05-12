@@ -12,7 +12,7 @@ import ph.com.gs3.formalistics.model.values.business.document.DocumentAction;
 
 public class DocumentActionJSONParser {
 
-    public static final List<DocumentAction> createFromJSON(JSONArray raw) throws JSONException {
+    public static List<DocumentAction> createFromJSON(JSONArray raw) throws JSONException {
 
         List<DocumentAction> actions = new ArrayList<>();
         int actionCount = raw.length();
@@ -31,7 +31,7 @@ public class DocumentActionJSONParser {
         return actions;
     }
 
-    public static final JSONArray createJSONArrayFromDocumentActionList(List<DocumentAction> actions)
+    public static JSONArray createJSONArrayFromDocumentActionList(List<DocumentAction> actions)
             throws JSONException {
 
         JSONArray jsonActions = new JSONArray();

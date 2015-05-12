@@ -15,7 +15,7 @@ public class FormSelectionDialogFragment extends DialogFragment {
 
     public static String TAG = FormSelectionDialogFragment.class.getSimpleName();
 
-    public static enum FormsAvailability {
+    public enum FormsAvailability {
         CURRENTLY_UPDATING, NO_FORMS_TO_SHOW, HAS_FORMS
     }
 

@@ -13,35 +13,35 @@ import ph.com.gs3.formalistics.model.values.business.form.FormViewContentData;
 
 public interface DocumentViewContentsManager {
 
-    public View getCreatedDocumentViewContentsContainer();
+    View getCreatedDocumentViewContentsContainer();
 
     /**
      * FIXME Make an abstract parent of document and outgoing action so that strategy
      * design pattern may be applied to them. (Requires refactoring of the document view
      * fragment and activity as well)
      */
-    public void createDocumentViewsFromData(
+    void createDocumentViewsFromData(
             List<FormViewContentData> formViewContentDataList,
             JSONObject fieldValues,
             DocumentHeaderData documentHeaderData,
             User currentUser);
 
-    public void setSpecialFieldsListener(Activity activity);
+    void setSpecialFieldsListener(Activity activity);
 
-    public View findFieldView(String fieldId);
+    View findFieldView(String fieldId);
 
-    public void setFieldValue(String fieldId, String value);
+    void setFieldValue(String fieldId, String value);
 
-    public JSONObject getFieldValues();
+    JSONObject getFieldValues();
 
-    public List<String> validateFields();
+    List<String> validateFields();
 
-    public void notifyFieldsRequired(List<String> fieldsThatFailedValidation);
+    void notifyFieldsRequired(List<String> fieldsThatFailedValidation);
 
     // =====================================================
     // {{ Events
 
-    public void onLoad();
+    void onLoad();
 
     // }}
 

@@ -46,7 +46,7 @@ public class FormTableReferenceDAO extends DataAccessObject {
 
     }
 
-    public static final void dropFormTables(SQLiteDatabase db) {
+    public static void dropFormTables(SQLiteDatabase db) {
         Cursor cursor = db.query(FormTableReferenceTable.NAME,
                 FormTableReferenceTable.COLUMN_COLLECTION, null, null, null, null, null);
 

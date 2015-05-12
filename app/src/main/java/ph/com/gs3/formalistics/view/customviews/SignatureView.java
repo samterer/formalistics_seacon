@@ -50,7 +50,7 @@ public class SignatureView extends View {
 		setFocusable(true);
 		signPath = new Path();
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paint.setColor(BACKGROUND_COLOR ^ 0x00FFFFFF);
+		paint.setColor(~0x00FFFFFF);
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(STROKE_WIDTH);
 	}

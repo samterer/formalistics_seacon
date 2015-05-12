@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Serializer {
 
-	public static final String serializeArray(String[] values) {
+	public static String serializeArray(String[] values) {
 
 		if (values.length > 0) {
 			StringBuilder sbSerializedValues = new StringBuilder();
@@ -23,13 +23,13 @@ public class Serializer {
 
 	}
 
-    public static final String serializeList(List values) {
+    public static String serializeList(List values) {
 
         return serializeList(values, ",");
 
     }
 
-	public static final String serializeList(List values, String divider) {
+	public static String serializeList(List values, String divider) {
 		if (values.size() > 0) {
 			StringBuilder serializedValuesBuilder = new StringBuilder();
 
@@ -46,7 +46,7 @@ public class Serializer {
 		}
 	}
 
-	public static final List<String> unserializeList(String serializedValues) {
+	public static List<String> unserializeList(String serializedValues) {
 
 		if (serializedValues == null || serializedValues.trim().isEmpty()) {
 			return new ArrayList<String>();

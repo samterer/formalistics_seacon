@@ -7,7 +7,7 @@ public class APIResponse {
 
     public static final String TAG = APIResponse.class.getSimpleName();
 
-    public static enum APIStatus {
+    public enum APIStatus {
         SUCCESS, ERROR
     }
 

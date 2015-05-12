@@ -28,7 +28,7 @@ public class VersionSettings {
      */
     public List<Integer> formIdListToSynchronize = new ArrayList<>();
 
-    public static enum AvailableVersion {
+    public enum AvailableVersion {
         DEFAULT, SEACON, SMARTMATIC
     }
 

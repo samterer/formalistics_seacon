@@ -1,7 +1,5 @@
 package ph.com.gs3.formalistics.view.customviews;
 
-import java.lang.ref.WeakReference;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
+
+import java.lang.ref.WeakReference;
 
 public abstract class BaseImageView extends ImageView {
     private static final String TAG = BaseImageView.class.getSimpleName();
@@ -95,7 +95,6 @@ public abstract class BaseImageView extends ImageView {
                     mPaint.setXfermode(null);
 //                    mPaint.setShader(null);
                     canvas.drawBitmap(bitmap, 0.0f, 0.0f, mPaint);
-                    return;
                 }
             } catch (Exception e) {
                 System.gc();

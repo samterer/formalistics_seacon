@@ -12,12 +12,12 @@ import ph.com.gs3.formalistics.presenter.fragment.view.NavigationDrawerFragment;
  */
 public interface DocumentListNavigationPresenter extends NavigationDrawerFragment.NavigationDrawerActionListener {
 
-    public void refreshCurrentView();
+    void refreshCurrentView();
 
-    public List<NavigationDrawerItem> getNavigationDrawerItems();
+    List<NavigationDrawerItem> getNavigationDrawerItems();
 
-    public List<DocumentSummary> getDisplayableDocumentSummaries();
+    List<DocumentSummary> getDisplayableDocumentSummaries();
 
-    public List<DisplayReadyAction> getDisplayableOutgoingActions();
+    List<DisplayReadyAction> getDisplayableOutgoingActions();
 
 }

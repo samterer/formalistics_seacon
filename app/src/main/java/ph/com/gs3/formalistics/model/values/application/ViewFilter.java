@@ -9,7 +9,7 @@ import ph.com.gs3.formalistics.model.values.business.form.Form;
  */
 public class ViewFilter {
 
-    public static enum ViewContentType {
+    public enum ViewContentType {
         EXISTING_DOCUMENTS, FOR_APPROVAL_DOCUMENTS, OUTGOING_ACTIONS
     }
 

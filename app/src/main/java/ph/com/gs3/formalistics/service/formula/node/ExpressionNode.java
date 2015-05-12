@@ -7,12 +7,12 @@ import ph.com.gs3.formalistics.service.formula.ParserException;
  */
 public interface ExpressionNode {
 
-    public static enum NodeType {
+    enum NodeType {
         VARIABLE, CONSTANT, ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION, COMPARISON, FUNCTION
     }
 
-    public NodeType getType();
+    NodeType getType();
 
-    public Object getValue() throws ParserException;
+    Object getValue() throws ParserException;
 
 }

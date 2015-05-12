@@ -92,13 +92,13 @@ public class PicklistPickerViewFragment extends Fragment {
 
     }
 
-    public static interface PicklistPickerActionListener {
+    public interface PicklistPickerActionListener {
 
-        public void onViewReady();
+        void onViewReady();
 
-        public void onItemSelected(JSONObject selectedItemData);
+        void onItemSelected(JSONObject selectedItemData);
 
-        public void onFilterRequested(String filter);
+        void onFilterRequested(String filter);
 
     }
 

@@ -17,7 +17,7 @@ import ph.com.gs3.formalistics.model.values.business.form.FormViewContentData;
  */
 public class FormJSONParserV1 {
 
-    public static final FormOld createFromJSON(JSONObject raw) throws JSONException, InvalidFormFieldException {
+    public static FormOld createFromJSON(JSONObject raw) throws JSONException, InvalidFormFieldException {
 
         FormOld form = new FormOld();
 
@@ -79,7 +79,7 @@ public class FormJSONParserV1 {
 
     }
 
-    public static final JSONArray createJSONArrayFromActions(List<DocumentAction> actions)
+    public static JSONArray createJSONArrayFromActions(List<DocumentAction> actions)
             throws JSONException {
 
         JSONArray jsonArrayActions = new JSONArray();

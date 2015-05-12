@@ -29,7 +29,7 @@ public class FCodeScannerField extends FField {
 
     private CodeType codeType;
 
-    public static enum CodeType {
+    public enum CodeType {
         BAR_CODE, QR_CODE
     }
 
@@ -125,9 +125,9 @@ public class FCodeScannerField extends FField {
         });
     }
 
-    public static interface CodeScannerListener {
+    public interface CodeScannerListener {
 
-        public void onScanCodeCommand(FCodeScannerField source);
+        void onScanCodeCommand(FCodeScannerField source);
 
     }
 

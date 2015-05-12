@@ -39,11 +39,8 @@ public class DateUtilities {
             return false;
         }
 
-        if (date.getDate() != today.getDate()) {
-            return false;
-        }
+        return date.getDate() == today.getDate();
 
-        return true;
     }
 
     public static Date parseToServerDate(String rawDate) throws ParseException {

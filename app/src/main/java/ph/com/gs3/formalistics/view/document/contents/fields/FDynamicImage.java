@@ -114,15 +114,15 @@ public class FDynamicImage extends FField {
         ivDynamicImage.setImageBitmap(bitmap);
     }
 
-    public static interface DynamicImageFieldActionListener {
+    public interface DynamicImageFieldActionListener {
 
-        public void onBrowseForImageCommand(FDynamicImage source);
+        void onBrowseForImageCommand(FDynamicImage source);
 
-        public void onTakeNewImageCommand(FDynamicImage source);
+        void onTakeNewImageCommand(FDynamicImage source);
 
-        public Bitmap onFindImageOnLocalStorageCommand(FDynamicImage source);
+        Bitmap onFindImageOnLocalStorageCommand(FDynamicImage source);
 
-        public void onOpenImageCommand(FDynamicImage source);
+        void onOpenImageCommand(FDynamicImage source);
 
     }
 

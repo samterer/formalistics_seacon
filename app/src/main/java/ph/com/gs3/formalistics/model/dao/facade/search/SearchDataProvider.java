@@ -11,7 +11,7 @@ import ph.com.gs3.formalistics.model.values.business.document.DocumentSummary;
  */
 public interface SearchDataProvider {
 
-    public List<DocumentSummary> searchDocumentSummaries(
+    List<DocumentSummary> searchDocumentSummaries(
             EnumSet<DocumentSearchType> searchTypeSet, String searchFilter, int fromIndex, int fetchCount
     );
 

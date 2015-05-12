@@ -4,10 +4,10 @@ import ph.com.gs3.formalistics.model.values.business.document.DocumentSummary;
 
 public interface DocumentListItemActionListener {
 
-    public void onOpenDocumentActionsCommand(DocumentSummary source);
+    void onOpenDocumentActionsCommand(DocumentSummary source);
 
-    public void onToggleDocumentStarMarkCommand(DocumentSummary source);
+    void onToggleDocumentStarMarkCommand(DocumentSummary source);
 
-    public void onOpenDocumentCommentsCommand(DocumentSummary source);
+    void onOpenDocumentCommentsCommand(DocumentSummary source);
 
 }

@@ -11,15 +11,15 @@ import ph.com.gs3.formalistics.model.values.business.Comment;
  */
 public interface CommentsAPI {
 
-    public List<Comment> getFormDocumentsCommentUpdates(
+    List<Comment> getFormDocumentsCommentUpdates(
             int formWebId, int[] documentWebIdArray, String lastUpdateDate, int rangeFrom, int rangeTo) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
 
-    public Comment submitComment(Comment comment) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
+    Comment submitComment(Comment comment) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
 
-    public void deleteComment(int commentWebId) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
+    void deleteComment(int commentWebId) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
 
-    public List<Comment> getDeletedComments(String lastUpdateDate) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
+    List<Comment> getDeletedComments(String lastUpdateDate) throws HttpCommunicator.CommunicationException, APIResponse.InvalidResponseException, APIResponse.ServerErrorException;
 
-    public List<UnparseableObject> getUnparseableComments();
+    List<UnparseableObject> getUnparseableComments();
 
 }

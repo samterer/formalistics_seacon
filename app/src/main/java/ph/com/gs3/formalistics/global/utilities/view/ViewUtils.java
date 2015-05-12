@@ -13,7 +13,6 @@ public class ViewUtils {
         if (view != null) {
             if (view instanceof TextView) {
                 ((TextView) view).setTextColor(color);
-                return;
             } else if (view instanceof ViewGroup) {
                 ViewGroup viewGroup = (ViewGroup) view;
                 for (int i = 0; i < viewGroup.getChildCount(); i++) {

@@ -69,11 +69,11 @@ public class LoginWorkerFragment extends Fragment {
 
     }
 
-    public static interface LoginWorkerEventListener {
+    public interface LoginWorkerEventListener {
 
-        public void onLoginSuccess(User loggedInUser);
+        void onLoginSuccess(User loggedInUser);
 
-        public void onLoginFailed(UsersAPI.LoginException loginException);
+        void onLoginFailed(UsersAPI.LoginException loginException);
 
     }
 

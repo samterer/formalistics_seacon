@@ -163,11 +163,7 @@ public class ImageLoader {
 	private boolean imageViewReused( ImageViewHolder holder ) {
 
 		String tag = imageViews.get(holder.imageView);
-		if ( tag == null || !tag.equals(holder.url) ) {
-			return true;
-		}
-
-		return false;
+		return tag == null || !tag.equals(holder.url);
 
 	}
 

@@ -111,11 +111,11 @@ public class LoginViewFragment extends Fragment {
         return isViewReady;
     }
 
-    public static interface LoginViewActionListener {
+    public interface LoginViewActionListener {
 
-        public void onViewReady();
+        void onViewReady();
 
-        public void onLoginCommand(String server, String email, String password);
+        void onLoginCommand(String server, String email, String password);
 
     }
 
