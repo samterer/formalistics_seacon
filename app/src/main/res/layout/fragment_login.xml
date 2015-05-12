@@ -1,0 +1,82 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:background="@drawable/splashbg2"
+    tools:context="ph.com.gs3.formalistics.LoginActivity$PlaceholderFragment">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:src="@drawable/logo"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_text"
+            android:id="@+id/Login_tvMessage"/>
+
+        <EditText
+            android:id="@+id/Login_etServer"
+            style="@style/FEditText"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_server"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@drawable/server"/>
+
+        <EditText
+            android:id="@+id/Login_etEmail"
+            style="@style/FEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@drawable/user_login"/>
+
+        <EditText
+            android:id="@+id/Login_etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            style="@style/FEditText"
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@drawable/password"/>
+
+        <Button
+            android:id="@+id/Login_bLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_login"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/button_orange"/>
+    </LinearLayout>
+
+</RelativeLayout>

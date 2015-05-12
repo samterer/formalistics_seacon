@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_login">Log in</string>
+    <string name="action_view_profile">My Profile</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_create_document">Create New ...</string>
+    <string name="action_compose_document">Compose Document</string>
+    <string name="action_search">Search</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_submit_action">Submit</string>
+    <string name="action_open_calendar">Calendar</string>
+    <string name="action_scan">Scan</string>
+    <string name="action_change">Change</string>
+    <string name="action_browse_image">Browse...</string>
+    <string name="action_take_image">Take New...</string>
+    <string name="action_goto_outgoing_action">You already issued an action to this document and it will be sent to the server later when the application connects. Click here to see your action.</string>
+
+</resources>

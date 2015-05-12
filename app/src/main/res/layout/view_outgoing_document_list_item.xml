@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:descendantFocusability="blocksDescendants" >
+
+    <ImageView
+        android:id="@+id/DocumentItem_ivAvatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/cdesc_dynamic_image"
+        android:src="@drawable/icons_user" />
+
+    <TextView
+        android:id="@+id/DocumentItem_tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/DocumentItem_ivAvatar"
+        android:text="@string/placeholder_form_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/DocumentItem_tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/placeholder_date"
+        android:textSize="11dp" />
+
+    <TextView
+        android:id="@+id/DocumentItem_tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/DocumentItem_tvHeader"
+        android:layout_below="@+id/DocumentItem_tvHeader"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="11dp"
+        android:text="@string/placeholder_text" />
+
+</RelativeLayout>

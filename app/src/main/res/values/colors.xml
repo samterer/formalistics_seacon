@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color  name="ee9803">#ee9803</color>
+    <color  name="e6e4e4">#e6e4e4</color>
+    <color name="a3a0a0">#a3a0a0</color>
+    <color name="form_head_bg">#1c3f4b</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="ff9000">#ff9000</color>
+
+    <!-- font color -->
+    <color name="theme_font_color">#36A9E1</color>
+    <color name="green_font_color">#99cc00</color>
+    <color name="light_gray_color">#cccccc</color>
+
+    <color name="table_row_even">#F2F2F2</color>
+    <color name="table_row_odd">#E8E8E8</color>
+    <!-- font color -->
+
+
+    <!-- bg color -->
+    <color name="theme_bg">#36A9E1</color>
+    <color name="theme_secondary_color">#0099cc</color>
+    <color name="green_bg">#99cc01</color>
+    <color name="green_border">#8bb900</color>
+    <color name="starred_bg">#f2ca27</color>
+    <color name="clouds">#f3f3f3</color>
+    <color name="cloud_border_color">#dadada</color>
+    <color name="wetasphalt">#34495e</color>
+    <color name="midnightblue">#2c3e50</color>
+    <!-- bg color -->
+
+</resources>

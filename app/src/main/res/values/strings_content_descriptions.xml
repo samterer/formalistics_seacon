@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="cdesc_static_image">Static Image</string>
+    <string name="cdesc_dynamic_image">Dynamic Image</string>
+
+</resources>

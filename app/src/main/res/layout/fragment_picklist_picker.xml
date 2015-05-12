@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <EditText
+        android:id="@+id/Picklist_etFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/hint_filter" >
+    </EditText>
+
+    <ListView
+        android:id="@+id/Picklist_lvPicklistItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Picklist_etFilter"
+        android:divider="@color/theme_secondary_color"
+        android:dividerHeight="1px" >
+    </ListView>
+
+</RelativeLayout>

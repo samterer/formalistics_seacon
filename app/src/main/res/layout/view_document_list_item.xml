@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:descendantFocusability="blocksDescendants">
+
+    <ImageView
+        android:id="@+id/DocumentItem_ivAvatar"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/cdesc_dynamic_image"
+        android:src="@drawable/icons_user"/>
+
+    <TextView
+        android:id="@+id/DocumentItem_tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/DocumentItem_ivAvatar"
+        android:text="@string/placeholder_user_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:textSize="12dp"/>
+
+    <TextView
+        android:id="@+id/DocumentItem_tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/placeholder_no_date"
+        android:textSize="11dp"/>
+
+    <TextView
+        android:id="@+id/DocumentItem_tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/DocumentItem_tvHeader"
+        android:layout_below="@+id/DocumentItem_tvHeader"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textSize="11dp"
+        android:text="@string/placeholder_text"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/DocumentItem_tvBody"
+        android:layout_below="@+id/DocumentItem_tvBody">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/DocumentItem_tvFooter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_form_name"
+                android:textStyle="bold"
+                android:textSize="12dp"/>
+
+            <TextView
+                android:id="@+id/DocumentItem_tvSubFooter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_document_status"
+                android:textSize="11dp"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/DocumentItem_ibActions"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/DocumentItem_ibStarMark"
+            android:focusable="false"
+            android:src="@drawable/checked_h_inbox"
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/DocumentItem_ibStarMark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/DocumentItem_ibComments"
+            android:focusable="false"
+            android:background="@null"
+            android:src="@drawable/starred_o_inbox"/>
+
+        <ImageButton
+            android:id="@+id/DocumentItem_ibComments"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:src="@drawable/comments_inbox"
+            android:background="@null"/>
+
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="8dp"
+            android:text="@string/placeholder_number"
+            android:id="@+id/DocumentItem_tvCommentCount"
+            android:layout_alignTop="@+id/DocumentItem_ibComments"
+            android:layout_alignRight="@+id/DocumentItem_ibComments"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

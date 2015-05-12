@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Formalistics</string>
+    <string name="title_activity_user_profile">User Profile</string>
+    <string name="title_activity_document_list">Inbox</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="title_activity_test_form">TestFormActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_document">DocumentActivity</string>
+    <string name="title_activity_comments">Comments</string>
+    <string name="title_activity_picklist_picker">Pick List</string>
+    <string name="title_activity_image_viewer">Image</string>
+    <string name="title_activity_date_time_picker">Date Time Picker</string>
+    <string name="propmt_default_status">Place a barcode inside the viewfinder rectangle to scan it. </string>
+
+    <string name="prompt_no_delete">You cannot delete this comment.</string>
+    <string name="title_activity_tester">Tester</string>
+    <string name="title_activity_search_options">Search Options</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
