@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "ph.com.gs3.formalistics"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
+    }
+}
+
+dependencies {
+//    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile project(':ImageManager')
+    // ==================================================================
+    // ZXING
+    // Supports Android 4.0.3 and later (API level 15)
+    compile 'com.embarkmobile:zxing-android-minimal:2.0.0@aar'
+    // Supports Android 2.1 and later (API level 7), but not optimal for later Android versions.
+    // If you only plan on supporting Android 4.0.3 and up, you don't need to include this.
+    compile 'com.embarkmobile:zxing-android-legacy:2.0.0@aar'
+    // Convenience library to launch the scanning and encoding Activities.
+    // It automatically picks the best scanning library from the above two, depending on the
+    // Android version and what is available.
+    compile 'com.embarkmobile:zxing-android-integration:2.0.0@aar'
+    // Version 3.0.x of zxing core contains some code that is not compatible on Android 2.2 and earlier.
+    // This mostly affects encoding, but you should test if you plan to support these versions.
+    // Older versions e.g. 2.2 may also work if you need support for older Android versions.
+    compile 'com.google.zxing:core:3.0.1'
+    compile files('libs/js.jar')
+
+    compile "org.apache.httpcomponents:httpmime:4.2.3"
+    compile "org.apache.httpcomponents:httpclient:4.2.3"
+//    compile "org.apache.httpcomponents:httpcore:4.2.3"
+
+//    compile files('libs/httpcore-4.4.1.jar')
+//    compile files('libs/httpclient-4.4.1.jar')
+//    compile files('libs/httpmime-4.4.1.jar')
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_server">server (http://)</string>
+    <string name="hint_email">email address</string>
+    <string name="hint_password">your password</string>
+    <string name="hint_filter">Filter</string>
+    <string name="hint_search">Search</string>
+    <string name="hint_write_comment">Write a comment ...</string>
+
+</resources>

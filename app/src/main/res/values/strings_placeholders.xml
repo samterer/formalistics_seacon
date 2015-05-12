@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="placeholder_text">[Some text here]</string>
+    <string name="placeholder_label">[Label]</string>
+    <string name="placeholder_number">[13]</string>
+    <string name="placeholder_date">[Jun 13, 2011]</string>
+    <string name="placeholder_form_name">[Form]</string>
+    <string name="placeholder_user_name">[User Name]</string>
+    <string name="placeholder_document_status">[Status]</string>
+    <string name="placeholder_issued_action">[Issued Action]</string>
+
+    <string name="placeholder_no_date">[No Date Available]</string>
+
+    <string-array name="placeholder_multiple_items">
+        <item>Array Item One</item>
+        <item>Array Item Two</item>
+        <item>Array Item Three</item>
+    </string-array>
+
+</resources>

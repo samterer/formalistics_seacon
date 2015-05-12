@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/FField"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/FField_tvLabel"
+        style="@style/FTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_label" />
+
+    <Spinner
+        android:id="@+id/FField_spDropdownField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:saveEnabled="false"
+        android:entries="@array/placeholder_multiple_items" />
+
+</LinearLayout>

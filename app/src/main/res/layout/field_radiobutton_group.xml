@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/FField"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/placeholder_label"
+        style="@style/FTextView"
+        android:id="@+id/FField_tvLabel"/>
+
+    <RadioGroup
+        android:id="@+id/FField_rgRadioButtonContainer"
+        android:layout_width="match_parent"
+        android:saveEnabled="false"
+        android:layout_height="wrap_content">
+    </RadioGroup>
+
+</LinearLayout>

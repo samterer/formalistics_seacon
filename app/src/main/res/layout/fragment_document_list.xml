@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="ph.com.gs3.formalistics.CategorySelectionActivity$PlaceholderFragment">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/DocumentList_srlSwipeLayout"
+        android:layout_above="@+id/DocumentList_llFooterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/DocumentList_lvSelectableItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/DocumentList_llCenterMessageContainer"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="32dp"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/DocumentList_pbCenterMessageProgressBar"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:id="@+id/DocumentList_tvCenterMessageText"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/DocumentList_llFooterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/DocumentList_llFooterMessageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#b3b3b3"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cdesc_static_image"
+                android:src="@drawable/icons_notconnected"/>
+
+            <TextView
+                android:id="@+id/DocumentList_tvFooterMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="You&apos;re not connected to server."
+                android:textColor="#ffffff"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_margin="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/DocumentList_pbRetryingConnection"
+                android:indeterminate="false"/>
+
+            <Button
+                android:id="@+id/DocumentList_bRetry"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/secondary_theme_button"
+                android:paddingBottom="0dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="0dp"
+                android:text="Click to Retry"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/FButtonOrange"
+            android:visibility="gone"
+            android:text="Filter By QR Code"
+            android:id="@+id/DocumentList_bFilterByQRCode"
+            android:layout_gravity="center_vertical"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+</RelativeLayout>

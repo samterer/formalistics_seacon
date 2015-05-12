@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/FField"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/FField_tvLabel"
+        style="@style/FTextView"
+        android:text="@string/placeholder_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/FField_etDateText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="false"
+            style="@style/FEditText"
+            android:saveEnabled="false"
+            android:focusableInTouchMode="false"
+            android:inputType="text">
+        </EditText>
+
+        <Button
+            android:id="@+id/FField_bSelectDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_button"
+            android:text="@string/action_open_calendar"
+            android:visibility="gone"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>

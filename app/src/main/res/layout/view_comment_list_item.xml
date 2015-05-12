@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customfont="http://schemas.android.com/apk/res/ph.com.gs3.formalistics"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="4dp" >
+
+    <RelativeLayout        
+        android:id="@+id/Comment_rlCommentContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/wrap_container"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:tag="0dp" >
+
+        <ph.com.gs3.formalistics.view.customviews.CircleImageView
+            android:id="@+id/Comment_ivAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:bottomLeftRadius="0dp"
+            android:contentDescription="icon avatar"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icons_user" />
+
+        <ph.com.gs3.formalistics.view.customviews.FontTextView
+            android:id="@+id/Comment_tvText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/Comment_tvAuthorName"
+            android:layout_below="@+id/Comment_tvAuthorName"
+            android:paddingLeft="5dp"
+            android:paddingRight="0dp"
+            android:text="Some comment message here if posible..."
+            customfont:typeface="opensansregular.ttf" />
+
+        <ph.com.gs3.formalistics.view.customviews.FontTextView
+            android:id="@+id/Comment_tvDateCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/Comment_tvText"
+            android:text="yesterday"
+            android:textSize="11sp"
+            customfont:typeface="opensansregular.ttf" />
+
+        <ph.com.gs3.formalistics.view.customviews.FontTextView
+            android:id="@+id/Comment_tvAuthorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/Comment_ivAvatar"
+            android:paddingLeft="5dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:text="Angel Locsin"
+            android:textSize="@dimen/largeSizeText"
+            customfont:typeface="opensansregular.ttf" />
+    </RelativeLayout>
+
+</RelativeLayout>

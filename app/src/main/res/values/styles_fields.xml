@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="FField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/element_break</item>
+    </style>
+
+    <style name="FTextView" parent="@android:style/TextAppearance">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/form_head_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FEditText">
+        <item name="android:background">@drawable/shape_grey_bordered_rectangle</item>
+        <item name="android:padding">@dimen/activity_vertical_margin</item>
+    </style>
+
+    <style name="FSelectableItem">
+        <item name="android:background">@drawable/selector_selectable_item_background</item>
+        <item name="android:textColor">@drawable/selector_selectable_item_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FRadioButton" parent="@style/FSelectableItem">
+        <!--<item name="android:button">@drawable/selector_radiobutton_button</item>-->
+        <item name="android:drawableLeft">@drawable/selector_radiobutton_button</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <style name="FCheckBox" parent="@style/FSelectableItem">
+        <!--<item name="android:button">@drawable/selector_checkbox_button</item>-->
+        <item name="android:drawableLeft">@drawable/selector_checkbox_button</item>
+        <item name="android:button">@null</item>
+    </style>
+
+</resources>
