@@ -30,16 +30,7 @@ public class DateUtilities {
     public static boolean isDateToday(Date date) {
 
         Date today = new Date();
-
-        if (date.getYear() != today.getYear()) {
-            return false;
-        }
-
-        if (date.getMonth() != today.getMonth()) {
-            return false;
-        }
-
-        return date.getDate() == today.getDate();
+        return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getYear() == today.getYear();
 
     }
 
@@ -69,10 +60,4 @@ public class DateUtilities {
         return TIMESTAMP_FORMAT.format(currentDate);
 
     }
-
-    public static String getServerFormattedDate(String rawDate) throws ParseException {
-        Date date = parseToServerDate(rawDate);
-        return SERVER_DATE_TIME_FORMAT.format(date);
-    }
-
 }

@@ -853,8 +853,8 @@ public class DocumentListActivity extends Activity implements
                 documentSearchTypes, currentFilter, 0, SEARCH_ITEM_COUNT
         );
 
-        documentListViewFragment.setViewDocuments(documentSummaries);
-
+        documentListViewFragment.hideCenterMessage();
+        
         if (navigationDrawerItem != null) {
             setTitle(navigationDrawerItem.getLabel());
             getActionBar().setIcon(navigationDrawerItem.getImageResourceId());
@@ -871,6 +871,8 @@ public class DocumentListActivity extends Activity implements
         if (documentListViewFragment.getViewItemCount() == 0 && !documentListViewFragment.isCenterMessageShowing()) {
             documentListViewFragment.showCenterMessage("No documents to display", false);
         }
+
+        documentListViewFragment.setViewDocuments(documentSummaries);
 
     }
 

@@ -13,8 +13,6 @@ import ph.com.gs3.formalistics.model.values.business.form.WorkflowObject;
 
 public class FormsDataWriterFacade {
 
-    public static final String TAG = FormsDataWriterFacade.class.getSimpleName();
-
     protected final FormTableReferenceDAO formTableReferenceDAO;
     protected final DynamicFormFieldsDAO dynamicFormFieldsDAO;
     protected final FormsDAO formsDAO;

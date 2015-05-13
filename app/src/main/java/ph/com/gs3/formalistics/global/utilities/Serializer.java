@@ -38,10 +38,8 @@ public class Serializer {
 				serializedValuesBuilder.append(value.toString()).append(divider);
 			}
 
-			String serializedValues = serializedValuesBuilder.substring(0,
+			return serializedValuesBuilder.substring(0,
 			        serializedValuesBuilder.length() - divider.length());
-
-			return serializedValues;
 		} else {
 			return "";
 		}

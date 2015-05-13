@@ -1,5 +1,6 @@
-package ph.com.gs3.formalistics.model.api.seacon_impl;
+package ph.com.gs3.formalistics.model.api.custom_impl;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import ph.com.gs3.formalistics.model.api.HttpCommunicator;
 import ph.com.gs3.formalistics.model.api.default_impl.DocumentsAPIDefaultImpl;
+import ph.com.gs3.formalistics.model.dao.facade.search.SeaconSearchDataProvider;
 import ph.com.gs3.formalistics.model.values.application.APIResponse;
 import ph.com.gs3.formalistics.model.values.business.User;
 
@@ -48,6 +50,18 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
             rangeJSON.put("number_of_records", fetchCount);
 
             searchParameters.put("range", rangeJSON);
+
+            if (formWebId == SeaconSearchDataProvider.EIR_FORM_WEB_ID) {
+                // only fetch Incoming, Return, and Outgoing EIR documents
+                JSONObject filterJSON = new JSONObject();
+                JSONArray statusList = new JSONArray();
+                statusList.put("Incoming");
+                statusList.put("Return");
+                statusList.put("Outgoing");
+
+                filterJSON.put("ContainerStatus", statusList);
+                searchParameters.put("extra_conditions_by_fields", filterJSON);
+            }
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block

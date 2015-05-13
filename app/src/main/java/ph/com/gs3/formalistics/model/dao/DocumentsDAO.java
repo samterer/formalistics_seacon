@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +40,7 @@ public class DocumentsDAO extends DataAccessObject {
     }
 
     //<editor-fold desc=" Insert & Update Methods">
-    public Document saveDocument(Document document) throws DataAccessObjectException {
+    public Document saveDocument(Document document) {
 
         // Throws JSONException
         ContentValues cv = createCVFromDocument(document);
@@ -60,79 +59,6 @@ public class DocumentsDAO extends DataAccessObject {
         return null;
     }
 
-    public void saveMultipleDocuments(List<Document> documents) {
-
-        if (documents == null || documents.size() <= 0) {
-            return;
-        }
-
-        String query = "INSERT OR REPLACE INTO " + DocumentsTable.NAME + " ";
-
-        query += "(";
-        query += DocumentsTable.COL_WEB_ID + ", ";
-        query += DocumentsTable.COL_TRACKING_NUMBER + ", ";
-        query += DocumentsTable.COL_FORM_ID + ", ";
-        query += DocumentsTable.COL_WORKFLOW_NODE_ID + ", ";
-        query += DocumentsTable.COL_WORKFLOW_ID + ", ";
-        query += DocumentsTable.COL_STATUS + ", ";
-        query += DocumentsTable.COL_PROCESSOR + ", ";
-        query += DocumentsTable.COL_PROCESSOR_TYPE + ", ";
-        query += DocumentsTable.COL_PROCESSOR_DEPARTMENT_LEVEL + ", ";
-        query += DocumentsTable.COL_AUTHOR + ", ";
-        query += DocumentsTable.COL_DATE_CREATED + ", ";
-        query += DocumentsTable.COL_DATE_UPDATED + ", ";
-        query += DocumentsTable.COL_FIELD_VALUES + ", ";
-        query += DocumentsTable.COL_COMMENTS_LAST_UPDATE_DATE + ") VALUES " +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try {
-            open();
-            database.beginTransaction();
-            SQLiteStatement insertStatement = database.compileStatement(query);
-
-            for (Document document : documents) {
-                insertStatement.bindDouble(1, document.getWebId());
-                insertStatement.bindString(2, document.getTrackingNumber());
-                insertStatement.bindDouble(3, document.getFormId());
-                insertStatement.bindString(4, document.getWorkflowNodeId());
-                insertStatement.bindDouble(5, document.getWorkflowId());
-                insertStatement.bindString(6, document.getStatus());
-                insertStatement.bindString(7, document.getProcessor());
-                insertStatement.bindDouble(8, document.getProcessorType());
-                insertStatement.bindDouble(9, document.getProcessorDepartmentLevel());
-                insertStatement.bindDouble(10, document.getAuthorId());
-                insertStatement.bindString(11, document.getDateCreated());
-                insertStatement.bindString(12, document.getDateUpdated());
-                insertStatement.bindString(13, document.getFieldValuesJSONString());
-                insertStatement.bindString(14, document.getCommentsLastUpdateDate());
-                insertStatement.execute();
-            }
-
-            database.setTransactionSuccessful();
-        } finally {
-            database.endTransaction();
-            close();
-        }
-
-//        for (int i = 0; i < documents.size(); i++) {
-//            query += generateMultiInsertRowClauseFromDocument(documents.get(i)) + ", ";
-//        }
-//
-//        query = query.substring(0, query.length() - 2);
-//
-//        FLLogger.d(TAG, "Generated multi insert query: " + query);
-//
-//        FLPersistentLogger persistentLogger = new FLPersistentLogger(context);
-//        persistentLogger.log("Multi_insert_queries", query);
-//
-//        try {
-//            open();
-//            database.execSQL(query);
-//        } finally {
-//            close();
-//        }
-    }
-
     /**
      * Updates a document in the database using the document argument's web id and form id.
      *
@@ -141,7 +67,7 @@ public class DocumentsDAO extends DataAccessObject {
      * @return
      * @throws DataAccessObjectException
      */
-    public Document updateDocument(Document document, int userId) throws DataAccessObjectException {
+    public Document updateDocument(Document document, int userId) {
 
         // Throws DataAccessObjectException
         ContentValues cv = createCVFromDocument(document);

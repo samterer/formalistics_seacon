@@ -15,8 +15,6 @@ import ph.com.gs3.formalistics.model.values.business.User;
 import ph.com.gs3.formalistics.service.FileDownloader;
 import ph.com.gs3.formalistics.service.FileDownloader.DownloadException;
 import ph.com.gs3.formalistics.service.FileUploader;
-import ph.com.gs3.formalistics.service.synchronizers.exceptions.SynchronizationFailedException;
-import ph.com.gs3.formalistics.service.synchronizers.exceptions.SynchronizationPrematureException;
 
 /**
  * Created by Ervinne on 4/22/2015.
@@ -43,7 +41,7 @@ public class FilesSynchronizer extends AbstractSynchronizer {
         fileDownloader = new FileDownloader(context);
     }
 
-    public void synchronize() throws SynchronizationFailedException, SynchronizationPrematureException {
+    public void synchronize() {
 
         uploadOutgoingFiles();
         downloadIncomingFiles();

@@ -11,6 +11,7 @@ import ph.com.gs3.formalistics.R;
 import ph.com.gs3.formalistics.global.constants.ApplicationMode;
 import ph.com.gs3.formalistics.global.constants.DocumentSearchType;
 import ph.com.gs3.formalistics.model.dao.FormsDAO;
+import ph.com.gs3.formalistics.model.dao.facade.search.SeaconSearchDataProvider;
 import ph.com.gs3.formalistics.model.values.application.NavigationDrawerItem;
 import ph.com.gs3.formalistics.model.values.business.User;
 
@@ -26,15 +27,6 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
     public static final NavigationDrawerItem viewOutgoingEIRDocuments = new NavigationDrawerItem(103, R.drawable.inbox, "Outgoing EIR");
 
     public static final NavigationDrawerItem viewJobOrderDocuments = new NavigationDrawerItem(104, R.drawable.inbox, "Job Orders");
-
-    public static final int GATER_POSITION_ID = 4;
-    public static final int INSPECTOR_POSITION_ID = 5;
-    public static final int CRANE_OPERATOR_ID = 7;
-
-    public static final int CONTAINER_INFORMATION_FORM_WEB_ID = 1;
-    public static final int EIR_FORM_WEB_ID = 2;
-    public static final int JOB_ORDER_FORM_WEB_ID = 12;
-    public static final int SETUP_EQUIPMENT_FORM_CRANE_OPERATORS_FORM_WEB_ID = 46;
 
     private final Context context;
     private final User activeUser;
@@ -65,13 +57,14 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
     public List<NavigationDrawerItem> getNavigationDrawerItems() {
         List<NavigationDrawerItem> navItems = new ArrayList<>();
 
-        if (activeUser.getPositionId() == GATER_POSITION_ID || activeUser.getPositionId() == CRANE_OPERATOR_ID) {
+        if (activeUser.getPositionId() == SeaconSearchDataProvider.GATER_POSITION_ID ||
+                activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID) {
             navItems.add(viewIncomingEIRDocuments);
             navItems.add(viewReturnEIRDocuments);
             navItems.add(viewOutgoingEIRDocuments);
         }
 
-        if (activeUser.getPositionId() == INSPECTOR_POSITION_ID) {
+        if (activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID) {
             navItems.add(viewJobOrderDocuments);
         }
 
@@ -86,7 +79,6 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
         }
 
 //        navItems.add(DefaultDocumentListNavigationPresenter.resetDataCommandNavItem);
-
 //        navItems.add(new NavigationDrawerItem(5, R.drawable.archive, "Archive"));
         navItems.add(DefaultDocumentListNavigationPresenter.navigateToUserViewCommandNavItem);
         navItems.add(DefaultDocumentListNavigationPresenter.logoutNavCommandItem);

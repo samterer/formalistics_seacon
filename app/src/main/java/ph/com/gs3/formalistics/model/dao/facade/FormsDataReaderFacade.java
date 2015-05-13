@@ -16,14 +16,10 @@ import ph.com.gs3.formalistics.model.values.business.form.WorkflowObject;
  */
 public class FormsDataReaderFacade {
 
-    private final Context context;
-
     private final FormsDAO formsDAO;
     private final WorkflowObjectsDAO workflowObjectsDAO;
 
     public FormsDataReaderFacade(Context context) {
-        this.context = context;
-
         formsDAO = new FormsDAO(context);
         workflowObjectsDAO = new WorkflowObjectsDAO(context);
     }

@@ -147,22 +147,6 @@ public abstract class DataAccessObject {
 
     }
 
-    public static String escapeValue(Object rawValue) {
-
-        if (rawValue == null) {
-            return "null";
-        } else if (isNumeric(rawValue)) {
-            return rawValue.toString();
-        } else {
-            return "'" + rawValue.toString() + "'";
-        }
-
-    }
-
-    public static boolean isNumeric(Object object) {
-        return object.toString().matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
-    }
-
     public static class DataAccessObjectException extends Exception {
         public DataAccessObjectException(String message) {
             super(message);

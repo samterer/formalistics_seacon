@@ -67,8 +67,7 @@ public class DocumentDynamicViewContentsManager implements DocumentViewContentsM
 
     @Override
     public View getCreatedDocumentViewContentsContainer() {
-        DefaultDocumentFieldsContainer defaultDocumentFieldsContainer = new DefaultDocumentFieldsContainer(context, this);
-        return defaultDocumentFieldsContainer;
+        return new DefaultDocumentFieldsContainer(context, this);
     }
 
     @Override

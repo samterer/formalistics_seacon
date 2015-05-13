@@ -3,6 +3,7 @@ package ph.com.gs3.formalistics.presenter.navigation;
 import android.content.Context;
 
 import ph.com.gs3.formalistics.FormalisticsApplication;
+import ph.com.gs3.formalistics.model.dao.facade.search.SeaconSearchDataProvider;
 import ph.com.gs3.formalistics.model.values.application.VersionSettings;
 import ph.com.gs3.formalistics.model.values.business.User;
 
@@ -19,9 +20,9 @@ public class DocumentListNavigationPresenterFactory {
         VersionSettings versionSettings = FormalisticsApplication.versionSettings;
 
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON && (
-                activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.GATER_POSITION_ID ||
-                        activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.INSPECTOR_POSITION_ID ||
-                        activeUser.getPositionId() == SeaconDocumentListNavigationPresenter.CRANE_OPERATOR_ID)) {
+                activeUser.getPositionId() == SeaconSearchDataProvider.GATER_POSITION_ID ||
+                        activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID ||
+                        activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID)) {
             return new SeaconDocumentListNavigationPresenter(
                     context, activeUser, documentListNavigationPresenterEventsListener
             );

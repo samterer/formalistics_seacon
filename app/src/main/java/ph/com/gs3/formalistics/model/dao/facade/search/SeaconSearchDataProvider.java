@@ -1,6 +1,7 @@
 package ph.com.gs3.formalistics.model.dao.facade.search;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -121,12 +122,14 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
 
         } catch (DataAccessObject.DataAccessObjectException | JSONException e) {
             e.printStackTrace();
+        } catch (SQLiteDatabaseLockedException e) {
+            FLLogger.d(TAG, "Skipped search as the database is still locked");
         }
 
         return null;
     }
 
-    private void lazyLoadForms() throws DataAccessObject.DataAccessObjectException {
+    private void lazyLoadForms() throws DataAccessObject.DataAccessObjectException, SQLiteDatabaseLockedException {
         EIRForm = formsDAO.getForm(EIR_FORM_WEB_ID, activeUser.getCompany().getId());
         jobOrderForm = formsDAO.getForm(JOB_ORDER_FORM_WEB_ID, activeUser.getCompany().getId());
     }

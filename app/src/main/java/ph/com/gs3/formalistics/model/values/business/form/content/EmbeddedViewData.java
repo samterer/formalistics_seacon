@@ -97,8 +97,8 @@ public class EmbeddedViewData extends FormViewContentData implements Serializabl
 
     public static class EmbeddedViewDataSendingItem {
 
-        private String destinationField;
-        private String sourceField;
+        private final String destinationField;
+        private final String sourceField;
 
         public EmbeddedViewDataSendingItem(String sourceField, String destinationField) {
             this.sourceField = sourceField;

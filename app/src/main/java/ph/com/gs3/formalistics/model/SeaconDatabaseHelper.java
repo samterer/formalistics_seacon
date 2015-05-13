@@ -102,7 +102,6 @@ public class SeaconDatabaseHelper extends SQLiteOpenHelper {
         }
 
         File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
-        FLLogger.d(TAG, dbFile + " " + dbFile.exists());
         return dbFile.exists();
     }
 

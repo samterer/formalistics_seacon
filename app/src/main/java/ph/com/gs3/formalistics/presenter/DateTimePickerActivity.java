@@ -16,124 +16,119 @@ import ph.com.gs3.formalistics.presenter.fragment.view.DateTimePickerViewFragmen
 
 public class DateTimePickerActivity extends Activity implements DateTimePickerViewActionListener {
 
-	public static final String TAG = DateTimePickerActivity.class.getSimpleName();
+    //<editor-fold desc="Extras">
+    public static final String EXTRA_DATE_TIME_PICKER_FIELD_ID = "date_time_picker_field_id";
+    public static final String EXTRA_DATE_TIME_PICKER_TYPE = "date_time_picker_type";
+    public static final String EXTRA_PRE_SELECTED_DATE = "pre_selected_date";
+    public static final String EXTRA_RESULT_SELECTED_DATE = "result_selected_date";
+    //</editor-fold>
 
-	// ========================================================================
-	// {{ Extras
+    private DateTimePickerViewFragment dateTimePickerViewFragment;
 
-	public static final String EXTRA_DATE_TIME_PICKER_FIELD_ID = "date_time_picker_field_id";
-	public static final String EXTRA_DATE_TIME_PICKER_TYPE = "date_time_picker_type";
-	public static final String EXTRA_PRE_SELECTED_DATE = "pre_selected_date";
-	public static final String EXTRA_RESULT_SELECTED_DATE = "result_selected_date";
+    private DateTimePickerType dateTimePickerType;
+    private Date dateSelected;
 
-	// }}
+    private String fieldId;
 
-	private DateTimePickerViewFragment dateTimePickerViewFragment;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_date_time_picker);
 
-	private DateTimePickerType dateTimePickerType;
-	private Date dateSelected;
+        initializeFieldsFromExtras();
 
-	private String fieldId;
+        if (savedInstanceState == null) {
+            dateTimePickerViewFragment = DateTimePickerViewFragment.createInstance(
+                    dateTimePickerType, dateSelected);
+            getFragmentManager().beginTransaction().add(R.id.container, dateTimePickerViewFragment)
+                    .commit();
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_date_time_picker);
+            initializeViewData();
 
-		initializeFieldsFromExtras();
+        }
 
-		if (savedInstanceState == null) {
-			dateTimePickerViewFragment = DateTimePickerViewFragment.createInstance(
-			        dateTimePickerType, dateSelected);
-			getFragmentManager().beginTransaction().add(R.id.container, dateTimePickerViewFragment)
-			        .commit();
+    }
 
-			initializeViewData();
+    private void initializeViewData() {
 
-		}
+        dateTimePickerViewFragment.setSelectedDate(dateSelected);
 
-	}
+    }
 
-	private void initializeViewData() {
+    private void initializeFieldsFromExtras() {
 
-		dateTimePickerViewFragment.setSelectedDate(dateSelected);
+        Bundle extras = getIntent().getExtras();
 
-	}
+        fieldId = extras.getString(EXTRA_DATE_TIME_PICKER_FIELD_ID);
 
-	private void initializeFieldsFromExtras() {
+        dateTimePickerType = (DateTimePickerType) extras
+                .getSerializable(EXTRA_DATE_TIME_PICKER_TYPE);
+        String rawDateString = extras.getString(EXTRA_PRE_SELECTED_DATE);
 
-		Bundle extras = getIntent().getExtras();
+        if (rawDateString != null && !rawDateString.isEmpty()) {
+            try {
 
-		fieldId = extras.getString(EXTRA_DATE_TIME_PICKER_FIELD_ID);
+                switch (dateTimePickerType) {
+                    case DATE_ONLY: {
+                        dateSelected = DateUtilities.DEFAULT_DISPLAY_DATE_ONLY_FORMAT
+                                .parse(rawDateString);
+                    }
+                    break;
+                    case TIME_ONLY: {
+                        dateSelected = DateUtilities.DEFAULT_DISPLAY_TIME_ONLY_FORMAT
+                                .parse(rawDateString);
+                    }
+                    break;
+                    case DATE_TIME: {
+                        dateSelected = DateUtilities.DEFAULT_DISPLAY_DATE_TIME_FORMAT
+                                .parse(rawDateString);
+                    }
+                    break;
+                }
 
-		dateTimePickerType = (DateTimePickerType) extras
-		        .getSerializable(EXTRA_DATE_TIME_PICKER_TYPE);
-		String rawDateString = extras.getString(EXTRA_PRE_SELECTED_DATE);
+                // dateSelected = DateParser.parseToServerDate(rawDateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-		if (rawDateString != null && !rawDateString.isEmpty()) {
-			try {
+    @Override
+    public void onDateTimeSelected(Date dateSelected) {
+        this.dateSelected = dateSelected;
+        finishWithResult();
+    }
 
-				switch (dateTimePickerType) {
-					case DATE_ONLY: {
-						dateSelected = DateUtilities.DEFAULT_DISPLAY_DATE_ONLY_FORMAT
-						        .parse(rawDateString);
-					}
-						break;
-					case TIME_ONLY: {
-						dateSelected = DateUtilities.DEFAULT_DISPLAY_TIME_ONLY_FORMAT
-						        .parse(rawDateString);
-					}
-						break;
-					case DATE_TIME: {
-						dateSelected = DateUtilities.DEFAULT_DISPLAY_DATE_TIME_FORMAT
-						        .parse(rawDateString);
-					}
-						break;
-				}
+    @Override
+    public void onCancel() {
+        finishWithResult();
+    }
 
-				// dateSelected = DateParser.parseToServerDate(rawDateString);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    private void finishWithResult() {
 
-	@Override
-	public void onDateTimeSelected(Date dateSelected) {
-		this.dateSelected = dateSelected;
-		finishWithResult();
-	}
+        int resultCode = ActivityRequestCodes.PICK_DATE;
 
-	@Override
-	public void onCancel() {
-		finishWithResult();
-	}
+        switch (dateTimePickerType) {
+            case DATE_ONLY: {
+                resultCode = ActivityRequestCodes.PICK_DATE;
+            }
+            break;
+            case TIME_ONLY: {
+                resultCode = ActivityRequestCodes.PICK_TIME;
+            }
+            break;
+            case DATE_TIME: {
+                resultCode = ActivityRequestCodes.PICK_DATE_TIME;
+            }
+            break;
+        }
 
-	private void finishWithResult() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_DATE_TIME_PICKER_FIELD_ID, fieldId);
+        resultIntent.putExtra(EXTRA_RESULT_SELECTED_DATE, dateSelected);
+        setResult(resultCode, resultIntent);
+        finish();
 
-		int resultCode = ActivityRequestCodes.PICK_DATE;
-
-		switch (dateTimePickerType) {
-			case DATE_ONLY: {
-				resultCode = ActivityRequestCodes.PICK_DATE;
-			}
-				break;
-			case TIME_ONLY: {
-				resultCode = ActivityRequestCodes.PICK_TIME;
-			}
-				break;
-			case DATE_TIME: {
-				resultCode = ActivityRequestCodes.PICK_DATE_TIME;
-			}
-				break;
-		}
-
-		Intent resultIntent = new Intent();
-		resultIntent.putExtra(EXTRA_DATE_TIME_PICKER_FIELD_ID, fieldId);
-		resultIntent.putExtra(EXTRA_RESULT_SELECTED_DATE, dateSelected);
-		setResult(resultCode, resultIntent);
-		finish();
-
-	}
+    }
 
 }

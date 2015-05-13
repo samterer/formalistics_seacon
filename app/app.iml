@@ -89,8 +89,8 @@
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.2.3" level="project" />
     <orderEntry type="library" exported="" name="zxing-android-legacy-2.0.0" level="project" />
-    <orderEntry type="library" exported="" name="core-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.2.2" level="project" />
+    <orderEntry type="library" exported="" name="core-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="zxing-android-minimal-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="js" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.0.0" level="project" />

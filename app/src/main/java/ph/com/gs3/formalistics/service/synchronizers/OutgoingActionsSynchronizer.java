@@ -59,7 +59,7 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
         outgoingActionsDataWriterFacade = new OutgoingActionsDataWriterFacade(context);
     }
 
-    public void synchronize() throws SynchronizationFailedException, SynchronizationPrematureException {
+    public void synchronize() {
 
         List<SynchronizationFailedException> synchFailures = new ArrayList<>();
         List<SubmitReadyAction> submitReadyActions = null;

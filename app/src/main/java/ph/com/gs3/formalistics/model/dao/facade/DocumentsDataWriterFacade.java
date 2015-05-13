@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ph.com.gs3.formalistics.model.dao.DataAccessObject;
 import ph.com.gs3.formalistics.model.dao.DocumentsDAO;
 import ph.com.gs3.formalistics.model.dao.DynamicFormFieldsDAO;
 import ph.com.gs3.formalistics.model.dao.UserDocumentsDAO;
@@ -79,7 +78,7 @@ public class DocumentsDataWriterFacade {
 
 //            savedDocument.setFieldValuesJSONString(savedFieldValues.toString());
             insertUserDocument(savedDocument, document, user);
-        } catch (DataAccessObject.DataAccessObjectException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

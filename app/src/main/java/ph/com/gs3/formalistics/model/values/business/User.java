@@ -36,11 +36,7 @@ public class User implements Serializable {
             return false;
         }
 
-        if (!this.email.equals(user.email)) {
-            return false;
-        }
-
-        return this.company.getId() == user.company.getId();
+        return this.email.equals(user.email) && this.company.getId() == user.company.getId();
 
     }
 

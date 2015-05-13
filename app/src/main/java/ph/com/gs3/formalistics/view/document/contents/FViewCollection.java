@@ -158,8 +158,7 @@ public class FViewCollection implements List<FView> {
     @NonNull
     @Override
     public FView[] toArray() {
-        FView[] fViews = viewList.toArray(new FView[viewList.size()]);
-        return fViews;
+        return viewList.toArray(new FView[viewList.size()]);
     }
 
     @NonNull

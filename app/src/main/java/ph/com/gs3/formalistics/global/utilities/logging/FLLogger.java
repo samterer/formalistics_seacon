@@ -9,8 +9,6 @@ public class FLLogger {
 
     public static final int MAX_LOG_SIZE = 1000;
 
-    private static ApplicationMode mode = FormalisticsApplication.APPLICATION_MODE;
-
     private static FLPersistentLogger persistentLogger;
     private static boolean traceEnabled = false;
 
@@ -64,7 +62,7 @@ public class FLLogger {
                     persistentLogger.d(source, log);
                 }
 
-                if (mode == ApplicationMode.DEVELOPMENT) {
+                if (FormalisticsApplication.APPLICATION_MODE == ApplicationMode.DEVELOPMENT) {
 
                     if (log.length() > 4000) {
                         Log.v(source, log.substring(0, 4000));

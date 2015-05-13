@@ -225,7 +225,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
     }
 
     public JSONObject insertFieldValues(
-            int documentId, int outgoingActionId, String tableName, JSONObject fieldValuesJSON, List<FormFieldData> formFields) throws JSONException {
+            int documentId, int outgoingActionId, String tableName, JSONObject fieldValuesJSON, List<FormFieldData> formFields) {
 
         ContentValues cv = createCVFromJSON(fieldValuesJSON, formFields);
         cv.put("Document_id", documentId);
@@ -247,7 +247,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
     }
 
     public JSONObject updateDocumentFieldValues(
-            int documentId, String tableName, JSONObject fieldValuesJSON, List<FormFieldData> formFields) throws JSONException {
+            int documentId, String tableName, JSONObject fieldValuesJSON, List<FormFieldData> formFields) {
 
         ContentValues cv = createCVFromJSON(fieldValuesJSON, formFields);
 

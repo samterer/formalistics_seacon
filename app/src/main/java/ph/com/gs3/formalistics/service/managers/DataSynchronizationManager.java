@@ -35,13 +35,6 @@ public class DataSynchronizationManager {
     public static LoggingType LOGGING_TYPE;
     // </editor-fold>
 
-    // <editor-fold desc="Constants & Enums">
-
-    public enum UpdateMode {
-        NO_REAUTHENTICATION, REAUTHENTICATE_FIRST
-    }
-    // </editor-fold>
-
     // <editor-fold desc="Synchronizers">
 
     private FormsSynchronizer formsSynchronizer;
@@ -165,12 +158,8 @@ public class DataSynchronizationManager {
         filesSynchronizer = new FilesSynchronizer(applicationContext, user);
         filesSynchronizer.uploadOutgoingFiles();
 
-        try {
-            outgoingActionsSynchronizer = new OutgoingActionsSynchronizer(applicationContext, user);
-            outgoingActionsSynchronizer.synchronize();
-        } catch (SynchronizationFailedException | SynchronizationPrematureException e) {
-            e.printStackTrace();
-        }
+        outgoingActionsSynchronizer = new OutgoingActionsSynchronizer(applicationContext, user);
+        outgoingActionsSynchronizer.synchronize();
 
         try {
             documentsSynchronizer = new DocumentsSynchronizer(applicationContext, user, documentsSynchronizerEventListener);

@@ -1,10 +1,5 @@
 package ph.com.gs3.formalistics.presenter.fragment.view;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import ph.com.gs3.formalistics.R;
-import ph.com.gs3.formalistics.global.constants.DateTimePickerType;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -16,9 +11,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-public class DateTimePickerViewFragment extends Fragment {
+import java.util.Calendar;
+import java.util.Date;
 
-	public static final String TAG = DateTimePickerViewFragment.class.getSimpleName();
+import ph.com.gs3.formalistics.R;
+import ph.com.gs3.formalistics.global.constants.DateTimePickerType;
+
+public class DateTimePickerViewFragment extends Fragment {
 
 	// Views
 	private DatePicker dpDate;
