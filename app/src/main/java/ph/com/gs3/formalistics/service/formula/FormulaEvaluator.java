@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import ph.com.gs3.formalistics.global.constants.FormulaEvalutationType;
 import ph.com.gs3.formalistics.model.values.business.document.DocumentHeaderData;
 import ph.com.gs3.formalistics.service.formula.node.ConstantExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.ExpressionNode;
@@ -20,6 +21,7 @@ import ph.com.gs3.formalistics.service.formula.node.operation.ComparisonExpressi
 import ph.com.gs3.formalistics.service.formula.node.operation.DivisionExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.operation.MultiplicationExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.operation.SubtractionExpressionNode;
+import ph.com.gs3.formalistics.service.formula.node.variables.CurrentFormVariableExpressionNode;
 
 /**
  * Created by Ervinne on 5/3/2015.
@@ -28,15 +30,17 @@ public class FormulaEvaluator {
 
     public static final String TAG = FormulaEvaluator.class.getSimpleName();
 
-    private LinkedList<Token> tokens;
-    private Token lookAhead;
+    protected LinkedList<Token> tokens;
+    protected Token lookAhead;
 
-    private FormulaVariableParser formulaVariableParser;
+    protected FormulaVariableParser formulaVariableParser;
 
-    private final DocumentHeaderData documentHeaderData;
-    private final JSONObject fieldValues;
+    protected final DocumentHeaderData documentHeaderData;
+    protected final JSONObject fieldValues;
 
-    private LookupRequestListener lookupRequestListener;
+    protected LookupRequestListener lookupRequestListener;
+
+    protected FormulaEvalutationType formulaEvalutationType;
 
     public FormulaEvaluator(DocumentHeaderData documentHeaderData, JSONObject fieldValues) {
         this.documentHeaderData = documentHeaderData;
@@ -67,13 +71,18 @@ public class FormulaEvaluator {
         return expr;
     }
 
-    private ExpressionNode evaluateExpression() throws ParserException {
+    public ExpressionNode evaluateForCondition(LinkedList<Token> tokens) throws ParserException {
+        formulaEvalutationType = FormulaEvalutationType.CONDITION_CLAUSE;
+        return evaluate(tokens);
+    }
+
+    protected ExpressionNode evaluateExpression() throws ParserException {
         ExpressionNode term = evaluateSignedTerm();
         return evaluateAddSubOperation(term);
 
     }
 
-    private ExpressionNode evaluateSignedTerm() throws ParserException {
+    protected ExpressionNode evaluateSignedTerm() throws ParserException {
 
         // Check if the value is positive or negative
         if (lookAhead.type == TokenType.ADD_SUB) {
@@ -95,13 +104,13 @@ public class FormulaEvaluator {
 
     }
 
-    private ExpressionNode evaluateTerm() throws ParserException {
+    protected ExpressionNode evaluateTerm() throws ParserException {
         ExpressionNode argumentExp = evaluateArgument();
         ExpressionNode possibleConditionNode = evaluateCondition(argumentExp);
         return evaluateMultDivOperation(possibleConditionNode);
     }
 
-    private ExpressionNode evaluateAddSubOperation(ExpressionNode expressionNode) throws ParserException {
+    protected ExpressionNode evaluateAddSubOperation(ExpressionNode expressionNode) throws ParserException {
 
         if (lookAhead.type == TokenType.ADD_SUB) {
 
@@ -125,7 +134,7 @@ public class FormulaEvaluator {
 
     }
 
-    private ExpressionNode evaluateMultDivOperation(ExpressionNode expressionNode) throws ParserException {
+    protected ExpressionNode evaluateMultDivOperation(ExpressionNode expressionNode) throws ParserException {
 
         if (lookAhead.type == TokenType.MULT_DIV) {
 
@@ -148,11 +157,11 @@ public class FormulaEvaluator {
 
     }
 
-    private ExpressionNode evaluateCondition(ExpressionNode expressionNode) throws ParserException {
+    protected ExpressionNode evaluateCondition(ExpressionNode expressionNode) throws ParserException {
 
         if (lookAhead.type == TokenType.COMPARISON) {
 
-            ComparisonExpressionNode comparison = new ComparisonExpressionNode(expressionNode, lookAhead.data);
+            ComparisonExpressionNode comparison = new ComparisonExpressionNode(expressionNode, lookAhead.data, formulaEvalutationType);
 
             nextToken();
             ExpressionNode nextExpression = evaluateSignedTerm();
@@ -165,7 +174,7 @@ public class FormulaEvaluator {
 
     }
 
-    private ExpressionNode evaluateLookup() throws ParserException {
+    protected ExpressionNode evaluateLookup() throws ParserException {
 
         if (lookupRequestListener == null) {
             throw new ParserException("The evaluator does not have a handler for lookups");
@@ -191,7 +200,7 @@ public class FormulaEvaluator {
 
     }
 
-    private ExpressionNode evaluateStringConcatination() throws ParserException {
+    protected ExpressionNode evaluateStringConcatination() throws ParserException {
 
         StringConcatExpressionNode strConcat = new StringConcatExpressionNode();
 
@@ -204,7 +213,7 @@ public class FormulaEvaluator {
 
     }
 
-    private ExpressionNode evaluateGivenIf() throws ParserException {
+    protected ExpressionNode evaluateGivenIf() throws ParserException {
 
         List<ExpressionNode.NodeType> argumentTypes = new ArrayList<>();
         argumentTypes.add(ExpressionNode.NodeType.COMPARISON);
@@ -223,7 +232,24 @@ public class FormulaEvaluator {
         return givenIfExpressionNode;
     }
 
-    private void popComma() throws ParserException {
+    protected ExpressionNode evaluateCurrentFormVariableContainer() throws ParserException {
+
+        // pop @CurrentForm
+        nextToken();
+
+        // expected '['
+        nextToken();
+        ExpressionNode argumentExpressionNode = evaluateExpression();
+        // expected ']'
+        nextToken();
+
+        CurrentFormVariableExpressionNode expressionNode = new CurrentFormVariableExpressionNode(argumentExpressionNode);
+
+        return expressionNode;
+
+    }
+
+    protected void popComma() throws ParserException {
         if (lookAhead.type != TokenType.COMMA) {
             throw new ParserException("Expected ',' instead of " + lookAhead.data);
         }
@@ -234,7 +260,7 @@ public class FormulaEvaluator {
     /**
      * handles the non-terminal evaluateArgument
      */
-    private ExpressionNode evaluateArgument() throws ParserException {
+    protected ExpressionNode evaluateArgument() throws ParserException {
 
         if (lookAhead.type == TokenType.FUNCTION) {
 
@@ -262,7 +288,7 @@ public class FormulaEvaluator {
         return evaluateValue();
     }
 
-    private List<ExpressionNode> evaluateArguments(List<ExpressionNode.NodeType> argumentTypes) throws ParserException {
+    protected List<ExpressionNode> evaluateArguments(List<ExpressionNode.NodeType> argumentTypes) throws ParserException {
 
         if (lookAhead.type == TokenType.OPEN_PARENTHESIS) {
             // pop '('
@@ -298,7 +324,7 @@ public class FormulaEvaluator {
 
     }
 
-    private List<ExpressionNode> evaluateVariableCountArgument() throws ParserException {
+    protected List<ExpressionNode> evaluateVariableCountArgument() throws ParserException {
 
         if (lookAhead.type == TokenType.OPEN_PARENTHESIS) {
             // pop '('
@@ -335,17 +361,54 @@ public class FormulaEvaluator {
         }
 
         if (lookAhead.type == TokenType.STRING) {
-            ExpressionNode exp = new ConstantExpressionNode(formulaVariableParser.getRawStringFromTokenData(lookAhead.data));
+            String constant = formulaVariableParser.getRawStringFromTokenData(lookAhead.data);
+            if (formulaEvalutationType == FormulaEvalutationType.CONDITION_CLAUSE) {
+                constant = "'" + constant + "'";
+            }
+            ExpressionNode exp = new ConstantExpressionNode(constant);
             nextToken();
             return exp;
         }
 
         if (lookAhead.type == TokenType.VARIABLE) {
             VariableExpressionNode variable = new VariableExpressionNode(lookAhead.data);
-            //  throws ParserException
-            variable.setValue(formulaVariableParser.getStringVariableValue(variable.getName()));
+
+            if (formulaEvalutationType == FormulaEvalutationType.CONDITION_CLAUSE) {
+                variable.setValue(variable.getName().substring(1)); // remove @
+            } else {
+                //  throws ParserException
+                variable.setValue(formulaVariableParser.getStringVariableValue(variable.getName()));
+            }
+
             nextToken();
             return variable;
+        }
+
+        if (lookAhead.type == TokenType.VARIABLE_CONTAINER) {
+
+            // pop @CurrentForm
+            nextToken();
+
+            // expected '['
+            nextToken();
+            ExpressionNode argumentExpressionNode = evaluateExpression();
+            // expected ']'
+            nextToken();
+
+            CurrentFormVariableExpressionNode variable = new CurrentFormVariableExpressionNode(argumentExpressionNode);
+            String variableName = variable.getName();
+
+            if (formulaEvalutationType == FormulaEvalutationType.CONDITION_CLAUSE) {
+                variableName = "@" + formulaVariableParser.getRawStringFromTokenData(variableName);
+                variable.setValue("'" + formulaVariableParser.getStringVariableValue(variableName) + "'");
+            } else {
+                variable.setValue(formulaVariableParser.getStringVariableValue(variableName));
+            }
+
+
+
+            return variable;
+
         }
 
         if (lookAhead == null) {
@@ -355,7 +418,7 @@ public class FormulaEvaluator {
         }
     }
 
-    private boolean nextToken() {
+    protected boolean nextToken() {
         tokens.pop();
         boolean hasNext = !tokens.isEmpty();
 

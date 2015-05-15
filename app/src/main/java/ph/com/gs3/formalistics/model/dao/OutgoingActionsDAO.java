@@ -31,7 +31,6 @@ public class OutgoingActionsDAO extends DataAccessObject {
         super(context);
     }
 
-
     public OutgoingAction saveOutgoingAction(OutgoingAction outgoingAction) throws DataAccessObjectException {
         ContentValues cv = createCVFromOutgoingAction(outgoingAction);
 
@@ -319,7 +318,6 @@ public class OutgoingActionsDAO extends DataAccessObject {
 
     }
 
-
     public List<DisplayReadyAction> getAllDisplayReadyOutgoingActions(int userId) {
 
         List<DisplayReadyAction> actions = new ArrayList<>();
@@ -416,6 +414,7 @@ public class OutgoingActionsDAO extends DataAccessObject {
         // @formatter:off
 		String query = "SELECT "
     				+ "oa._id, "
+                    + "d._id AS document_id, "
     				+ "d.web_id AS document_web_id, "
     				+ "f.web_id AS form_web_id, "
     				+ "f.name AS form_name, "
@@ -609,6 +608,7 @@ public class OutgoingActionsDAO extends DataAccessObject {
 
         // @formatter:off
 		int idIndex 			= cursor.getColumnIndexOrThrow("_id");
+        int documentIdIndex     = cursor.getColumnIndexOrThrow("document_id");
 		int documentWebIdIndex 	= cursor.getColumnIndexOrThrow("document_web_id");
 		int formWebIdIndex 		= cursor.getColumnIndexOrThrow("form_web_id");
 		int fieldUpdatesIndex 	= cursor.getColumnIndexOrThrow("document_fields_updates_json");
@@ -617,6 +617,7 @@ public class OutgoingActionsDAO extends DataAccessObject {
 		int serverIndex 		= cursor.getColumnIndexOrThrow("server");
 
 		int id 						= cursor.getInt(idIndex);
+        int documentId              = cursor.getInt(documentIdIndex);
 		int documentWebId 		    = cursor.getInt(documentWebIdIndex);
 		int formWebId 			    = cursor.getInt(formWebIdIndex);
 		String fieldUpdatesString 	= cursor.getString(fieldUpdatesIndex);
@@ -628,6 +629,7 @@ public class OutgoingActionsDAO extends DataAccessObject {
         SubmitReadyAction submitReadyAction = new SubmitReadyAction();
 
         submitReadyAction.setId(id);
+        submitReadyAction.setDocumentId(documentId);
         submitReadyAction.setDocumentWebId(documentWebId);
         submitReadyAction.setFormWebId(formWebId);
         submitReadyAction.setFieldUpdates(fieldUpdatesString);

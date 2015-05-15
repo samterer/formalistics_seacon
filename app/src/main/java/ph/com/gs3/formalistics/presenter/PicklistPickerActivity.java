@@ -25,6 +25,7 @@ public class PicklistPickerActivity extends Activity implements PicklistPickerAc
     public static final String EXTRA_PICKLIST_SEARCH_AND_RESULT_DATA = "search_and_result_data";
     public static final String EXTRA_FIELD_ID = "field_id";
     public static final String EXTRA_PICKED_RESULT = "picked_result";
+    public static final String EXTRA_PARSED_CONDITION_STRING = "parsed_condition_string";
 
     private PickListPickerWorkerFragment workerFragment;
     private PicklistPickerViewFragment viewFragment;
@@ -44,13 +45,13 @@ public class PicklistPickerActivity extends Activity implements PicklistPickerAc
 
         User user = (User) extras.getSerializable(EXTRA_ACTIVE_USER);
         String fieldId = extras.getString(EXTRA_FIELD_ID);
-        PickListData searchAndResultData = (PickListData) extras
-                .getSerializable(EXTRA_PICKLIST_SEARCH_AND_RESULT_DATA);
+        PickListData searchAndResultData = (PickListData) extras.getSerializable(EXTRA_PICKLIST_SEARCH_AND_RESULT_DATA);
+        String parsedConditionString = extras.getString(EXTRA_PARSED_CONDITION_STRING);
 
         workerFragment.setCurrentUser(user);
         workerFragment.setFieldId(fieldId);
         workerFragment.setSearchAndResultData(searchAndResultData);
-
+        workerFragment.setParsedConditionString(parsedConditionString);
     }
 
     private void initializeFragements(Bundle savedInstanceState) {

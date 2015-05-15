@@ -21,11 +21,13 @@ public class FormulaLexer {
     private final List<TokenPattern> tokenPatterns;
 
     private final List<String> reservedKeywords;
+    private final List<String> variableContainers;
     private final List<String> functions;
 
     public FormulaLexer() {
 
         reservedKeywords = new ArrayList<>();
+        variableContainers = new ArrayList<>();
         functions = new ArrayList<>();
 
         // TODO: add other reserved words here
@@ -36,16 +38,20 @@ public class FormulaLexer {
         reservedKeywords.add("@Now");
         reservedKeywords.add("@TimeStamp");
 
+        variableContainers.add("@CurrentForm");
+
         functions.add("@Lookup");
         functions.add("@GivenIf");
         functions.add("@StrConcat");
 
+        reservedKeywords.addAll(variableContainers);
         reservedKeywords.addAll(functions);
 
         tokenPatterns = new ArrayList<>();
 
         // initialize patterns recognizable
         tokenPatterns.add(new TokenPattern(Serializer.serializeList(functions, "|"), TokenType.FUNCTION));
+        tokenPatterns.add(new TokenPattern(Serializer.serializeList(variableContainers, "|"), TokenType.VARIABLE_CONTAINER));
         tokenPatterns.add(new TokenPattern("@[a-zA-Z0-9_]*", TokenType.VARIABLE));
         tokenPatterns.add(new TokenPattern("(?:\\d+\\.?|\\.\\d)\\d*(?:[Ee][-+]?\\d+)?", TokenType.NUMBER));
         tokenPatterns.add(new TokenPattern("[+-]", TokenType.ADD_SUB));
@@ -54,6 +60,8 @@ public class FormulaLexer {
         tokenPatterns.add(new TokenPattern("\\\"[a-zA-Z0-9,'.`\\&: _]*\\\"|\\'[a-zA-Z0-9,.`\\&: _]*\\'", TokenType.STRING));
         tokenPatterns.add(new TokenPattern("\\(", TokenType.OPEN_PARENTHESIS));
         tokenPatterns.add(new TokenPattern("\\)", TokenType.CLOSE_PARENTHESIS));
+        tokenPatterns.add(new TokenPattern("\\[", TokenType.OPEN_BRACKET));
+        tokenPatterns.add(new TokenPattern("\\]", TokenType.CLOSE_BRACKET));
         tokenPatterns.add(new TokenPattern("(<[=>]?|==|>=?)", TokenType.COMPARISON));
         tokenPatterns.add(new TokenPattern("\\&\\&|\\|\\|", TokenType.BOOLEAN_OPERATOR));
         tokenPatterns.add(new TokenPattern(",", TokenType.COMMA));

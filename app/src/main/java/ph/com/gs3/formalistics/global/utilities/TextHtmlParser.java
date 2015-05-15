@@ -4,11 +4,7 @@ public class TextHtmlParser {
 
 	public static String stringToHTML(String rawString) {
 
-		// SpannedString spannedString = new SpannedString(rawString);
-		// return Html.toHtml(spannedString);
-
 		String html = rawString;
-
 		html = html.replaceAll("(\r\n|\n)", "<br>");
 
 		return html;

@@ -2,10 +2,13 @@ package ph.com.gs3.formalistics.model.dao.facade;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ph.com.gs3.formalistics.model.DatabaseHelperFactory;
+import ph.com.gs3.formalistics.model.dao.DataAccessObject;
 import ph.com.gs3.formalistics.model.dao.DocumentsDAO;
 import ph.com.gs3.formalistics.model.dao.DynamicFormFieldsDAO;
 import ph.com.gs3.formalistics.model.dao.UserDocumentsDAO;
@@ -20,20 +23,36 @@ public class DocumentsDataWriterFacade {
 
     public static final String TAG = DocumentsDataWriterFacade.class.getSimpleName();
 
-    private final DynamicFormFieldsDAO dynamicFormFieldsDAO;
-    private final DocumentsDAO documentsDAO;
-    private final UserDocumentsDAO userDocumentsDAO;
+    private final Context context;
+
+    private DynamicFormFieldsDAO dynamicFormFieldsDAO;
+    private DocumentsDAO documentsDAO;
+    private UserDocumentsDAO userDocumentsDAO;
 
     public DocumentsDataWriterFacade(Context context) {
-        dynamicFormFieldsDAO = new DynamicFormFieldsDAO(context);
-        documentsDAO = new DocumentsDAO(context);
-        userDocumentsDAO = new UserDocumentsDAO(context);
+        this.context = context;
+
+        initializeDAOs(context, null);
     }
 
     public DocumentsDataWriterFacade(Context context, SQLiteDatabase preOpenedDatabaseWithTransaction) {
-        dynamicFormFieldsDAO = new DynamicFormFieldsDAO(context, preOpenedDatabaseWithTransaction);
-        documentsDAO = new DocumentsDAO(context, preOpenedDatabaseWithTransaction);
-        userDocumentsDAO = new UserDocumentsDAO(context, preOpenedDatabaseWithTransaction);
+        this.context = context;
+
+        initializeDAOs(context, preOpenedDatabaseWithTransaction);
+    }
+
+    private void initializeDAOs(Context context, SQLiteDatabase preOpenedDatabaseWithTransaction) {
+
+        if (preOpenedDatabaseWithTransaction != null) {
+            dynamicFormFieldsDAO = new DynamicFormFieldsDAO(context, preOpenedDatabaseWithTransaction);
+            documentsDAO = new DocumentsDAO(context, preOpenedDatabaseWithTransaction);
+            userDocumentsDAO = new UserDocumentsDAO(context, preOpenedDatabaseWithTransaction);
+        } else {
+            dynamicFormFieldsDAO = new DynamicFormFieldsDAO(context);
+            documentsDAO = new DocumentsDAO(context);
+            userDocumentsDAO = new UserDocumentsDAO(context);
+        }
+
     }
 
     /**
@@ -99,6 +118,26 @@ public class DocumentsDataWriterFacade {
             userDocumentsDAO.changeDocumentStarMark(user.getId(), savedDocument.getId(), originalDocument.getStarMark());
         }
 
+    }
+
+    public void deleteDocument(Form form, int documentId, int userId) throws DataAccessObject.DataAccessObjectException {
+
+        SQLiteOpenHelper sqLiteOpenHelper = DatabaseHelperFactory.getDatabaseHelper(context);
+        SQLiteDatabase database = sqLiteOpenHelper.getWritableDatabase();
+
+        initializeDAOs(context, database);
+
+        try {
+            database.beginTransactionNonExclusive();
+
+            userDocumentsDAO.deleteUserDocumentReference(userId, documentId);
+            documentsDAO.deleteDocument(documentId);
+            dynamicFormFieldsDAO.deleteDocumentFieldValues(documentId, form.getGeneratedFormTableName());
+
+            database.setTransactionSuccessful();
+        } finally {
+            database.endTransaction();
+        }
     }
 
 }

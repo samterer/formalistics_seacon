@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ph.com.gs3.formalistics.FormalisticsApplication;
 import ph.com.gs3.formalistics.global.constants.LoggingType;
 import ph.com.gs3.formalistics.global.constants.StarMark;
 import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
@@ -18,15 +19,16 @@ import ph.com.gs3.formalistics.model.dao.DataAccessObject.DataAccessObjectExcept
 import ph.com.gs3.formalistics.model.dao.FieldOutgoingFileReferenceDAO;
 import ph.com.gs3.formalistics.model.dao.FormsDAO;
 import ph.com.gs3.formalistics.model.dao.OutgoingActionsDAO;
+import ph.com.gs3.formalistics.model.dao.facade.DocumentsDataWriterFacade;
 import ph.com.gs3.formalistics.model.dao.facade.OutgoingActionsDataWriterFacade;
 import ph.com.gs3.formalistics.model.values.application.APIResponse.InvalidResponseException;
 import ph.com.gs3.formalistics.model.values.application.APIResponse.ServerErrorException;
+import ph.com.gs3.formalistics.model.values.application.VersionSettings;
 import ph.com.gs3.formalistics.model.values.business.User;
 import ph.com.gs3.formalistics.model.values.business.document.SubmitReadyAction;
 import ph.com.gs3.formalistics.model.values.business.form.Form;
 import ph.com.gs3.formalistics.model.values.business.form.FormFieldData;
 import ph.com.gs3.formalistics.service.synchronizers.exceptions.SynchronizationFailedException;
-import ph.com.gs3.formalistics.service.synchronizers.exceptions.SynchronizationPrematureException;
 
 /**
  * Created by Ervinne on 4/14/2015.
@@ -43,6 +45,7 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
     private final FormsDAO formsDAO;
     private final FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
 
+    private final DocumentsDataWriterFacade documentsDataWriterFacade;
     private final OutgoingActionsDataWriterFacade outgoingActionsDataWriterFacade;
 
     public OutgoingActionsSynchronizer(Context context, User activeUser) {
@@ -56,10 +59,13 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
         formsDAO = new FormsDAO(context);
         fieldOutgoingFileReferenceDAO = new FieldOutgoingFileReferenceDAO(context);
 
+        documentsDataWriterFacade = new DocumentsDataWriterFacade(context);
         outgoingActionsDataWriterFacade = new OutgoingActionsDataWriterFacade(context);
     }
 
     public void synchronize() {
+
+        VersionSettings versionSettings = FormalisticsApplication.versionSettings;
 
         List<SynchronizationFailedException> synchFailures = new ArrayList<>();
         List<SubmitReadyAction> submitReadyActions = null;
@@ -76,12 +82,14 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
             try {
                 // TODO: make a combined API request for submitting documents and changing star marks
 
+                Form form = null;
+
                 // Check if this action is about submitting a document
                 if (!SubmitReadyAction.ACTION_NO_DOCUMENT_SUBMISSION.equals(submitReadyAction.getAction())) {
 
                     String fieldUpdates = submitReadyAction.getFieldUpdates();
 
-                    Form form = formsDAO.getForm(formWebId, activeUser.getCompany().getId());
+                    form = formsDAO.getForm(formWebId, activeUser.getCompany().getId());
                     List<FormFieldData> fieldsWithDownloadableData = form.getFieldsWithDownloadableData();
 
                     // if there are fields with downloadable data, make the necessary changes in the field updates
@@ -112,6 +120,11 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
                 // Remove the outgoing action from the database upon success
                 outgoingActionsDataWriterFacade.removeOutgoingAction(submitReadyAction.getId(), formWebId, activeUser.getCompany().getId());
 
+                // Remove the document if the settings says so and if the action is not a "no document submission" action
+                if (versionSettings.deleteDocumentsOnSubmitAction && !SubmitReadyAction.ACTION_NO_DOCUMENT_SUBMISSION.equals(submitReadyAction.getAction())) {
+                    documentsDataWriterFacade.deleteDocument(form, submitReadyAction.getDocumentId(), activeUser.getId());
+                }
+
             } catch (DataAccessObjectException | CommunicationException | InvalidResponseException | ServerErrorException e) {
                 FLLogger.e(TAG, "Unable to send outgoing action " + submitReadyAction.getAction() + " to form " + submitReadyAction.getFormWebId() + ": " + e.getMessage());
                 // Save the error message about the outgoing action to the database upon fail
@@ -121,7 +134,6 @@ public class OutgoingActionsSynchronizer extends AbstractSynchronizer {
         }
 
     }
-
 
     private void setOutgoingActionError(String errorMessage) {
         // TODO: implementation

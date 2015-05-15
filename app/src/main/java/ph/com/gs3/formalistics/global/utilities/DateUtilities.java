@@ -28,36 +28,26 @@ public class DateUtilities {
 
     @SuppressWarnings("deprecation")
     public static boolean isDateToday(Date date) {
-
         Date today = new Date();
         return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getYear() == today.getYear();
-
     }
 
     public static Date parseToServerDate(String rawDate) throws ParseException {
-
         return SERVER_DATE_TIME_FORMAT.parse(rawDate);
-
     }
 
     public static String getServerFormattedCurrentDateTime() {
-
         Date currentDate = new Date();
         return SERVER_DATE_TIME_FORMAT.format(currentDate);
-
     }
 
     public static String getServerFormattedCurrentDate() {
-
         Date currentDate = new Date();
         return SERVER_DATE_FORMAT.format(currentDate);
-
     }
 
     public static String getCurrentTimeStamp() {
-
         Date currentDate = new Date();
         return TIMESTAMP_FORMAT.format(currentDate);
-
     }
 }

@@ -1,7 +1,5 @@
 package ph.com.gs3.formalistics.presenter.navigation;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -10,7 +8,6 @@ import ph.com.gs3.formalistics.FormalisticsApplication;
 import ph.com.gs3.formalistics.R;
 import ph.com.gs3.formalistics.global.constants.ApplicationMode;
 import ph.com.gs3.formalistics.global.constants.DocumentSearchType;
-import ph.com.gs3.formalistics.model.dao.FormsDAO;
 import ph.com.gs3.formalistics.model.dao.facade.search.SeaconSearchDataProvider;
 import ph.com.gs3.formalistics.model.values.application.NavigationDrawerItem;
 import ph.com.gs3.formalistics.model.values.business.User;
@@ -28,24 +25,16 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 
     public static final NavigationDrawerItem viewJobOrderDocuments = new NavigationDrawerItem(104, R.drawable.inbox, "Job Orders");
 
-    private final Context context;
     private final User activeUser;
     private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
-
-    private final FormsDAO formsDAO;
 
     private int currentlySelectedNavigationDrawerItemPosition;
 
     public SeaconDocumentListNavigationPresenter(
-            Context context,
             User activeUser,
             DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener) {
-        this.context = context;
         this.activeUser = activeUser;
         this.documentListNavigationPresenterEventsListener = documentListNavigationPresenterEventsListener;
-
-        this.formsDAO = new FormsDAO(context);
-
     }
 
     @Override
@@ -100,6 +89,8 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 //            documentListNavigationPresenterEventsListener.onResetDataCommand();
         } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.fullSynchronizeCommandNavItem) {
             documentListNavigationPresenterEventsListener.onFullSynchronizeCommand();
+        } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.openOutboxNavItem) {
+            documentListNavigationPresenterEventsListener.onDisplayOutgoingActions(navigationDrawerItem);
         } else if (navigationDrawerItem == viewIncomingEIRDocuments) {
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_EIR_INCOMING));
         } else if (navigationDrawerItem == viewReturnEIRDocuments) {

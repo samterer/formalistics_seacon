@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.util.Map;
 
+import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.api.HttpCommunicator.CommunicationException;
 import ph.com.gs3.formalistics.model.values.application.APIResponse;
 import ph.com.gs3.formalistics.model.values.application.APIResponse.InvalidResponseException;
@@ -57,7 +58,7 @@ public abstract class API {
             }
         }
 
-//        FLLogger.d(TAG, "response: " + rawResponseString);
+        FLLogger.d("API.request", "response: " + rawResponseString);
 
         JSONObject responseJSON;
         try {

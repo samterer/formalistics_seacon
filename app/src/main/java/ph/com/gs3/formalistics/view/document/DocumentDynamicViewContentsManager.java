@@ -210,7 +210,8 @@ public class DocumentDynamicViewContentsManager implements DocumentViewContentsM
      * Initializes listeners using the activity, this may throw an illegal state exception
      * if the required listeners are not implemented by the activity
      *
-     * @param activity
+     * @param activity The activity that implements PickListFieldListener, DateTimePickerListener,
+     *                 CodeScannerListener, EmbeddedViewEventsListener and DynamicImageFieldActionListener
      */
     public void setSpecialFieldsListener(Activity activity) {
 
@@ -274,7 +275,7 @@ public class DocumentDynamicViewContentsManager implements DocumentViewContentsM
         if (FormContentTypeGroupings.isField(formContentData.getType())) {
             FormFieldData formField = (FormFieldData) formContentData;
 
-            FField fieldView = null;
+            FField fieldView;
 
             switch (formContentData.getType()) {
                 case TEXT_FIELD:

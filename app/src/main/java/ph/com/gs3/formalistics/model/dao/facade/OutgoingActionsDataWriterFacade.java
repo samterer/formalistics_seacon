@@ -132,7 +132,7 @@ public class OutgoingActionsDataWriterFacade {
 
     public void removeOutgoingAction(int id, Form form) throws DataAccessObjectException {
 
-        dynamicFormFieldsDAO.removeOutgoingActionFieldValues(id, form.getGeneratedFormTableName());
+        dynamicFormFieldsDAO.deleteOutgoingActionFieldValues(id, form.getGeneratedFormTableName());
         outgoingActionsDAO.removeOutgoingAction(id);
 
     }

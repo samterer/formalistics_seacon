@@ -129,6 +129,24 @@ public class UserDocumentsDAO extends DataAccessObject {
 
     }
 
+    public void deleteUserDocumentReference(int userId, int documentId) throws DataAccessObjectException {
+
+        String whereClause = UserDocumentsTable.COL_USER_ID + "=? AND " + UserDocumentsTable.COL_DOCUMENT_ID + "=?";
+        String[] whereArgs = {Integer.toString(userId), Integer.toString(documentId)};
+
+        try {
+            open();
+
+            int affectedRows = database.delete(UserDocumentsTable.NAME, whereClause, whereArgs);
+            if (affectedRows < 1) {
+                throw new DataAccessObjectException("Failed to delete document with id " + documentId);
+            }
+        } finally {
+            close();
+        }
+
+    }
+
     public ContentValues createCVFromData(int userId, int documentId, int starMarkInt) {
 
         ContentValues cv = new ContentValues();

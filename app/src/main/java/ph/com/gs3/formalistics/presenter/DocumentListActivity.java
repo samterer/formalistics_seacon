@@ -510,10 +510,12 @@ public class DocumentListActivity extends Activity implements
     //<editor-fold desc="Functional Methods">
 
     private void filterView(String filterString) {
-        currentFilter = filterString;
-        currentViewFilter.setGenericStringFilter(filterString);
+        if (filterString != null && !filterString.equals(currentFilter)) {
+            currentFilter = filterString;
+            currentViewFilter.setGenericStringFilter(filterString);
 //        onChangeViewContentsCommand(currentlySelectedNavigationDrawerItem, currentViewFilter);
-        onDisplayDocumentSummaries(currentlySelectedNavigationDrawerItem, documentSearchTypes);
+            onDisplayDocumentSummaries(currentlySelectedNavigationDrawerItem, documentSearchTypes);
+        }
     }
 
     private void submitDocumentAction(int documentId, String action) {
@@ -710,11 +712,17 @@ public class DocumentListActivity extends Activity implements
 
     @Override
     public void onLoadMore(int startIndex, int fetchCount) {
-        List<DocumentSummary> documentSummaries = searchDataProvider.searchDocumentSummaries(
-                documentSearchTypes, currentFilter, startIndex, fetchCount
-        );
 
-        documentListViewFragment.addViewDocuments(documentSummaries);
+        if (!documentSearchTypes.isEmpty()) {
+            List<DocumentSummary> documentSummaries = searchDataProvider.searchDocumentSummaries(
+                    documentSearchTypes, currentFilter, startIndex, fetchCount
+            );
+
+            documentListViewFragment.addViewDocuments(documentSummaries);
+        } else {
+            // refresh outbox
+            onDisplayOutgoingActions(null);
+        }
     }
 
     @Override
@@ -845,7 +853,6 @@ public class DocumentListActivity extends Activity implements
         navigateToDeveloperOptionsActivity();
     }
 
-
     @Override
     public void onDisplayDocumentSummaries(NavigationDrawerItem navigationDrawerItem, EnumSet<DocumentSearchType> documentSearchTypes) {
         this.documentSearchTypes = documentSearchTypes;
@@ -854,7 +861,7 @@ public class DocumentListActivity extends Activity implements
         );
 
         documentListViewFragment.hideCenterMessage();
-        
+
         if (navigationDrawerItem != null) {
             setTitle(navigationDrawerItem.getLabel());
             getActionBar().setIcon(navigationDrawerItem.getImageResourceId());
@@ -877,8 +884,12 @@ public class DocumentListActivity extends Activity implements
     }
 
     @Override
-    public void onDisplayOutgoingActions(NavigationDrawerItem navigationDrawerItem, List<DisplayReadyAction> displayReadyActions) {
+    public void onDisplayOutgoingActions(NavigationDrawerItem navigationDrawerItem) {
+        List<DisplayReadyAction> displayReadyActions = outgoingActionsDAO.getAllDisplayReadyOutgoingActions(activeUser.getId());
+
+        documentListViewFragment.hideCenterMessage();
         documentListViewFragment.setOutgoingViewDocuments(displayReadyActions);
+        documentSearchTypes.clear();
 
         if (navigationDrawerItem != null) {
             setTitle(navigationDrawerItem.getLabel());

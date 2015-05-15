@@ -1,2 +1,3 @@
-Low Priority:
-    1. add a "currently checking connection" notification in the document list view activity instead of starting it with not connnected
+Create a per user record of last updated dates of forms, documents and comments.
+    - this is so that the user using the same device will have his documents updated not by the last update date of the previous user.
+    - after this, apply the commented query on the DynamicFormFieldsDAO.search method. This query queries for documents that are viewable by the current user only. As for workaround for this issue, this is removed.

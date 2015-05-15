@@ -1,5 +1,6 @@
 package ph.com.gs3.formalistics.service.formula.node.operation;
 
+import ph.com.gs3.formalistics.global.constants.FormulaEvalutationType;
 import ph.com.gs3.formalistics.service.formula.ParserException;
 import ph.com.gs3.formalistics.service.formula.node.ExpressionNode;
 
@@ -12,9 +13,18 @@ public class ComparisonExpressionNode implements ExpressionNode {
     private ExpressionNode rightArgument;
     private final String conditionalOperator;
 
+    private FormulaEvalutationType formulaEvalutationType;
+
+    public ComparisonExpressionNode(ExpressionNode leftArgument, String conditionalOperator, FormulaEvalutationType formulaEvalutationType) {
+        this.leftArgument = leftArgument;
+        this.conditionalOperator = conditionalOperator;
+        this.formulaEvalutationType = formulaEvalutationType;
+    }
+
     public ComparisonExpressionNode(ExpressionNode leftArgument, String conditionalOperator) {
         this.leftArgument = leftArgument;
         this.conditionalOperator = conditionalOperator;
+        this.formulaEvalutationType = FormulaEvalutationType.VALUE;
     }
 
     public void setRightArgument(ExpressionNode rightArgument) {
@@ -28,6 +38,28 @@ public class ComparisonExpressionNode implements ExpressionNode {
 
     @Override
     public Object getValue() throws ParserException {
+
+        if (formulaEvalutationType == FormulaEvalutationType.VALUE) {
+            return evaluateForBooleanValue();
+        } else {
+            return evaluateForConditionClause();
+        }
+
+    }
+
+    private String evaluateForConditionClause() throws ParserException {
+        String checkedConditionalOperator;
+
+        if ("==".equals(conditionalOperator)) {
+            checkedConditionalOperator = "=";
+        } else {
+            checkedConditionalOperator = conditionalOperator;
+        }
+
+        return leftArgument.getValue() + checkedConditionalOperator + rightArgument.getValue();
+    }
+
+    private Boolean evaluateForBooleanValue() throws ParserException {
         Boolean result = null;
 
         if ("==".equals(conditionalOperator)) {
@@ -60,4 +92,5 @@ public class ComparisonExpressionNode implements ExpressionNode {
 
         return result;
     }
+
 }

@@ -51,15 +51,39 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
 
             searchParameters.put("range", rangeJSON);
 
+//            if (formWebId == SeaconSearchDataProvider.EIR_FORM_WEB_ID) {
+//                // only fetch Incoming, Return, and Outgoing EIR documents
+//                JSONObject filterJSON = new JSONObject();
+//                JSONArray statusList = new JSONArray();
+//                statusList.put("Incoming");
+//                statusList.put("Return");
+//                statusList.put("Outgoing");
+//
+//                filterJSON.put("ContainerStatus", statusList);
+//                searchParameters.put("extra_conditions_by_fields", filterJSON);
+//            }
+
+            if (formWebId == SeaconSearchDataProvider.CONTAINER_INFORMATION_FORM_WEB_ID) {
+                // only fetch Incoming, Return, and Outgoing EIR documents
+                JSONObject filterJSON = new JSONObject();
+                JSONArray statusList = new JSONArray();
+                statusList.put("For Stocking in Yard");
+                statusList.put("For Generating of Location");
+                filterJSON.put("Status", statusList);
+                searchParameters.put("extra_conditions_by_fields", filterJSON);
+            }
+
             if (formWebId == SeaconSearchDataProvider.EIR_FORM_WEB_ID) {
                 // only fetch Incoming, Return, and Outgoing EIR documents
                 JSONObject filterJSON = new JSONObject();
                 JSONArray statusList = new JSONArray();
                 statusList.put("Incoming");
-                statusList.put("Return");
+                statusList.put("Returned Container");
                 statusList.put("Outgoing");
+                statusList.put("For Inspection");
+                statusList.put("For Release");
 
-                filterJSON.put("ContainerStatus", statusList);
+                filterJSON.put("Status", statusList);
                 searchParameters.put("extra_conditions_by_fields", filterJSON);
             }
 

@@ -36,12 +36,12 @@ public class FormalisticsApplication extends Application {
         sessionManager.enableDebugLogging(true);
         sessionManager.startListeningToNetworkChanges();
 
-        DataSynchronizationManager dataSynchronizationManager = DataSynchronizationManager.createApplicationInstance(getApplicationContext());
+        DataSynchronizationManager.createApplicationInstance(getApplicationContext());
         DataSynchronizationManager.LOGGING_TYPE = LoggingType.ENABLED;
 
         FormsSynchronizer.LOGGING_TYPE = LoggingType.DISABLED;
-        OutgoingActionsSynchronizer.LOGGING_TYPE = LoggingType.DISABLED;
-        DocumentsSynchronizer.LOGGING_TYPE = LoggingType.DISABLED;
+        OutgoingActionsSynchronizer.LOGGING_TYPE = LoggingType.ENABLED;
+        DocumentsSynchronizer.LOGGING_TYPE = LoggingType.ENABLED;
         CommentsSycnhronizer.LOGGING_TYPE = LoggingType.DISABLED;
         FilesSynchronizer.LOGGING_TYPE = LoggingType.DISABLED;
 
@@ -51,10 +51,11 @@ public class FormalisticsApplication extends Application {
 
     private void initializeVersion() {
 
-        // Custom version settings
+        // Custoam version settings
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON) {
             versionSettings.enableDocumentCreationGlobally = false;
             versionSettings.showFilterByQRCodeButton = true;
+            versionSettings.deleteDocumentsOnSubmitAction = true;
 
             versionSettings.partiallySynchronize = true;
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.EIR_FORM_WEB_ID);
@@ -65,6 +66,7 @@ public class FormalisticsApplication extends Application {
             versionSettings.enableDocumentCreationGlobally = true;
             versionSettings.showFilterByQRCodeButton = false;
             versionSettings.partiallySynchronize = false;
+            versionSettings.deleteDocumentsOnSubmitAction = false;
         }
 
     }

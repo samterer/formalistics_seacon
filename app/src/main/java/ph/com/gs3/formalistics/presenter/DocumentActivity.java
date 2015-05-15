@@ -622,10 +622,36 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
             return;
         }
 
+
+        String rawFormulaConditionString = data.getCondition();
+        String parsedConditionString = null;
+
+        FLLogger.d(TAG, "rawFormulaConditionString: " + rawFormulaConditionString);
+
+        if (rawFormulaConditionString != null && !"".equals(rawFormulaConditionString.trim())) {
+
+            try {
+                LinkedList<Token> tokenizedFormula = formulaLexer.lex(rawFormulaConditionString);
+
+                DocumentHeaderData documentHeaderData = documentWorkerFragment.getDocumentHeaderData();
+                JSONObject fieldValues = documentViewContentsManager.getFieldValues();
+
+                FormulaEvaluator formulaEvaluator = new FormulaEvaluator(documentHeaderData, fieldValues, lookupRequestListener);
+                ExpressionNode topExpressionNode = formulaEvaluator.evaluateForCondition(tokenizedFormula);
+
+                parsedConditionString = topExpressionNode.getValue().toString();
+            } catch (ParserException e) {
+                FLLogger.e(TAG, "Failed to parse formula " + rawFormulaConditionString + ": " + e.getMessage());
+                Toast.makeText(this, "Failed to parse formula " + rawFormulaConditionString + ", please contact your administrator", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
         Intent intent = new Intent(DocumentActivity.this, PicklistPickerActivity.class);
         intent.putExtra(PicklistPickerActivity.EXTRA_FIELD_ID, source.getFieldName());
         intent.putExtra(PicklistPickerActivity.EXTRA_ACTIVE_USER, documentWorkerFragment.getActiveUser());
         intent.putExtra(PicklistPickerActivity.EXTRA_PICKLIST_SEARCH_AND_RESULT_DATA, data);
+        intent.putExtra(PicklistPickerActivity.EXTRA_PARSED_CONDITION_STRING, parsedConditionString);
         startActivityForResult(intent, ActivityRequestCodes.PICK_LIST);
 
     }

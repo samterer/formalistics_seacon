@@ -24,13 +24,11 @@ public class DocumentListNavigationPresenterFactory {
                         activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID ||
                         activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID)) {
             return new SeaconDocumentListNavigationPresenter(
-                    context, activeUser, documentListNavigationPresenterEventsListener
+                    activeUser, documentListNavigationPresenterEventsListener
             );
         } else {
             // Default navigation
-            return new DefaultDocumentListNavigationPresenter(
-                    context, activeUser, documentListNavigationPresenterEventsListener
-            );
+            return new DefaultDocumentListNavigationPresenter(documentListNavigationPresenterEventsListener);
         }
 
     }

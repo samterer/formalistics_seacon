@@ -6,6 +6,7 @@ package ph.com.gs3.formalistics.service.formula;
 public enum TokenType {
     TERMINAL,
     VARIABLE,
+    VARIABLE_CONTAINER,
     NUMBER,
     ADD_SUB,
     MULT_DIV,
@@ -13,6 +14,8 @@ public enum TokenType {
     FUNCTION,
     OPEN_PARENTHESIS,
     CLOSE_PARENTHESIS,
+    OPEN_BRACKET,
+    CLOSE_BRACKET,
     COMPARISON,
     BOOLEAN_OPERATOR,
     COMMA

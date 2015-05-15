@@ -107,6 +107,12 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
         List<SynchronizationFailedException> syncFailures = new ArrayList<>();
 
         for (Form form : forms) {
+
+//            if (form.getWebId() == SeaconSearchDataProvider.CONTAINER_INFORMATION_FORM_WEB_ID || form.getWebId() == SeaconSearchDataProvider.EIR_FORM_WEB_ID || form.getWebId() == SeaconSearchDataProvider.JOB_ORDER_FORM_WEB_ID) {
+//                log("Skipping " + form.toString() + "'s documents");
+//                continue;
+//            }
+
             log("Synchronizing " + form.toString() + "'s documents");
             try {
                 int lastIndex = 0;
@@ -188,7 +194,7 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
             usersSynchronizer = new UsersSynchronizer(context, database, activeUser);
 
             try {
-                database.beginTransaction();
+                database.beginTransactionNonExclusive();
                 for (int i = 0; i < documentCount; i++) {
 
                     // Throws JSONException

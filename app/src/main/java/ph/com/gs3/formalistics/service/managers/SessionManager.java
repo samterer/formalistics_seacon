@@ -163,6 +163,9 @@ public class SessionManager {
         // if this version is a custom version for a specific company
         VersionSettings versionSettings = FormalisticsApplication.versionSettings;
         if (versionSettings.version != VersionSettings.AvailableVersion.DEFAULT) {
+
+//            User similarUser = usersDAO.getSimilarUserFromDifferentServer(loggedInUser);
+
             Company similarCompany = companiesDAO.getSimilarCompanyFromDifferentServer(loggedInUser.getCompany());
 
             // If there is a similar company found

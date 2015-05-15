@@ -36,6 +36,9 @@ public class DocumentViewFragment extends Fragment {
     private LinearLayout llMessageContainer;
     private LinearLayout llOutgoingActionLinkContainer;
 
+    private TextView tvTrackingNumber;
+    private TextView tvStatus;
+
     private TextView tvMessage;
     private ProgressBar pbMessageProgress;
     //</editor-fold>
@@ -79,6 +82,9 @@ public class DocumentViewFragment extends Fragment {
         tvMessage = (TextView) rootView.findViewById(R.id.Document_tvMessage);
         pbMessageProgress = (ProgressBar) rootView.findViewById(R.id.Document_pbMessageProgress);
 
+        tvTrackingNumber = (TextView) rootView.findViewById(R.id.Document_tvTrackingNumber);
+        tvStatus = (TextView) rootView.findViewById(R.id.Document_tvStatus);
+
     }
 
     public void initializeDynamicViews(DocumentViewFragmentParameterBundle bundle) {
@@ -118,6 +124,9 @@ public class DocumentViewFragment extends Fragment {
                 break;
         }
 
+        tvTrackingNumber.setText(documentHeaderData.getTrackingNumber());
+        tvStatus.setText(documentHeaderData.getWorkflowObject().getStatus());
+
         documentViewContentsManager.setSpecialFieldsListener(getActivity());
         documentViewContentsManager.createDocumentViewsFromData(
                 bundle.form.getActiveContents(), fieldValues, documentHeaderData, bundle.activeUser
@@ -131,17 +140,7 @@ public class DocumentViewFragment extends Fragment {
         this.documentViewContentsManager = documentViewContentsManager;
     }
 
-    public DocumentViewContentsManager getDocumentViewContentsManager() {
-        return documentViewContentsManager;
-    }
-
     public interface DocumentViewActionListener {
-//        public void onMarkDocumentStarCommand(StarMark star);
-//
-//        public void onOpenCommentsCommand();
-//
-//        public void onOpenIssuedOutgoingActionCommand();
-
         void onFailedOpeningDocumentData(String message);
 
         void onViewReady();

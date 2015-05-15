@@ -51,17 +51,12 @@ public class FLLogger {
                 }
                 break;
             case INFORMATION:
+                Log.i(source, log);
                 if (persistentLogger != null) {
                     persistentLogger.i(source, log);
-                } else {
-                    Log.i(source, log);
                 }
                 break;
             case DEBUG: {
-                if (persistentLogger != null) {
-                    persistentLogger.d(source, log);
-                }
-
                 if (FormalisticsApplication.APPLICATION_MODE == ApplicationMode.DEVELOPMENT) {
 
                     if (log.length() > 4000) {
@@ -71,23 +66,27 @@ public class FLLogger {
                         Log.v(source, log);
 
                 }
-
-                // if (persistentLogger != null && mode == MODE_PRODUCTION) {
-                // persistentLogger.d(log);
-                // } else {
-                // Log.v(source, log);
-                // }
             }
 
             break;
         }
+
+        // If the persistent logger is not null
+        // Only log debug logs in persistent logger if the application mode is not production
+        // All other logs except debug will be logged in persistent logger
+        if (persistentLogger != null &&
+                (logType != LogType.DEBUG ||
+                        (logType == LogType.DEBUG && FormalisticsApplication.APPLICATION_MODE != ApplicationMode.PRODUCTION))) {
+            persistentLogger.d(source, log);
+        }
+
     }
 
     //<editor-fold desc="Other utility methods">
     public static String getFormattedStackTrace() {
 
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        String row = "";
+        String row;
         String trace = "";
 
         for (StackTraceElement element : stackTraceElements) {

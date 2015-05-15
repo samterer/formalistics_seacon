@@ -45,7 +45,12 @@ public class DefaultSearchDataProvider implements SearchDataProvider {
                 } else {
                     try {
                         List<Form> forms = formsDAO.getCompanyForms(activeUser.getCompany().getId());
-                        return documentsDAO.searchForUserDocumentSummaries(activeUser, forms, searchFilter);
+                        return documentsDAO.searchForUserDocumentSummaries(
+                                activeUser,
+                                forms,
+                                searchFilter,
+                                fromIndex,
+                                fetchCount);
                     } catch (DataAccessObject.DataAccessObjectException e) {
                         e.printStackTrace();
                     }

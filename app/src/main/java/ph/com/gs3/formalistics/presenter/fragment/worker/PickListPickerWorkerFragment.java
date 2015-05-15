@@ -29,6 +29,7 @@ public class PickListPickerWorkerFragment extends Fragment {
     private User currentUser;
     private String fieldId;
     private PickListData searchAndResultData;
+    private String parsedConditionString;
 
     public static PickListPickerWorkerFragment createInstance(Context context) {
 
@@ -43,7 +44,6 @@ public class PickListPickerWorkerFragment extends Fragment {
     public List<JSONObject> getPicklistData(String filter) {
 
         int formWebId = searchAndResultData.getFormWebId();
-
         List<String> displayFieldIds = searchAndResultData.getViewColumnIdList();
         List<String> dataFieldIds = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class PickListPickerWorkerFragment extends Fragment {
 
         try {
             documentsDAO.open();
-            data = dynamicFormFieldsDAO.search(form, dataFieldIds, currentUser.getId(), conditions);
+            data = dynamicFormFieldsDAO.search(form, dataFieldIds, currentUser.getId(), conditions, parsedConditionString);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -108,9 +108,7 @@ public class PickListPickerWorkerFragment extends Fragment {
 
     }
 
-    // ========================================================================
-    // {{ Getters & Setters
-
+    //<editor-fold desc="Getters & Setters">
     public User getCurrentUser() {
         return currentUser;
     }
@@ -135,6 +133,14 @@ public class PickListPickerWorkerFragment extends Fragment {
         this.searchAndResultData = searchAndResultData;
     }
 
-    // }}
+    public String getParsedConditionString() {
+        return parsedConditionString;
+    }
+
+    public void setParsedConditionString(String parsedConditionString) {
+        this.parsedConditionString = parsedConditionString;
+    }
+
+//</editor-fold>
 
 }

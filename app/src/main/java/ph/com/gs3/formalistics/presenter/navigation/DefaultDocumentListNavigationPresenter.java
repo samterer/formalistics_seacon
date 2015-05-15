@@ -1,7 +1,5 @@
 package ph.com.gs3.formalistics.presenter.navigation;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -10,12 +8,7 @@ import ph.com.gs3.formalistics.FormalisticsApplication;
 import ph.com.gs3.formalistics.R;
 import ph.com.gs3.formalistics.global.constants.ApplicationMode;
 import ph.com.gs3.formalistics.global.constants.DocumentSearchType;
-import ph.com.gs3.formalistics.model.dao.DocumentsDAO;
-import ph.com.gs3.formalistics.model.dao.FormsDAO;
-import ph.com.gs3.formalistics.model.dao.OutgoingActionsDAO;
 import ph.com.gs3.formalistics.model.values.application.NavigationDrawerItem;
-import ph.com.gs3.formalistics.model.values.business.User;
-import ph.com.gs3.formalistics.model.values.business.view.DisplayReadyAction;
 
 /**
  * Created by Ervinne on 4/24/2015.
@@ -35,29 +28,12 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
     public static final NavigationDrawerItem navigateToUserViewCommandNavItem = new NavigationDrawerItem(9, R.drawable.user, "User");
     public static final NavigationDrawerItem logoutNavCommandItem = new NavigationDrawerItem(10, R.drawable.logout, "Logout");
 
-    private final Context context;
-
-    private final User activeUser;
     private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
-
-    private final FormsDAO formsDAO;
-    private final DocumentsDAO documentsDAO;
-    private final OutgoingActionsDAO outgoingActionsDAO;
 
     private int currentlySelectedNavigationDrawerPosition;
 
-    public DefaultDocumentListNavigationPresenter(
-            Context context,
-            User activeUser,
-            DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener) {
-        this.context = context;
-
-        this.activeUser = activeUser;
+    public DefaultDocumentListNavigationPresenter(DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener) {
         this.documentListNavigationPresenterEventsListener = documentListNavigationPresenterEventsListener;
-
-        this.formsDAO = new FormsDAO(context);
-        this.documentsDAO = new DocumentsDAO(context);
-        this.outgoingActionsDAO = new OutgoingActionsDAO(context);
 
         this.currentlySelectedNavigationDrawerPosition = 0;
 
@@ -110,8 +86,7 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
                     navigationDrawerItem, EnumSet.of(DocumentSearchType.DEFAULT_INBOX, DocumentSearchType.DEFAULT_STARRED)
             );
         } else if (navigationDrawerItem == openOutboxNavItem) {
-            List<DisplayReadyAction> displayReadyActions = outgoingActionsDAO.getAllDisplayReadyOutgoingActions(activeUser.getId());
-            documentListNavigationPresenterEventsListener.onDisplayOutgoingActions(navigationDrawerItem, displayReadyActions);
+            documentListNavigationPresenterEventsListener.onDisplayOutgoingActions(navigationDrawerItem);
         }
 
         currentlySelectedNavigationDrawerPosition = position;

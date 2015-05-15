@@ -15,6 +15,8 @@ import ph.com.gs3.formalistics.model.values.business.document.DocumentHeaderData
  */
 public class FormulaVariableParser {
 
+    public static final String TAG = FormulaVariableParser.class.getSimpleName();
+
     private List<String> timeDependentComputationVariables;
     private JSONObject consolidatedDocumentValues;
 
@@ -71,6 +73,8 @@ public class FormulaVariableParser {
         String rawVariable = variable.substring(1); // remove @
         String value = null;
 
+        FLLogger.d(TAG, consolidatedDocumentValues.toString());
+
         if (consolidatedDocumentValues.has(rawVariable)) {
             try {
                 value = consolidatedDocumentValues.getString(rawVariable);
@@ -89,6 +93,7 @@ public class FormulaVariableParser {
         } else {
             throw new ParserException("Undefined variable " + variable);
         }
+
 
         return value;
     }

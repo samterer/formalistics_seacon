@@ -1,5 +1,6 @@
 package ph.com.gs3.formalistics.model.values.business.document;
 
+import java.io.Serializable;
 import java.util.List;
 
 import ph.com.gs3.formalistics.global.constants.StarMark;
@@ -8,7 +9,7 @@ import ph.com.gs3.formalistics.global.utilities.DateUtilities;
 import ph.com.gs3.formalistics.model.values.business.form.Form;
 import ph.com.gs3.formalistics.model.values.business.form.WorkflowObject;
 
-public class DocumentHeaderData {
+public class DocumentHeaderData implements Serializable{
 
     public static final String TAG = DocumentHeaderData.class.getSimpleName();
 

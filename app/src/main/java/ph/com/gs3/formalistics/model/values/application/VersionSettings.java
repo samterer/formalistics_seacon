@@ -13,6 +13,7 @@ public class VersionSettings {
     public boolean enableDocumentCreationGlobally = true;
     public List<Integer> enableDocumentCreationOnFormIdList = new ArrayList<>();
     public boolean showFilterByQRCodeButton = false;
+    public boolean deleteDocumentsOnSubmitAction = false;
 
     /**
      * If set to true, this will prevent other forms other that the forms specified in formIdListToSynchronize

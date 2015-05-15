@@ -58,6 +58,11 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
 
     public List<JSONObject> search(Form form, List<String> resultFieldNames, int ownerId, List<SearchCondition> conditions)
             throws JSONException {
+        return search(form, resultFieldNames, ownerId, conditions, "");
+    }
+
+    public List<JSONObject> search(Form form, List<String> resultFieldNames, int ownerId, List<SearchCondition> conditions, String rawConditions)
+            throws JSONException {
 
         List<JSONObject> results = new ArrayList<>();
 
@@ -102,9 +107,15 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
             query += " WHERE " + generateWhereClauseFromConditions(conditions);
         }
 
-        FLLogger.d(TAG, TAG + ".search: " + query);
+        if (rawConditions != null && !"".equals(rawConditions.trim())) {
+            if (conditions != null) {
+                query += " AND " + rawConditions;
+            } else {
+                query += " WHERE " + rawConditions;
+            }
+        }
 
-        String[] params = {Integer.toString(ownerId)};
+        FLLogger.d(TAG, TAG + ".search: " + query);
 
         try {
             open();
@@ -213,7 +224,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
 
     }
 
-    //<editor-fold desc="Insert & Update Methods">
+    //<editor-fold desc="Insert, Update & Delete Methods">
     public JSONObject insertDocumentFieldValues(
             int documentId, String tableName, JSONObject fieldValuesJSON, List<FormFieldData> formFields) throws JSONException {
         return insertFieldValues(documentId, 0, tableName, fieldValuesJSON, formFields);
@@ -294,7 +305,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
 
     }
 
-    public void removeOutgoingActionFieldValues(int outgoingActionId, String tableName) {
+    public void deleteOutgoingActionFieldValues(int outgoingActionId, String tableName) {
         String whereClause = "Outgoing_Action_Id = ?";
         String[] whereArgs = {Integer.toString(outgoingActionId)};
 
@@ -310,6 +321,27 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
 
             if (affectedRows <= 0) {
                 FLLogger.e(TAG, "No deleted field values with id = " + outgoingActionId);
+            }
+        } finally {
+            close();
+        }
+    }
+
+    public void deleteDocumentFieldValues(int documentId, String tableName) throws DataAccessObjectException {
+        String whereClause = "Document_Id = ?";
+        String[] whereArgs = {Integer.toString(documentId)};
+
+        try {
+            open();
+            int affectedRows = database.delete(tableName, whereClause, whereArgs);
+
+            if (affectedRows > 1) {
+                FLLogger.w(TAG,
+                        "There are more than one record deleted when the app deleted document field values id: " + documentId);
+            }
+
+            if (affectedRows < 1) {
+                throw new DataAccessObjectException("Failed to delete document with id " + documentId);
             }
         } finally {
             close();

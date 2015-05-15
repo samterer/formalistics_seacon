@@ -39,7 +39,7 @@ public class DocumentsDAO extends DataAccessObject {
         super(context, preOpenedDatabaseWithTransaction);
     }
 
-    //<editor-fold desc=" Insert & Update Methods">
+    //<editor-fold desc=" Insert, Update & Delete Methods">
     public Document saveDocument(Document document) {
 
         // Throws JSONException
@@ -93,6 +93,22 @@ public class DocumentsDAO extends DataAccessObject {
             close();
         }
 
+    }
+
+    public void deleteDocument(int documentId) throws DataAccessObjectException {
+
+        String whereClause = DocumentsTable.COL_ID + "=?";
+        String[] whereArgs = {Integer.toString(documentId)};
+
+        try {
+            open();
+            int affectedRows = database.delete(DocumentsTable.NAME, whereClause, whereArgs);
+            if (affectedRows < 1) {
+                throw new DataAccessObjectException("Failed to delete document with id " + documentId);
+            }
+        } finally {
+            close();
+        }
     }
 
     //</editor-fold>
@@ -161,11 +177,19 @@ public class DocumentsDAO extends DataAccessObject {
 
     }
 
-    public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, String genericStringFilter) throws JSONException {
-        return searchForUserDocumentSummaries(user, forms, null, null, null, genericStringFilter);
+    public List<DocumentSummary> searchForUserDocumentSummaries(
+            User user, List<Form> forms, String genericStringFilter, int fetchStartIndex, int fetchCount) throws JSONException {
+        return searchForUserDocumentSummaries(user, forms, null, null, null, genericStringFilter, fetchStartIndex, fetchCount);
     }
 
-    public List<DocumentSummary> searchForUserDocumentSummaries(User user, List<Form> forms, List<SearchCondition> searchConditions, String manualJoins, String manualConditions, String genericStringFilter) throws JSONException {
+    public List<DocumentSummary> searchForUserDocumentSummaries(
+            User user, List<Form> forms,
+            List<SearchCondition> searchConditions,
+            String manualJoins,
+            String manualConditions,
+            String genericStringFilter,
+            int fetchStartIndex,
+            int fetchCount) throws JSONException {
 
         int userId = user.getId();
 
@@ -204,7 +228,7 @@ public class DocumentsDAO extends DataAccessObject {
             joinClause += " " + manualJoins;
         }
 
-        return getUserDocumentSummaries(joinClause, whereClause);
+        return getUserDocumentSummaries(joinClause, whereClause, fetchStartIndex, fetchCount);
 
     }
 
@@ -263,6 +287,8 @@ public class DocumentsDAO extends DataAccessObject {
                 documentSummaries.add(cursorToDocumentSummary(cursor));
                 cursor.moveToNext();
             }
+
+            FLLogger.d(TAG, "Fetch count: " + cursor.getCount());
 
             cursor.close();
         } finally {

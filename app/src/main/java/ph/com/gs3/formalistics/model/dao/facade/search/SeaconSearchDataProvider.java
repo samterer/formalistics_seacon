@@ -18,6 +18,7 @@ import ph.com.gs3.formalistics.model.dao.FormsDAO;
 import ph.com.gs3.formalistics.model.values.application.SearchCondition;
 import ph.com.gs3.formalistics.model.values.business.User;
 import ph.com.gs3.formalistics.model.values.business.document.DocumentSummary;
+import ph.com.gs3.formalistics.model.values.business.document.SubmitReadyAction;
 import ph.com.gs3.formalistics.model.values.business.form.Form;
 
 /**
@@ -104,7 +105,7 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
                     manualJoins = " LEFT JOIN " + SEFCOTableName + " ON " + CITableName + ".EquipmentUsed = " + SEFCOTableName + ".txt_EqName " +
                             " LEFT JOIN " + CITableName + " ON " + CITableName + ".TS = " + EIRTableName + ".TS ";
 
-                    manualConditions += " AND " + SEFCOTableName + ".EmpName = '" + activeUser.getDisplayName() + "'";
+                    manualConditions += " AND " + SEFCOTableName + ".EmpName = '" + activeUser.getDisplayName() + "' ";
                 } else {
                     Toast.makeText(
                             context,
@@ -114,10 +115,20 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
                 }
 
             }
+
+            // Do not show documents with outgoing actions
+            manualConditions += " AND (oa._id IS NULL OR oa.action = '" + SubmitReadyAction.ACTION_NO_DOCUMENT_SUBMISSION + "') ";
             searchConditions.add(new SearchCondition("wo.actions", "!=", "[]"));
 
             return documentsDAO.searchForUserDocumentSummaries(
-                    activeUser, formList, searchConditions, manualJoins, manualConditions, searchFilter
+                    activeUser,
+                    formList,
+                    searchConditions,
+                    manualJoins,
+                    manualConditions,
+                    searchFilter,
+                    fromIndex,
+                    fetchCount
             );
 
         } catch (DataAccessObject.DataAccessObjectException | JSONException e) {
