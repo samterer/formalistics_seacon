@@ -43,8 +43,10 @@ public class GivenIfExpressionNode implements ExpressionNode {
         FLLogger.d("GivenIfExpressionNode", "rawConditionValue = " + rawConditionValue.toString());
 
         if (Boolean.FALSE.equals(rawConditionValue) || rawConditionValue == null) {
+            FLLogger.d("GivenIfExpressionNode", "false");
             return resultIfFalse.getValue();
         } else {
+            FLLogger.d("GivenIfExpressionNode", "true");
             return resultIfTrue.getValue();
         }
 

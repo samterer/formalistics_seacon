@@ -55,6 +55,7 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 
         if (activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID) {
             navItems.add(viewJobOrderDocuments);
+            navItems.add(viewOutgoingEIRDocuments);
         }
 
         navItems.add(DefaultDocumentListNavigationPresenter.openOutboxNavItem);
@@ -70,6 +71,7 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 //        navItems.add(DefaultDocumentListNavigationPresenter.resetDataCommandNavItem);
 //        navItems.add(new NavigationDrawerItem(5, R.drawable.archive, "Archive"));
         navItems.add(DefaultDocumentListNavigationPresenter.navigateToUserViewCommandNavItem);
+        navItems.add(DefaultDocumentListNavigationPresenter.navigateToAboutViewNavItem);
         navItems.add(DefaultDocumentListNavigationPresenter.logoutNavCommandItem);
 
         return navItems;
@@ -81,6 +83,8 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 
         if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.navigateToUserViewCommandNavItem && currentlySelectedNavigationDrawerItemPosition != position) {
             documentListNavigationPresenterEventsListener.onOpenUserProfileCommand();
+        } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.navigateToAboutViewNavItem && currentlySelectedNavigationDrawerItemPosition != position) {
+            documentListNavigationPresenterEventsListener.onOpenAboutCommand();
         } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.logoutNavCommandItem && currentlySelectedNavigationDrawerItemPosition != position) {
             documentListNavigationPresenterEventsListener.onLogoutCommand();
         } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.openDeveloperOptionsCommandNavItem && currentlySelectedNavigationDrawerItemPosition != position) {

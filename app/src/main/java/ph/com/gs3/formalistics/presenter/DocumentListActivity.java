@@ -562,7 +562,7 @@ public class DocumentListActivity extends Activity implements
         List<Form> forms = new ArrayList<>();
 
         try {
-            forms = formsDAO.getCompanyForms(activeUser.getCompany().getId());
+            forms = formsDAO.getCompanyAlphabetical(activeUser.getCompany().getId());
         } catch (DataAccessObject.DataAccessObjectException e) {
             e.printStackTrace();
             // TODO: add feature to reset the forms
@@ -841,6 +841,12 @@ public class DocumentListActivity extends Activity implements
     @Override
     public void onOpenUserProfileCommand() {
         navigateToUserProfileActivity();
+    }
+
+    @Override
+    public void onOpenAboutCommand() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -25,7 +25,6 @@ import ph.com.gs3.formalistics.model.values.business.form.WorkflowObject;
 import ph.com.gs3.formalistics.presenter.fragment.view.TesterViewFragment;
 import ph.com.gs3.formalistics.service.formula.FormulaEvaluator;
 import ph.com.gs3.formalistics.service.formula.FormulaLexer;
-import ph.com.gs3.formalistics.service.formula.FormulaParser;
 import ph.com.gs3.formalistics.service.formula.ParserException;
 import ph.com.gs3.formalistics.service.formula.Token;
 import ph.com.gs3.formalistics.service.formula.node.ExpressionNode;
@@ -75,10 +74,10 @@ public class TesterActivity extends Activity implements TesterViewFragment.Teste
         long startTime = System.currentTimeMillis();
 
         FormulaLexer formulaLexer = new FormulaLexer();
-        LinkedList<Token> lexeme = null;
+        LinkedList<Token> tokens = null;
         try {
-            lexeme = formulaLexer.lex(formula);
-            for (Token token : lexeme) {
+            tokens = formulaLexer.lex(formula);
+            for (Token token : tokens) {
                 FLLogger.d(TAG, token.toString());
             }
         } catch (ParserException e) {
@@ -88,8 +87,12 @@ public class TesterActivity extends Activity implements TesterViewFragment.Teste
         String message;
 
         try {
-            FormulaParser formulaParser = new FormulaParser(lexeme, dummyHeaderData, dummyFieldValues);
-            String parsedWhereClause = formulaParser.parseForSQLiteWhereClause();
+//            FormulaParser formulaParser = new FormulaParser(lexeme, dummyHeaderData, dummyFieldValues);
+//            String parsedWhereClause = formulaParser.parseForSQLiteWhereClause();
+
+            FormulaEvaluator evaluator = new FormulaEvaluator(dummyHeaderData, dummyFieldValues);
+            ExpressionNode conditionExpressionNode = evaluator.evaluateForCondition(tokens);
+            String parsedWhereClause = conditionExpressionNode.getValue().toString();
 
             message = "Parsed where clause: " + parsedWhereClause;
             FLLogger.d(TAG, message);

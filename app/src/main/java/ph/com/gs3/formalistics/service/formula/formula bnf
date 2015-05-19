@@ -1,0 +1,25 @@
+
+expression  ::= signed_term + expression
+            |   signed_term - expression
+            |   signed_term
+
+signed_term ::= '-'? term
+
+term        ::= factor * term
+            |   factor / term
+            |   factor
+
+factor      ::= variable
+            |   number
+            |   string_constant
+
+variable    ::= @
+
+condition   ::= expression = expression
+            |   expression != expression
+            |   expression >= expression
+            |   expression <= expression
+            |   expression > expression
+            |   expression < expression
+
+function    ::=

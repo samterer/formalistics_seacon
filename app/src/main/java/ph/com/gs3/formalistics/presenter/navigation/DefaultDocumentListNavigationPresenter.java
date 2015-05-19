@@ -26,7 +26,8 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
 
     public static final NavigationDrawerItem fullSynchronizeCommandNavItem = new NavigationDrawerItem(8, R.drawable.processed, "Full Synchronize");
     public static final NavigationDrawerItem navigateToUserViewCommandNavItem = new NavigationDrawerItem(9, R.drawable.user, "User");
-    public static final NavigationDrawerItem logoutNavCommandItem = new NavigationDrawerItem(10, R.drawable.logout, "Logout");
+    public static final NavigationDrawerItem navigateToAboutViewNavItem = new NavigationDrawerItem(10, R.drawable.ic_launcher, "About");
+    public static final NavigationDrawerItem logoutNavCommandItem = new NavigationDrawerItem(11, R.drawable.logout, "Logout");
 
     private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
 
@@ -58,6 +59,7 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
 
 //        navItems.add(new NavigationDrawerItem(5, R.drawable.archive, "Archive"));
         navItems.add(navigateToUserViewCommandNavItem);
+        navItems.add(navigateToAboutViewNavItem);
         navItems.add(logoutNavCommandItem);
 
         return navItems;
@@ -69,6 +71,8 @@ public class DefaultDocumentListNavigationPresenter implements DocumentListNavig
 
         if (navigationDrawerItem == navigateToUserViewCommandNavItem && currentlySelectedNavigationDrawerPosition != position) {
             documentListNavigationPresenterEventsListener.onOpenUserProfileCommand();
+        } else if (navigationDrawerItem == navigateToAboutViewNavItem && currentlySelectedNavigationDrawerPosition != position) {
+            documentListNavigationPresenterEventsListener.onOpenAboutCommand();
         } else if (navigationDrawerItem == logoutNavCommandItem && currentlySelectedNavigationDrawerPosition != position) {
             documentListNavigationPresenterEventsListener.onLogoutCommand();
         } else if (navigationDrawerItem == openDeveloperOptionsCommandNavItem && currentlySelectedNavigationDrawerPosition != position) {

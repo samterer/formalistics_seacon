@@ -10,6 +10,7 @@ public class VersionSettings {
 
     public AvailableVersion version = AvailableVersion.DEFAULT;
 
+    public String versionName;
     public boolean enableDocumentCreationGlobally = true;
     public List<Integer> enableDocumentCreationOnFormIdList = new ArrayList<>();
     public boolean showFilterByQRCodeButton = false;

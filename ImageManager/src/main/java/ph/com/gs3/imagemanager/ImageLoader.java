@@ -268,9 +268,9 @@ public class ImageLoader {
             sampledSizeFIS.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
 
         return bitmap;

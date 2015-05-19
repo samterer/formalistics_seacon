@@ -10,9 +10,6 @@ import ph.com.gs3.formalistics.model.values.application.NavigationDrawerItem;
  */
 public interface DocumentListNavigationPresenterEventsListener {
 
-    void onOpenUserProfileCommand();
-
-    void onLogoutCommand();
 
     void onOpenDeveloperOptionsCommand();
 
@@ -22,8 +19,10 @@ public interface DocumentListNavigationPresenterEventsListener {
 
     void onFullSynchronizeCommand();
 
-//    void onChangeViewDocumentsCommand(NavigationDrawerItem navigationDrawerItem, List<DocumentSummary> documentSummaryList);
-//
-//    void onChangeViewOutgoingDocumentsCommand(NavigationDrawerItem navigationDrawerItem, List<DisplayReadyAction> documentsForDisplayList);
+    void onOpenUserProfileCommand();
+
+    void onOpenAboutCommand();
+
+    void onLogoutCommand();
 
 }

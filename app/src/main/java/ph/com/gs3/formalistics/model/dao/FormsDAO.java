@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.api.default_impl.parsers.json.FormJSONParserV2;
+import ph.com.gs3.formalistics.model.tables.CompaniesTable;
 import ph.com.gs3.formalistics.model.tables.FormsTable;
 import ph.com.gs3.formalistics.model.values.business.Company;
 import ph.com.gs3.formalistics.model.values.business.form.Form;
@@ -94,6 +95,10 @@ public class FormsDAO extends DataAccessObject {
     }
 
     public List<Form> getCompanyForms(int companyId) throws DataAccessObjectException {
+        return getCompanyForms(companyId, null);
+    }
+
+    public List<Form> getCompanyForms(int companyId, String orderBy) throws DataAccessObjectException {
 
         List<Form> forms = new ArrayList<>();
 
@@ -104,6 +109,10 @@ public class FormsDAO extends DataAccessObject {
 				+ "LEFT JOIN Companies c ON f.company_id = c._id "
 				+ "WHERE f.company_id = ?";
 		// @formatter:on
+
+        if (orderBy != null && !"".equals(orderBy.trim())) {
+            query += " ORDER BY " + orderBy;
+        }
 
         try {
             open();
@@ -128,6 +137,10 @@ public class FormsDAO extends DataAccessObject {
 
         return forms;
 
+    }
+
+    public List<Form> getCompanyAlphabetical(int companyId) throws DataAccessObjectException {
+        return getCompanyForms(companyId, CompaniesTable.COL_NAME + " ASC");
     }
 
     public long getFormsCount(int companyId) {

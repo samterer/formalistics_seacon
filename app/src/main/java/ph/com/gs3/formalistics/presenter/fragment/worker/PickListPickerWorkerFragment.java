@@ -2,6 +2,8 @@ package ph.com.gs3.formalistics.presenter.fragment.worker;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +24,8 @@ public class PickListPickerWorkerFragment extends Fragment {
 
     public static final String TAG = PickListPickerWorkerFragment.class.getSimpleName();
 
+    private Context context;
+
     private FormsDAO formsDAO;
     private DocumentsDAO documentsDAO;
     private DynamicFormFieldsDAO dynamicFormFieldsDAO;
@@ -34,6 +38,9 @@ public class PickListPickerWorkerFragment extends Fragment {
     public static PickListPickerWorkerFragment createInstance(Context context) {
 
         PickListPickerWorkerFragment instance = new PickListPickerWorkerFragment();
+
+        instance.context = context;
+
         instance.formsDAO = new FormsDAO(context);
         instance.documentsDAO = new DocumentsDAO(context);
         instance.dynamicFormFieldsDAO = new DynamicFormFieldsDAO(context);
@@ -82,12 +89,28 @@ public class PickListPickerWorkerFragment extends Fragment {
 
         List<JSONObject> data = new ArrayList<>();
 
+        if (form == null) {
+            Toast.makeText(context, "Search failed, missing form with id = " + formWebId + " please contact your administrator", Toast.LENGTH_LONG).show();
+            return data;
+
+        }
+
         try {
             documentsDAO.open();
             data = dynamicFormFieldsDAO.search(form, dataFieldIds, currentUser.getId(), conditions, parsedConditionString);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException | SQLiteException e) {
             e.printStackTrace();
+
+            String expectedMessage = "no such column: ";
+            String message = e.getMessage();
+            if (e.getMessage().startsWith(expectedMessage)) {
+
+                String missingField = e.getMessage().substring(expectedMessage.length());
+                missingField = missingField.split(" ")[0];
+                message = "Missing field: " + missingField + " from " + form.getName() + " , please contact your administrator";
+            }
+
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         } finally {
             documentsDAO.close();
         }
@@ -101,6 +124,7 @@ public class PickListPickerWorkerFragment extends Fragment {
         List<SearchCondition> conditions = new ArrayList<>();
 
         for (String fieldId : fieldIds) {
+//            conditions.add(new SearchCondition(fieldId, " LIKE ", "%" + filter + "%"));
             conditions.add(new SearchCondition(fieldId, " LIKE ", filter + "%"));
         }
 

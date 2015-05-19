@@ -63,12 +63,16 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
             List<Form> formList = new ArrayList<>();
             lazyLoadForms();
 
-            if (activeUser.getPositionId() == GATER_POSITION_ID || activeUser.getPositionId() == CRANE_OPERATOR_ID) {
+            if (activeUser.getPositionId() == GATER_POSITION_ID ||
+                    activeUser.getPositionId() == CRANE_OPERATOR_ID ||
+                    activeUser.getPositionId() == INSPECTOR_POSITION_ID) {
                 if (EIRForm != null) {
                     formList.add(EIRForm);
                 }
 
-            } else if (activeUser.getPositionId() == INSPECTOR_POSITION_ID) {
+            }
+
+            if (activeUser.getPositionId() == INSPECTOR_POSITION_ID) {
                 if (jobOrderForm != null) {
                     formList.add(jobOrderForm);
                 }

@@ -40,7 +40,7 @@ public class FormulaEvaluator {
 
     protected LookupRequestListener lookupRequestListener;
 
-    protected FormulaEvalutationType formulaEvalutationType;
+    protected FormulaEvalutationType formulaEvalutationType = FormulaEvalutationType.VALUE;
 
     public FormulaEvaluator(DocumentHeaderData documentHeaderData, JSONObject fieldValues) {
         this.documentHeaderData = documentHeaderData;
@@ -76,12 +76,28 @@ public class FormulaEvaluator {
         return evaluate(tokens);
     }
 
+    /**
+     * BNF:
+     *  expression	::=	expression + term
+     *              |	expression - term
+     *              |	term
+     * @return
+     * @throws ParserException
+     */
     protected ExpressionNode evaluateExpression() throws ParserException {
         ExpressionNode term = evaluateSignedTerm();
         return evaluateAddSubOperation(term);
 
     }
 
+    /**
+     * BNF:
+     *  signed_term	::= + term
+     *              |	- term
+     *              |	term
+     * @return
+     * @throws ParserException
+     */
     protected ExpressionNode evaluateSignedTerm() throws ParserException {
 
         // Check if the value is positive or negative
@@ -104,6 +120,14 @@ public class FormulaEvaluator {
 
     }
 
+    /**
+     * BNF:
+     *  term	    ::= + term
+     *              |	- term
+     *              |	term
+     * @return
+     * @throws ParserException
+     */
     protected ExpressionNode evaluateTerm() throws ParserException {
         ExpressionNode argumentExp = evaluateArgument();
         ExpressionNode possibleConditionNode = evaluateCondition(argumentExp);

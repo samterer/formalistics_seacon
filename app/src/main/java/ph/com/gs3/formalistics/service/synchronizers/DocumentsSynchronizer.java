@@ -119,9 +119,15 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
                 int fetchSize = 100;
                 boolean hasSynchronizedDocuments = false;
 
+                Document latestDocument = null;
                 List<Document> downloadedDocuments;
                 do {
                     downloadedDocuments = synchronizeFormDocuments(form, lastIndex, fetchSize);
+
+                    if (lastIndex == 0 && downloadedDocuments.size() >= 1) {
+                        latestDocument = downloadedDocuments.get(0);
+                    }
+
                     lastIndex += 100;
                     hasSynchronizedDocuments = true;
                     // continue on until there are no documents that can be downloaded or the size of downloaded documents is below 100
@@ -131,6 +137,12 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
                     }
                 }
                 while (downloadedDocuments != null && downloadedDocuments.size() >= 100);
+
+                // Update the documents' last update date of the current form
+                if (latestDocument != null) {
+                    formsDAO.updateDocumentsLastUpdateDate(form.getId(), latestDocument.getDateUpdated());
+                }
+
             } catch (SynchronizationFailedException e) {
                 syncFailures.add(e);
             }
@@ -248,9 +260,6 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
                 database.endTransaction();
                 database.close();
             }
-
-            // Update the documents' last update date of the current form
-            formsDAO.updateDocumentsLastUpdateDate(form.getId(), response.getServerDate());
         } else {
             // Server error
             FLLogger.w(TAG, "Failed to get document updates: " + response.getErrorMessage());

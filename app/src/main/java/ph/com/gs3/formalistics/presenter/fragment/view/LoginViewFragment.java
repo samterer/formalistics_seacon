@@ -66,7 +66,7 @@ public class LoginViewFragment extends Fragment {
 
         if (FormalisticsApplication.APPLICATION_MODE == ApplicationMode.DEVELOPMENT) {
             etEmail.setText("gater@gmail.com");
-            etEmail.setText("inspector1@seabox.com");
+//            etEmail.setText("inspector1@seabox.com");
 //            etEmail.setText("charnie.capulong@gs3.com.ph");
 //            etEmail.setText("formalisticsad@gmail.com");
 //            etEmail.setText("cez.crisostomo@gs3.com.ph");

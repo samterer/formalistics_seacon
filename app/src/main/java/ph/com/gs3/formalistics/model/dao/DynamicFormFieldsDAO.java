@@ -104,7 +104,7 @@ public class DynamicFormFieldsDAO extends DataAccessObject {
 //        query = String.format(query, fieldSelectionString, form.getGeneratedFormTableName(), ownerId, ownerId);
         query = String.format(query, fieldSelectionString, form.getGeneratedFormTableName());
         if (conditions != null) {
-            query += " WHERE " + generateWhereClauseFromConditions(conditions);
+            query += " WHERE " + generateWhereClauseFromConditions(conditions, "OR");
         }
 
         if (rawConditions != null && !"".equals(rawConditions.trim())) {

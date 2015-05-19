@@ -114,11 +114,7 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
 
                     FLLogger.d(TAG, "The field " + field.getFieldName() + " is dependent to " + Serializer.serializeList(fieldNames));
 
-                } else {
-                    FLLogger.d(TAG, field.getFieldName() + "'s formula type: " + formula.getFormulaType().name());
                 }
-            } else {
-                FLLogger.d(TAG, field.getFieldName() + " does not have a formula");
             }
 
         }

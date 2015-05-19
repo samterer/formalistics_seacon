@@ -51,8 +51,9 @@ public class FormalisticsApplication extends Application {
 
     private void initializeVersion() {
 
-        // Custoam version settings
+        // Custoam version settings7
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON) {
+            versionSettings.versionName = "1u2_seacon_custom";
             versionSettings.enableDocumentCreationGlobally = false;
             versionSettings.showFilterByQRCodeButton = true;
             versionSettings.deleteDocumentsOnSubmitAction = true;
@@ -63,6 +64,7 @@ public class FormalisticsApplication extends Application {
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.JOB_ORDER_FORM_WEB_ID);
         } else {
             // Default
+            versionSettings.versionName = "1u2";
             versionSettings.enableDocumentCreationGlobally = true;
             versionSettings.showFilterByQRCodeButton = false;
             versionSettings.partiallySynchronize = false;
