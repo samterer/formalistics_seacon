@@ -29,6 +29,10 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
 
     private final FieldComputationRequestListener fieldComputationRequestListener;
 
+    public enum ChangeTriggerType {
+        VALUE, VISIBILITY
+    }
+
     public DocumentDynamicFieldsChangeDependencyMapper(FieldComputationRequestListener fieldComputationRequestListener) {
         this.fieldComputationRequestListener = fieldComputationRequestListener;
     }
@@ -78,21 +82,22 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
 
             final FField field = (FField) view;
 
-            Formula formula = field.getFormFieldData().getValueFormula();
+            Formula valueFormula = field.getFormFieldData().getValueFormula();
+            Formula visibilityFormula = field.getFormFieldData().getVisibilityFormula();
 
             FLLogger.d(TAG, field.getFieldName());
 
-            if (formula != null) {
-                FLLogger.d(TAG, field.getFieldName() + "'s " + formula.getFormulaType().name() + " formula = " + formula.getRule());
+            if (valueFormula != null) {
+                FLLogger.d(TAG, field.getFieldName() + "'s " + valueFormula.getFormulaType().name() + " formula = " + valueFormula.getRule());
 
-                if (formula.getFormulaType() == Formula.FormulaType.STATIC) {
+                if (valueFormula.getFormulaType() == Formula.FormulaType.STATIC) {
                     // just set this formula as the value of the field
-                    if (!"".equals(formula.getRule().trim())) {
-                        field.setValue(formula.getRule());
+                    if (!"".equals(valueFormula.getRule().trim())) {
+                        field.setValue(valueFormula.getRule());
                     }
-                } else if (formula.getFormulaType() == Formula.FormulaType.COMPUTED) {
+                } else if (valueFormula.getFormulaType() == Formula.FormulaType.COMPUTED) {
 
-                    List<String> fieldNames = lexer.lexVariables(formula.getRule());
+                    List<String> fieldNames = lexer.lexVariables(valueFormula.getRule());
 
                     // map field dependencies
                     for (String fieldName : fieldNames) {
@@ -103,7 +108,7 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
                                 fieldDependentUpon.addOnChangeListener(new AbstractFieldChangeListener() {
                                     @Override
                                     public void onChange(FField source, String newValue) {
-                                        triggerOnChangeForDependentFields(source, newValue, null);
+                                        triggerOnChangeForDependentFields(source, newValue, null, ChangeTriggerType.VALUE);
                                     }
                                 });
                             }
@@ -117,11 +122,38 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
                 }
             }
 
+            if (visibilityFormula != null) {
+
+                List<String> fieldNames = lexer.lexVariables(visibilityFormula.getRule());
+
+                // map field dependencies
+                for (String fieldName : fieldNames) {
+                    if (!fieldDependencyMap.containsKey(fieldName)) {
+                        fieldDependencyMap.put(fieldName, new ArrayList<String>());
+                        FField fieldDependentUpon = viewCollection.findFieldView(fieldName);
+                        if (fieldDependentUpon != null) {
+                            fieldDependentUpon.addOnChangeListener(new AbstractFieldChangeListener() {
+                                @Override
+                                public void onChange(FField source, String newValue) {
+                                    triggerOnChangeForDependentFields(source, newValue, null, ChangeTriggerType.VISIBILITY);
+                                }
+                            });
+                        }
+                    }
+
+                    fieldDependencyMap.get(fieldName).add(field.getFieldName());
+                }
+
+                FLLogger.d(TAG, "The field " + field.getFieldName() + "'s visbility is dependent to " + Serializer.serializeList(fieldNames));
+
+
+            }
+
         }
 
     }
 
-    private synchronized void triggerOnChangeForDependentFields(FField source, String newValue, List<String> alreadyTriggeredFields) {
+    private synchronized void triggerOnChangeForDependentFields(FField source, String newValue, List<String> alreadyTriggeredFields, ChangeTriggerType changeTriggerType) {
         // if there was really a change
         if (source.getValue() != newValue) {
 
@@ -141,9 +173,18 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
                         FField fieldToRecompute = viewCollection.findFieldView(dependentField);
 
                         if (fieldToRecompute != null) {
+
                             String computedValue = fieldComputationRequestListener.onRecomputeRequested(fieldToRecompute);
-                            // fieldToRecompute.setValue(value, notifyListeners);
-                            fieldToRecompute.setValue(computedValue, false);
+                            FLLogger.d(TAG, "Computed value: " + computedValue);
+
+                            if (changeTriggerType == ChangeTriggerType.VALUE) {
+                                // fieldToRecompute.setValue(value, notifyListeners);
+                                fieldToRecompute.setValue(computedValue, false);
+                            } else {
+                                Boolean computedBoolean = Boolean.parseBoolean(computedValue);
+                                fieldToRecompute.setVisible(computedBoolean);
+                            }
+
                             triggeredFields.add(dependentField);
 
                             FLLogger.d(TAG, "Will recompute value of field " + fieldToRecompute.getFieldName());
@@ -151,7 +192,7 @@ public class DocumentDynamicFieldsChangeDependencyMapper {
                             // set value and notify listeners about change if the field is not yet triggered,
                             // use recursion to manually trigger change
                             if (!triggeredFields.contains(fieldToRecompute.getFieldName())) {
-                                triggerOnChangeForDependentFields(fieldToRecompute, computedValue, triggeredFields);
+                                triggerOnChangeForDependentFields(fieldToRecompute, computedValue, triggeredFields, changeTriggerType);
                             }
                         }
 

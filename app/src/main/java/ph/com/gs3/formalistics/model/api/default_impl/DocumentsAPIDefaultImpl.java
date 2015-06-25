@@ -48,7 +48,7 @@ public class DocumentsAPIDefaultImpl extends API implements DocumentsAPI {
             if (lastUpdateDate != null && !lastUpdateDate.isEmpty()) {
                 JSONObject dateUpdatedConditions = new JSONObject();
 
-                dateUpdatedConditions.put("condition", ">=");
+                dateUpdatedConditions.put("condition", ">");
                 dateUpdatedConditions.put("compared_to_date", lastUpdateDate);
 
                 searchParameters.put("date_updated_comparison", dateUpdatedConditions);

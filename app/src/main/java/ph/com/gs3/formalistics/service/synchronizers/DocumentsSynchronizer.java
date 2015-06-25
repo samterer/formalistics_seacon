@@ -28,6 +28,7 @@ import ph.com.gs3.formalistics.model.dao.FormsDAO;
 import ph.com.gs3.formalistics.model.dao.UserDocumentsDAO;
 import ph.com.gs3.formalistics.model.dao.facade.DocumentsDataWriterFacade;
 import ph.com.gs3.formalistics.model.dao.facade.FilesDataWriterFacade;
+import ph.com.gs3.formalistics.model.dao.facade.search.SeaconSearchDataProvider;
 import ph.com.gs3.formalistics.model.values.application.APIResponse;
 import ph.com.gs3.formalistics.model.values.business.User;
 import ph.com.gs3.formalistics.model.values.business.document.Document;
@@ -54,7 +55,7 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
     private final FormsDAO formsDAO;
 
     private DocumentsDataWriterFacade documentsDataWriterFacade;
-    private final FilesDataWriterFacade filesDataWriterFacade;
+    private FilesDataWriterFacade filesDataWriterFacade;
 
     private UsersSynchronizer usersSynchronizer;
 
@@ -108,7 +109,10 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
 
         for (Form form : forms) {
 
-//            if (form.getWebId() == SeaconSearchDataProvider.CONTAINER_INFORMATION_FORM_WEB_ID || form.getWebId() == SeaconSearchDataProvider.EIR_FORM_WEB_ID || form.getWebId() == SeaconSearchDataProvider.JOB_ORDER_FORM_WEB_ID) {
+//            if (form.getWebId() == SeaconSearchDataProvider.CONTAINER_INFORMATION_FORM_WEB_ID ||
+//                    form.getWebId() == SeaconSearchDataProvider.EIR_FORM_WEB_ID ||
+//                    form.getWebId() == SeaconSearchDataProvider.JOB_ORDER_FORM_WEB_ID ||
+//                    form.getWebId() == SeaconSearchDataProvider.VIOLATION_TICKET_FORM_WEB_ID) {
 //                log("Skipping " + form.toString() + "'s documents");
 //                continue;
 //            }
@@ -119,6 +123,14 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
                 int fetchSize = 100;
                 boolean hasSynchronizedDocuments = false;
 
+//                // FIXME: remove later -temporary only
+//                if (form.getWebId() == 58) {
+//                    lastIndex = 17700;
+//                    fetchSize = 100;
+//                } else {
+//                    continue;
+//                }
+
                 Document latestDocument = null;
                 List<Document> downloadedDocuments;
                 do {
@@ -128,7 +140,7 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
                         latestDocument = downloadedDocuments.get(0);
                     }
 
-                    lastIndex += 100;
+                    lastIndex += fetchSize;
                     hasSynchronizedDocuments = true;
                     // continue on until there are no documents that can be downloaded or the size of downloaded documents is below 100
 
@@ -136,7 +148,8 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
                         eventListener.onNewDocumentsDownloaded();
                     }
                 }
-                while (downloadedDocuments != null && downloadedDocuments.size() >= 100);
+//                while (downloadedDocuments != null && downloadedDocuments.size() >= fetchSize);
+                while (downloadedDocuments != null && downloadedDocuments.size() > 0);
 
                 // Update the documents' last update date of the current form
                 if (latestDocument != null) {
@@ -202,11 +215,13 @@ public class DocumentsSynchronizer extends AbstractSynchronizer {
             SQLiteOpenHelper sqLiteOpenHelper = DatabaseHelperFactory.getDatabaseHelper(context);
             SQLiteDatabase database = sqLiteOpenHelper.getWritableDatabase();
             documentsDataWriterFacade = new DocumentsDataWriterFacade(context, database);
+//            filesDataWriterFacade = new FilesDataWriterFacade(context, database);
 
             usersSynchronizer = new UsersSynchronizer(context, database, activeUser);
 
+            database.beginTransactionNonExclusive();
+//            database.beginTransaction();
             try {
-                database.beginTransactionNonExclusive();
                 for (int i = 0; i < documentCount; i++) {
 
                     // Throws JSONException

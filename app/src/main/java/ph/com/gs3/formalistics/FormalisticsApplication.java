@@ -53,7 +53,7 @@ public class FormalisticsApplication extends Application {
 
         // Custoam version settings7
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON) {
-            versionSettings.versionName = "1u2_seacon_custom";
+            versionSettings.versionName = "1u3_seacon_custom";
             versionSettings.enableDocumentCreationGlobally = false;
             versionSettings.showFilterByQRCodeButton = true;
             versionSettings.deleteDocumentsOnSubmitAction = true;
@@ -62,6 +62,7 @@ public class FormalisticsApplication extends Application {
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.EIR_FORM_WEB_ID);
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.CONTAINER_INFORMATION_FORM_WEB_ID);
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.JOB_ORDER_FORM_WEB_ID);
+            versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.VIOLATION_TICKET_FORM_WEB_ID);
         } else {
             // Default
             versionSettings.versionName = "1u2";

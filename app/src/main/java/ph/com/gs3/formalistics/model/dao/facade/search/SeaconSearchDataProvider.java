@@ -2,6 +2,7 @@ package ph.com.gs3.formalistics.model.dao.facade.search;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -36,9 +37,13 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
     public static final int EIR_FORM_WEB_ID = 2;
     public static final int JOB_ORDER_FORM_WEB_ID = 12;
     public static final int SETUP_EQUIPMENT_FORM_CRANE_OPERATORS_FORM_WEB_ID = 46;
+    public static final int APPROVED_FOR_REPAIR_CONTAINERS_WEB_ID = 59;
+    public static final int VIOLATION_TICKET_FORM_WEB_ID = 35;
 
     private Form EIRForm;
     private Form jobOrderForm;
+    private Form approvedForRepairContainerForm;
+    private Form violationTicketForm;
 
     private final FormsDAO formsDAO;
     private final DocumentsDAO documentsDAO;
@@ -63,19 +68,30 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
             List<Form> formList = new ArrayList<>();
             lazyLoadForms();
 
+            FLLogger.d(TAG, searchTypeSet.toString());
+
             if (activeUser.getPositionId() == GATER_POSITION_ID ||
                     activeUser.getPositionId() == CRANE_OPERATOR_ID ||
                     activeUser.getPositionId() == INSPECTOR_POSITION_ID) {
-                if (EIRForm != null) {
-                    formList.add(EIRForm);
+
+                if (searchTypeSet.contains(DocumentSearchType.SEACON_EIR_INCOMING) || searchTypeSet.contains(DocumentSearchType.SEACON_EIR_OUTGOING) || searchTypeSet.contains(DocumentSearchType.SEACON_EIR_RETURN)) {
+                    if (EIRForm != null) {
+                        formList.add(EIRForm);
+                    }
+                } else if (searchTypeSet.contains(DocumentSearchType.SEACON_APPROVED_FOR_REPAIR_CONTAINERS)) {
+                    if (approvedForRepairContainerForm != null) {
+                        formList.add(approvedForRepairContainerForm);
+                    }
+                } else if (searchTypeSet.contains(DocumentSearchType.SEACON_JOB_ORDERS)) {
+                    if (jobOrderForm != null) {
+                        formList.add(jobOrderForm);
+                    }
+                } else if (searchTypeSet.contains(DocumentSearchType.SEACON_VIOLATION_TICKET)) {
+                    if (violationTicketForm != null) {
+                        formList.add(violationTicketForm);
+                    }
                 }
 
-            }
-
-            if (activeUser.getPositionId() == INSPECTOR_POSITION_ID) {
-                if (jobOrderForm != null) {
-                    formList.add(jobOrderForm);
-                }
             }
 
             List<SearchCondition> searchConditions = new ArrayList<>();
@@ -93,9 +109,14 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
             }
 
             String manualJoins = "";
-            String manualConditions = DocumentsDAO.getForApprovalWhereClause(activeUser);
+            String manualConditions = "";
 
-            if (activeUser.getPositionId() == CRANE_OPERATOR_ID) {
+            // all forms will display for approval requests only except seacon violation ticket and approved for repair containers
+            if (!searchTypeSet.contains(DocumentSearchType.SEACON_VIOLATION_TICKET) && !searchTypeSet.contains(DocumentSearchType.SEACON_APPROVED_FOR_REPAIR_CONTAINERS)) {
+                manualConditions = DocumentsDAO.getForApprovalWhereClause(activeUser);
+            }
+
+            if (activeUser.getPositionId() == CRANE_OPERATOR_ID && !searchTypeSet.contains(DocumentSearchType.SEACON_APPROVED_FOR_REPAIR_CONTAINERS)) {
 
                 Form setupEquipmentForCraneOperators = formsDAO.getForm(SETUP_EQUIPMENT_FORM_CRANE_OPERATORS_FORM_WEB_ID, activeUser.getCompany().getId());
                 Form containerInformation = formsDAO.getForm(CONTAINER_INFORMATION_FORM_WEB_ID, activeUser.getCompany().getId());
@@ -121,7 +142,10 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
             }
 
             // Do not show documents with outgoing actions
-            manualConditions += " AND (oa._id IS NULL OR oa.action = '" + SubmitReadyAction.ACTION_NO_DOCUMENT_SUBMISSION + "') ";
+            if (manualConditions != "") {
+                manualConditions += " AND ";
+            }
+            manualConditions += " (oa._id IS NULL OR oa.action = '" + SubmitReadyAction.ACTION_NO_DOCUMENT_SUBMISSION + "') ";
             searchConditions.add(new SearchCondition("wo.actions", "!=", "[]"));
 
             return documentsDAO.searchForUserDocumentSummaries(
@@ -147,5 +171,7 @@ public class SeaconSearchDataProvider implements SearchDataProvider {
     private void lazyLoadForms() throws DataAccessObject.DataAccessObjectException, SQLiteDatabaseLockedException {
         EIRForm = formsDAO.getForm(EIR_FORM_WEB_ID, activeUser.getCompany().getId());
         jobOrderForm = formsDAO.getForm(JOB_ORDER_FORM_WEB_ID, activeUser.getCompany().getId());
+        approvedForRepairContainerForm = formsDAO.getForm(APPROVED_FOR_REPAIR_CONTAINERS_WEB_ID, activeUser.getCompany().getId());
+        violationTicketForm = formsDAO.getForm(VIOLATION_TICKET_FORM_WEB_ID, activeUser.getCompany().getId());
     }
 }

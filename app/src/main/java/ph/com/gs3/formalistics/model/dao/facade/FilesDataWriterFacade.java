@@ -1,10 +1,14 @@
 package ph.com.gs3.formalistics.model.dao.facade;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import ph.com.gs3.formalistics.global.constants.FileStatus;
+import ph.com.gs3.formalistics.model.dao.DocumentsDAO;
+import ph.com.gs3.formalistics.model.dao.DynamicFormFieldsDAO;
 import ph.com.gs3.formalistics.model.dao.FieldOutgoingFileReferenceDAO;
 import ph.com.gs3.formalistics.model.dao.FilesDAO;
+import ph.com.gs3.formalistics.model.dao.UserDocumentsDAO;
 import ph.com.gs3.formalistics.model.values.application.FieldOutgoingFileReference;
 import ph.com.gs3.formalistics.model.values.application.FileInfo;
 
@@ -14,12 +18,27 @@ import ph.com.gs3.formalistics.model.values.application.FileInfo;
 public class FilesDataWriterFacade {
 
 
-    private final FilesDAO filesDAO;
-    private final FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
+    private FilesDAO filesDAO;
+    private FieldOutgoingFileReferenceDAO fieldOutgoingFileReferenceDAO;
 
     public FilesDataWriterFacade(Context context) {
-        filesDAO = new FilesDAO(context);
-        fieldOutgoingFileReferenceDAO = new FieldOutgoingFileReferenceDAO(context);
+        initializeDAOs(context, null);
+    }
+
+    public FilesDataWriterFacade(Context context, SQLiteDatabase preOpenedDatabaseWithTransaction) {
+        initializeDAOs(context, preOpenedDatabaseWithTransaction);
+    }
+
+    public void initializeDAOs(Context context, SQLiteDatabase preOpenedDatabaseWithTransaction) {
+
+        if (preOpenedDatabaseWithTransaction != null) {
+            filesDAO = new FilesDAO(context, preOpenedDatabaseWithTransaction);
+            fieldOutgoingFileReferenceDAO = new FieldOutgoingFileReferenceDAO(context, preOpenedDatabaseWithTransaction);
+        } else {
+            filesDAO = new FilesDAO(context);
+            fieldOutgoingFileReferenceDAO = new FieldOutgoingFileReferenceDAO(context);
+        }
+
     }
 
     public FileInfo saveIncomingFileInfo(String remoteURL, int userId) {

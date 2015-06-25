@@ -3,6 +3,7 @@ package ph.com.gs3.formalistics.model.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import ph.com.gs3.formalistics.model.tables.FieldOutgoingFileReferenceTable;
 import ph.com.gs3.formalistics.model.tables.FilesTable;
@@ -14,6 +15,10 @@ import ph.com.gs3.formalistics.model.values.application.FieldOutgoingFileReferen
 public class FieldOutgoingFileReferenceDAO extends DataAccessObject {
     public FieldOutgoingFileReferenceDAO(Context context) {
         super(context);
+    }
+
+    public FieldOutgoingFileReferenceDAO(Context context, SQLiteDatabase preOpenedDatabaseWithTransaction) {
+        super(context, preOpenedDatabaseWithTransaction);
     }
 
     public void insertFieldOutgoingFileReference(FieldOutgoingFileReference fieldOutgoingFileReference) {

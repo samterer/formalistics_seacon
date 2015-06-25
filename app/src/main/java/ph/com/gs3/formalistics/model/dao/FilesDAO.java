@@ -3,6 +3,7 @@ package ph.com.gs3.formalistics.model.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -32,6 +33,10 @@ public class FilesDAO extends DataAccessObject {
 
     public FilesDAO(Context context) {
         super(context);
+    }
+
+    public FilesDAO(Context context, SQLiteDatabase preOpenedDatabaseWithTransaction) {
+        super(context, preOpenedDatabaseWithTransaction);
     }
 
     public File saveBitmap(Bitmap bitmap, String filename) {

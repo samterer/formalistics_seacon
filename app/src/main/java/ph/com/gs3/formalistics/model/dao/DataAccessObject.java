@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ph.com.gs3.formalistics.global.utilities.Serializer;
+import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.DatabaseHelperFactory;
 import ph.com.gs3.formalistics.model.values.application.SearchCondition;
 import ph.com.gs3.formalistics.model.values.business.form.Form;
@@ -18,6 +19,8 @@ import ph.com.gs3.formalistics.model.values.business.form.FormFieldData;
  * Created by Ervinne on 4/7/2015.
  */
 public abstract class DataAccessObject {
+
+    private static final String TAG = DataAccessObject.class.getSimpleName();
 
     protected final Context context;
 
@@ -44,12 +47,14 @@ public abstract class DataAccessObject {
     }
 
     public void open() throws SQLException {
+//        FLLogger.d(TAG, "Opened database");
         if (!willUsePreOpenedDatabase) {
             database = databaseHelper.getWritableDatabase();
         }
     }
 
     public void close() {
+//        FLLogger.d(TAG, "Closed Database");
         if (!willUsePreOpenedDatabase) {
             databaseHelper.close();
         }

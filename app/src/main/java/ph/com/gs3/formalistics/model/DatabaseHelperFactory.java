@@ -11,9 +11,18 @@ import ph.com.gs3.formalistics.model.values.application.VersionSettings;
  */
 public class DatabaseHelperFactory {
 
+    private static SQLiteOpenHelper defaultDatabaseHelper;
+    private static SQLiteOpenHelper seaconDatabaseHelper;
+
     public static SQLiteOpenHelper getDatabaseHelper(Context context) {
 
         VersionSettings versionSettings = FormalisticsApplication.versionSettings;
+
+//        if (versionSettings.version == VersionSettings.AvailableVersion.SEACON) {
+//            return getSeaconDatabaseHelper(context);
+//        }
+//
+//        return getDefaultDatabaseHelper(context);
 
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON) {
             return new SeaconDatabaseHelper(context);
@@ -21,6 +30,22 @@ public class DatabaseHelperFactory {
 
         return new DefaultDatabaseHelper(context);
 
+    }
+
+    private static SQLiteOpenHelper getDefaultDatabaseHelper(Context context) {
+        if (defaultDatabaseHelper == null) {
+            defaultDatabaseHelper = new DefaultDatabaseHelper(context);
+        }
+
+        return defaultDatabaseHelper;
+    }
+
+    private static SQLiteOpenHelper getSeaconDatabaseHelper(Context context) {
+        if (seaconDatabaseHelper == null) {
+            seaconDatabaseHelper = new SeaconDatabaseHelper(context);
+        }
+
+        return seaconDatabaseHelper;
     }
 
 }

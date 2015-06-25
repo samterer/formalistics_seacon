@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.api.HttpCommunicator;
 import ph.com.gs3.formalistics.model.api.default_impl.DocumentsAPIDefaultImpl;
 import ph.com.gs3.formalistics.model.dao.facade.search.SeaconSearchDataProvider;
@@ -38,7 +39,7 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
             if (lastUpdateDate != null && !lastUpdateDate.isEmpty()) {
                 JSONObject dateUpdatedConditions = new JSONObject();
 
-                dateUpdatedConditions.put("condition", ">=");
+                dateUpdatedConditions.put("condition", ">");
                 dateUpdatedConditions.put("compared_to_date", lastUpdateDate);
 
                 searchParameters.put("date_updated_comparison", dateUpdatedConditions);
@@ -85,6 +86,32 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
 
                 filterJSON.put("Status", statusList);
                 searchParameters.put("extra_conditions_by_fields", filterJSON);
+            }
+
+            if (formWebId == SeaconSearchDataProvider.APPROVED_FOR_REPAIR_CONTAINERS_WEB_ID) {
+
+                // only fetch Approved For Repair, For Stacking in Yard documents
+                JSONObject filterJSON = new JSONObject();
+                JSONArray statusList = new JSONArray();
+                statusList.put("Approved For Repair");
+                statusList.put("For Stacking in Yard");
+
+                filterJSON.put("Status", statusList);
+                searchParameters.put("extra_conditions_by_fields", filterJSON);
+
+            }
+
+            FLLogger.d(TAG, "downloading requests from web id: " + formWebId);
+
+            if (formWebId == SeaconSearchDataProvider.VIOLATION_TICKET_FORM_WEB_ID) {
+                JSONObject filterJSON = new JSONObject();
+                JSONArray statusList = new JSONArray();
+                statusList.put("For Review");
+                statusList.put("Updated");
+
+                filterJSON.put("Status", statusList);
+                searchParameters.put("extra_conditions_by_fields", filterJSON);
+
             }
 
         } catch (JSONException e) {

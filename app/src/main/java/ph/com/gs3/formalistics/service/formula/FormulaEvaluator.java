@@ -75,7 +75,7 @@ public class FormulaEvaluator {
         formulaEvalutationType = FormulaEvalutationType.CONDITION_CLAUSE;
         return evaluate(tokens);
     }
-
+    
     /**
      * BNF:
      *  expression	::=	expression + term
@@ -241,8 +241,8 @@ public class FormulaEvaluator {
 
         List<ExpressionNode.NodeType> argumentTypes = new ArrayList<>();
         argumentTypes.add(ExpressionNode.NodeType.COMPARISON);
-        argumentTypes.add(ExpressionNode.NodeType.CONSTANT);
-        argumentTypes.add(ExpressionNode.NodeType.CONSTANT);
+        argumentTypes.add(ExpressionNode.NodeType.EXPRESSION);
+        argumentTypes.add(ExpressionNode.NodeType.EXPRESSION);
 
         GivenIfExpressionNode givenIfExpressionNode = new GivenIfExpressionNode();
 
@@ -324,7 +324,7 @@ public class FormulaEvaluator {
 
             for (int i = 0; i < argumentCount; i++) {
                 ExpressionNode exp = evaluateExpression();
-                if (exp.getType() != argumentTypes.get(i) && exp.getType() != ExpressionNode.NodeType.VARIABLE) {
+                if (argumentTypes.get(i) != ExpressionNode.NodeType.EXPRESSION && exp.getType() != argumentTypes.get(i) && exp.getType() != ExpressionNode.NodeType.VARIABLE) {
                     throw new ParserException("Argument type " + exp.getType().name() + " is not applicable for type " + argumentTypes.get(i).name());
                 }
                 arguments.add(exp);

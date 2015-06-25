@@ -83,7 +83,7 @@ public class FormFieldData extends FormViewContentData implements Serializable {
         this.valueFormula = valueFormula;
     }
 
-//</editor-fold>
+    //</editor-fold>
 
     // ========================================================================
     // Exceptions

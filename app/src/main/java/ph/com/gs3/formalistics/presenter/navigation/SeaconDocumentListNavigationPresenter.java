@@ -25,6 +25,9 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 
     public static final NavigationDrawerItem viewJobOrderDocuments = new NavigationDrawerItem(104, R.drawable.inbox, "Job Orders");
 
+    public static final NavigationDrawerItem viewApprovedForRepairDocuments = new NavigationDrawerItem(105, R.drawable.inbox, "Approved For Repair Containers");
+    public static final NavigationDrawerItem viewViolationTicketDocuments = new NavigationDrawerItem(106, R.drawable.inbox, "Violation Tickets");
+
     private final User activeUser;
     private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
 
@@ -51,6 +54,14 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
             navItems.add(viewIncomingEIRDocuments);
             navItems.add(viewReturnEIRDocuments);
             navItems.add(viewOutgoingEIRDocuments);
+        }
+
+        if (activeUser.getPositionId() == SeaconSearchDataProvider.GATER_POSITION_ID) {
+            navItems.add(viewViolationTicketDocuments);
+        }
+
+        if (activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID) {
+            navItems.add(viewApprovedForRepairDocuments);
         }
 
         if (activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID) {
@@ -81,6 +92,7 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
     public void onNavigationDrawerItemSelected(int position) {
         NavigationDrawerItem navigationDrawerItem = getNavigationDrawerItems().get(position);
 
+
         if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.navigateToUserViewCommandNavItem && currentlySelectedNavigationDrawerItemPosition != position) {
             documentListNavigationPresenterEventsListener.onOpenUserProfileCommand();
         } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.navigateToAboutViewNavItem && currentlySelectedNavigationDrawerItemPosition != position) {
@@ -89,20 +101,24 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
             documentListNavigationPresenterEventsListener.onLogoutCommand();
         } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.openDeveloperOptionsCommandNavItem && currentlySelectedNavigationDrawerItemPosition != position) {
             documentListNavigationPresenterEventsListener.onOpenDeveloperOptionsCommand();
-        } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.resetDataCommandNavItem) {
+        } else if (navigationDrawerItem.getId() == DefaultDocumentListNavigationPresenter.resetDataCommandNavItem.getId()) {
 //            documentListNavigationPresenterEventsListener.onResetDataCommand();
-        } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.fullSynchronizeCommandNavItem) {
+        } else if (navigationDrawerItem.getId() == DefaultDocumentListNavigationPresenter.fullSynchronizeCommandNavItem.getId()) {
             documentListNavigationPresenterEventsListener.onFullSynchronizeCommand();
-        } else if (navigationDrawerItem == DefaultDocumentListNavigationPresenter.openOutboxNavItem) {
+        } else if (navigationDrawerItem.getId() == DefaultDocumentListNavigationPresenter.openOutboxNavItem.getId()) {
             documentListNavigationPresenterEventsListener.onDisplayOutgoingActions(navigationDrawerItem);
-        } else if (navigationDrawerItem == viewIncomingEIRDocuments) {
+        } else if (navigationDrawerItem.getId() == viewIncomingEIRDocuments.getId()) {
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_EIR_INCOMING));
-        } else if (navigationDrawerItem == viewReturnEIRDocuments) {
+        } else if (navigationDrawerItem.getId() == viewReturnEIRDocuments.getId()) {
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_EIR_RETURN));
-        } else if (navigationDrawerItem == viewOutgoingEIRDocuments) {
+        } else if (navigationDrawerItem.getId() == viewOutgoingEIRDocuments.getId()) {
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_EIR_OUTGOING));
-        } else if (navigationDrawerItem == viewJobOrderDocuments) {
+        } else if (navigationDrawerItem.getId() == viewJobOrderDocuments.getId()) {
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_JOB_ORDERS));
+        } else if (navigationDrawerItem.getId() == viewApprovedForRepairDocuments.getId()) {
+            documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_APPROVED_FOR_REPAIR_CONTAINERS));
+        } else if (navigationDrawerItem.getId() == viewViolationTicketDocuments.getId()) {
+            documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_VIOLATION_TICKET));
         }
 
         currentlySelectedNavigationDrawerItemPosition = position;
