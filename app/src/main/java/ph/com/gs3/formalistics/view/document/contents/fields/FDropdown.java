@@ -22,6 +22,8 @@ public class FDropdown extends FField {
 
     private boolean changeListenerInitialized = false;
 
+    private String oldValue;
+
     public FDropdown(Context context, FormFieldData formFieldData, List<String> options) {
         super(context, R.layout.field_dropdown, formFieldData);
 
@@ -57,7 +59,13 @@ public class FDropdown extends FField {
     }
 
     @Override
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    @Override
     public void setValue(String value) {
+        oldValue = getValue();
         // Assign the value if this field is for viewing
         if (value != null && !"null".equals(value)) {
             if (options.indexOf(value) > -1) {

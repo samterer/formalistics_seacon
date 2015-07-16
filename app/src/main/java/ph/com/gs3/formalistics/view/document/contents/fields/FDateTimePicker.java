@@ -23,6 +23,8 @@ public class FDateTimePicker extends FField {
 
     private final EditText etDateText;
 
+    private String oldValue;
+
     public enum PickerType {
         DATE, TIME, DATETIME
     }
@@ -78,9 +80,15 @@ public class FDateTimePicker extends FField {
     }
 
     @Override
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    @Override
     public void setValue(String value) {
 
         if (value == null || "".equals(value)) {
+            oldValue = getValue();
             value = getValue();
         }
 

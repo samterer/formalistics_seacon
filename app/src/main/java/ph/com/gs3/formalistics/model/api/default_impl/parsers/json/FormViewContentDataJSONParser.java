@@ -63,9 +63,9 @@ public class FormViewContentDataJSONParser {
             // Set formulas
             if (raw.has("formulas")) {
                 JSONObject formulas = raw.getJSONObject("formulas");
-                Formula visibilityFormula = createFormulaFromJSON(formulas.getJSONObject("visibility"));
-                Formula valueFormula = createFormulaFromJSON(formulas.getJSONObject("computed"));
-                Formula readOnlyFormula = createFormulaFromJSON(formulas.getJSONObject("readonly"));
+                Formula valueFormula = createValueFormulaFromJSON(formulas.getJSONObject("computed"));
+                Formula visibilityFormula = createOtherFormulaFromJSON(formulas.getJSONObject("visibility"));
+                Formula readOnlyFormula = createOtherFormulaFromJSON(formulas.getJSONObject("readonly"));
 
                 formField.setVisibilityFormula(visibilityFormula);
 
@@ -84,7 +84,18 @@ public class FormViewContentDataJSONParser {
 
     }
 
-    public static Formula createFormulaFromJSON(JSONObject rawJSON) throws JSONException {
+    public static Formula createOtherFormulaFromJSON(JSONObject rawJSON) throws JSONException {
+        String rule = rawJSON.getString("formula_rule");
+        Formula formula = null;
+
+        if (rule != null && !rule.trim().equals("")) {
+            formula = new Formula(rule);
+        }
+
+        return formula;
+    }
+
+    public static Formula createValueFormulaFromJSON(JSONObject rawJSON) throws JSONException {
 
         Formula formula;
 

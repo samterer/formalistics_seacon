@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import ph.com.gs3.formalistics.R;
 import ph.com.gs3.formalistics.global.constants.ActivityRequestCodes;
@@ -65,6 +66,7 @@ import ph.com.gs3.formalistics.service.formula.node.ExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.function.LookupRequestListener;
 import ph.com.gs3.formalistics.view.dialogs.ListSelectionDialogFragment;
 import ph.com.gs3.formalistics.view.document.DocumentDynamicFieldsChangeDependencyMapper;
+import ph.com.gs3.formalistics.view.document.DocumentDynamicFieldsChangeDependencyMapper.ChangeTriggerType;
 import ph.com.gs3.formalistics.view.document.DocumentDynamicViewContentsManager;
 import ph.com.gs3.formalistics.view.document.DocumentViewContentsManager;
 import ph.com.gs3.formalistics.view.document.contents.FField;
@@ -172,7 +174,6 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
                 break;
         }
 
-
         return true;
     }
 
@@ -253,13 +254,14 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
             break;
             case ActivityRequestCodes.CAMERA_REQUEST: {
 
-                FLLogger.d(TAG, " ActivityRequestCodes.CAMERA_REQUEST");
-
                 FLLogger.d(TAG, "image local path: " + activeDynamicImageField.getImageLocalPath());
                 Bitmap selectedImage = documentWorkerFragment.getBitmapFromPath(activeDynamicImageField.getImageLocalPath());
 
                 if (selectedImage != null) {
                     File movedFile = documentWorkerFragment.moveFileToInternalStorage(new File(activeDynamicImageField.getImageLocalPath()));
+
+                    FLLogger.d(TAG, "new image local path: " + movedFile.getPath());
+
                     activeDynamicImageField.setImageLocalPath(movedFile.getPath());
                     activeDynamicImageField.setBitmap(selectedImage);
                     documentWorkerFragment.saveOutgoingFileFromDynamicImageField(activeDynamicImageField);
@@ -856,12 +858,16 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
         if (source.getValue() != null && !"".equals(source.getValue())) {
             FilesDAO filesDAO = new FilesDAO(DocumentActivity.this);
 
-            try {
-                new URL(source.getValue());
-                FileInfo fileInfo = filesDAO.findFileInfoForRemoteURL(source.getValue());
-                localFileLocation = fileInfo.getLocalPath();
-            } catch (MalformedURLException e) {
-                localFileLocation = source.getValue();
+            if (source.getImageCurrentValueType() == FDynamicImage.ImageCurrentValueType.UPLOADED) {
+                try {
+                    new URL(source.getValue());
+                    FileInfo fileInfo = filesDAO.findFileInfoForRemoteURL(source.getValue());
+                    localFileLocation = fileInfo.getLocalPath();
+                } catch (MalformedURLException e) {
+                    localFileLocation = source.getValue();
+                }
+            } else {
+                localFileLocation = source.getImageLocalPath();
             }
 
         } else if (source.getImageLocalPath() != null && !"".equals(source.getImageLocalPath())) {
@@ -881,12 +887,31 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
 
     //<editor-fold desc="FieldComputationRequestListener Implementation Methods & formula related objects">
     @Override
-    public String onRecomputeRequested(FField fieldToRecompute) {
+    public String onRecomputeRequested(FField fieldToRecompute, DocumentDynamicFieldsChangeDependencyMapper.ChangeTriggerType changeTriggerType) {
 
         String computedValue = null;
 
-        Formula formula = fieldToRecompute.getFormFieldData().getValueFormula();
-        if (formula != null && formula.getFormulaType() == Formula.FormulaType.COMPUTED) {
+        Formula formula = null;
+
+        if (changeTriggerType == ChangeTriggerType.VALUE) {
+            formula = fieldToRecompute.getFormFieldData().getValueFormula();
+        } else if (changeTriggerType == ChangeTriggerType.VISIBILITY) {
+            formula = fieldToRecompute.getFormFieldData().getVisibilityFormula();
+        }
+
+        if (formula != null) {
+            FLLogger.d(TAG, "Evalutating: " + formula.getRule());
+        } else {
+            FLLogger.d(TAG, "No formula found");
+        }
+
+        boolean evaluateFormula = formula != null;
+
+        if (changeTriggerType == ChangeTriggerType.VALUE) {
+            evaluateFormula = evaluateFormula && formula.getFormulaType() == Formula.FormulaType.COMPUTED;
+        }
+
+        if (evaluateFormula) {
             String message = null;
             try {
                 LinkedList<Token> tokenizedFormula = formulaLexer.lex(formula.getRule());
@@ -902,7 +927,7 @@ public class DocumentActivity extends Activity implements DocumentViewActionList
                     computedValue = "";
                 }
                 FLLogger.d(TAG, "Formula evaluated: " + formula.getRule() + " = " + computedValue);
-            } catch (ParserException e) {
+            } catch (ParserException | NoSuchElementException e) {
                 e.printStackTrace();
                 message = e.getMessage();
             }

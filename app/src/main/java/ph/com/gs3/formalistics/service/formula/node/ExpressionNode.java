@@ -8,7 +8,7 @@ import ph.com.gs3.formalistics.service.formula.ParserException;
 public interface ExpressionNode {
 
     enum NodeType {
-        VARIABLE, CONSTANT, ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION, COMPARISON, FUNCTION, EXPRESSION
+        VARIABLE, CONSTANT, ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION, COMPARISON, LOGICAL_OPERATION, FUNCTION, EXPRESSION
     }
 
     NodeType getType();

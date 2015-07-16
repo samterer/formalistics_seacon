@@ -29,6 +29,8 @@ public class FTextField extends FField {
     private final long ON_CHANGE_DELAY = 1000; // Milliseconds
     private boolean changeListenerInitialized = false;
 
+    private String oldValue;
+
     public FTextField(Context context, FormFieldData formFieldData) {
         super(context, R.layout.field_text, formFieldData);
         this.textFieldType = TextFieldType.SINGLE_LINE;
@@ -54,11 +56,17 @@ public class FTextField extends FField {
 
     @Override
     public void setValue(String value) {
+        oldValue = getValue();
         etValue.setText(value);
 //        FLLogger.d("FTextField", "Setting " + getLabel() + " = " + getValue());
         if ("null".equals(value)) {
             new Exception().printStackTrace();
         }
+    }
+
+    @Override
+    public String getOldValue() {
+        return oldValue;
     }
 
     @Override
@@ -97,6 +105,7 @@ public class FTextField extends FField {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                oldValue = getValue();
             }
 
             @Override

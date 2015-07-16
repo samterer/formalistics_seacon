@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import ph.com.gs3.formalistics.R;
+import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.dao.FilesDAO;
 import ph.com.gs3.formalistics.presenter.fragment.view.ImageViewerViewFragment;
 
@@ -12,6 +13,8 @@ import ph.com.gs3.formalistics.presenter.fragment.view.ImageViewerViewFragment;
  * Created by Ervinne on 4/22/2015.
  */
 public class ImageViewerActivity extends Activity implements ImageViewerViewFragment.ImageViewerViewEventListener {
+
+    public static final String TAG = ImageViewerActivity.class.getSimpleName();
 
     private ImageViewerViewFragment imageViewerViewFragment;
 
@@ -54,7 +57,7 @@ public class ImageViewerActivity extends Activity implements ImageViewerViewFrag
     @Override
     public void onViewReady() {
 
-        Bitmap bitmap = filesDAO.getBitmapFromPath(imageLocalPath);
+        Bitmap bitmap = filesDAO.getBitmapFromPath(imageLocalPath, 1000);
         imageViewerViewFragment.setImageBitmap(bitmap);
 
 

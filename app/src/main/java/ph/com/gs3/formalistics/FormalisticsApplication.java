@@ -21,9 +21,9 @@ public class FormalisticsApplication extends Application {
      * depending on the application mode. These behaviors include logging and availability
      * of developer options.
      */
-    public static final ApplicationMode APPLICATION_MODE = ApplicationMode.DEVELOPMENT;
+//    public static final ApplicationMode APPLICATION_MODE = ApplicationMode.DEVELOPMENT;
     // public static final ApplicationMode APPLICATION_MODE = ApplicationMode.QA;
-//    public static final ApplicationMode APPLICATION_MODE = ApplicationMode.PRODUCTION;
+    public static final ApplicationMode APPLICATION_MODE = ApplicationMode.PRODUCTION;
 
     public static final VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.SEACON);
 //    public static VersionSettings versionSettings = new VersionSettings(VersionSettings.AvailableVersion.DEFAULT);
@@ -53,7 +53,7 @@ public class FormalisticsApplication extends Application {
 
         // Custoam version settings7
         if (versionSettings.version == VersionSettings.AvailableVersion.SEACON) {
-            versionSettings.versionName = "1u3_seacon_custom";
+            versionSettings.versionName = "1u4_seacon_custom";
             versionSettings.enableDocumentCreationGlobally = false;
             versionSettings.showFilterByQRCodeButton = true;
             versionSettings.deleteDocumentsOnSubmitAction = true;
@@ -63,6 +63,8 @@ public class FormalisticsApplication extends Application {
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.CONTAINER_INFORMATION_FORM_WEB_ID);
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.JOB_ORDER_FORM_WEB_ID);
             versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.VIOLATION_TICKET_FORM_WEB_ID);
+            versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.APPROVED_FOR_REPAIR_CONTAINERS_WEB_ID);
+            versionSettings.formIdListToSynchronize.add(SeaconSearchDataProvider.CONTAINER_RESERVATION_FORM_WEB_ID);
         } else {
             // Default
             versionSettings.versionName = "1u2";

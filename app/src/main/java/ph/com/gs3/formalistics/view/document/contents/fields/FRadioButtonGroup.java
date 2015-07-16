@@ -20,6 +20,8 @@ public class FRadioButtonGroup extends FField {
     private boolean enabled;
     private boolean changeListenerInitialized = false;
 
+    private String oldValue;
+
     public FRadioButtonGroup(Context context, FormFieldData formFieldData, List<String> options) {
         super(context, R.layout.field_radiobutton_group, formFieldData);
 
@@ -66,7 +68,13 @@ public class FRadioButtonGroup extends FField {
     }
 
     @Override
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    @Override
     public void setValue(String value) {
+        oldValue = getValue();
         int collectionChildCount = radioGroup.getChildCount();
         for (int index = 0; index < collectionChildCount; index++) {
             if (radioGroup.getChildAt(index) instanceof RadioButton) {

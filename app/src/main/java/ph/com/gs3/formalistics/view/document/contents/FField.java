@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ph.com.gs3.formalistics.R;
+import ph.com.gs3.formalistics.global.utilities.logging.FLLogger;
 import ph.com.gs3.formalistics.model.values.business.form.FormFieldData;
 
 /**
@@ -75,6 +76,8 @@ public abstract class FField extends FView {
 
     public abstract void setValue(String value);
 
+    public abstract String getOldValue();
+
     public abstract String getValue();
 
     public abstract void setEnabled(boolean enabled);
@@ -96,6 +99,8 @@ public abstract class FField extends FView {
             for (AbstractFieldChangeListener changeListener : changeListeners) {
                 changeListener.onChange(this, getValue());
             }
+        } else {
+            FLLogger.d("FField", "notification not enabled for " + getFieldName());
         }
     }
 

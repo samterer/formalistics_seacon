@@ -19,6 +19,8 @@ public class FPickList extends FField {
     private final PickListFieldListener listener;
     private final FormFieldData formFieldData;
 
+    private String oldValue;
+
     public FPickList(Context context, FormFieldData formFieldData, PickListFieldListener listener) {
         super(context, R.layout.field_pick_list, formFieldData);
 
@@ -54,7 +56,13 @@ public class FPickList extends FField {
     }
 
     @Override
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    @Override
     public void setValue(String value) {
+        oldValue = getValue();
         etPicker.setText(value);
         notifyValueChanged();
     }

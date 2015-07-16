@@ -133,6 +133,25 @@ public class DocumentDynamicViewContentsManager implements DocumentViewContentsM
         documentDynamicFieldsChangeDependencyMapper.mapEmbeddedViewsChangeDependencies(documentViewContents, embeddedViewEventsListener);
         documentDynamicFieldsChangeDependencyMapper.mapFieldsChangeDependencies(documentViewContents);
 
+        // TODO: fix formulas on load
+
+        // set field values, they are set here to trigger change listeners for formulas
+//        Iterator<String> iterator = fieldValues.keys();
+//        while (iterator.hasNext()) {
+//            String key = iterator.next();
+//            try {
+//                String value = fieldValues.getString(key);
+//                if (value == null || value == "") {
+//                    setFieldValue(key, value);
+//                }
+//            } catch (JSONException e) {
+//                FLLogger.e(
+//                        TAG,
+//                        "Unable to read value of field " + key + " "
+//                                + e.getMessage());
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override
@@ -161,6 +180,7 @@ public class DocumentDynamicViewContentsManager implements DocumentViewContentsM
         return fieldsThatFailedValidation;
 
     }
+
 
     public void setFieldValue(String fieldId, String fieldValue) {
         FField field = documentViewContents.findFieldView(fieldId);

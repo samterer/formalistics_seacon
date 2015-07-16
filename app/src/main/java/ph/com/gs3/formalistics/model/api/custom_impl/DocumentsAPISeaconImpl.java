@@ -95,6 +95,7 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
                 JSONArray statusList = new JSONArray();
                 statusList.put("Approved For Repair");
                 statusList.put("For Stacking in Yard");
+                statusList.put("For Quality Check");
 
                 filterJSON.put("Status", statusList);
                 searchParameters.put("extra_conditions_by_fields", filterJSON);
@@ -108,6 +109,7 @@ public class DocumentsAPISeaconImpl extends DocumentsAPIDefaultImpl {
                 JSONArray statusList = new JSONArray();
                 statusList.put("For Review");
                 statusList.put("Updated");
+                statusList.put("Released");// so the requests will be lost in the view
 
                 filterJSON.put("Status", statusList);
                 searchParameters.put("extra_conditions_by_fields", filterJSON);

@@ -133,7 +133,7 @@ public class FilesDAO extends DataAccessObject {
 
     }
 
-    public Bitmap getBitmapFromPath(String filePath) {
+    public Bitmap getBitmapFromPath(String filePath, int requiredSize) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -141,7 +141,6 @@ public class FilesDAO extends DataAccessObject {
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             return BitmapFactory.decodeFile(filePath, options);
         } catch (OutOfMemoryError e) {
-            int requiredSize = 100;
 
             try {
                 BitmapFactory.Options o = new BitmapFactory.Options();
@@ -168,6 +167,12 @@ public class FilesDAO extends DataAccessObject {
                 return null;
             }
         }
+
+    }
+
+    public Bitmap getBitmapFromPath(String filePath) {
+
+       return getBitmapFromPath(filePath, 100);
 
     }
 

@@ -12,6 +12,7 @@
         android:id="@+id/ImageViewer_ivImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         android:src="@drawable/image_placeholder_300"/>
 
 </LinearLayout>

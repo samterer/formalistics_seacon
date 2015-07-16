@@ -54,7 +54,7 @@ public class FormsAPIDefaultImpl extends API implements FormsAPI {
             JSONObject dateUpdatedFilter = new JSONObject();
             JSONObject dateUpdatedConditions = new JSONObject();
             try {
-                dateUpdatedConditions.put("condition", ">=");
+                dateUpdatedConditions.put("condition", ">");
                 dateUpdatedConditions.put("compared_to_date", fromDate);
 
                 dateUpdatedFilter.put("date_updated_comparison", dateUpdatedConditions);

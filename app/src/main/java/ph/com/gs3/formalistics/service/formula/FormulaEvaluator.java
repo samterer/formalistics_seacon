@@ -19,6 +19,7 @@ import ph.com.gs3.formalistics.service.formula.node.function.StringConcatExpress
 import ph.com.gs3.formalistics.service.formula.node.operation.AdditionExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.operation.ComparisonExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.operation.DivisionExpressionNode;
+import ph.com.gs3.formalistics.service.formula.node.operation.LogicalOperatorNode;
 import ph.com.gs3.formalistics.service.formula.node.operation.MultiplicationExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.operation.SubtractionExpressionNode;
 import ph.com.gs3.formalistics.service.formula.node.variables.CurrentFormVariableExpressionNode;
@@ -75,26 +76,27 @@ public class FormulaEvaluator {
         formulaEvalutationType = FormulaEvalutationType.CONDITION_CLAUSE;
         return evaluate(tokens);
     }
-    
+
     /**
      * BNF:
-     *  expression	::=	expression + term
-     *              |	expression - term
-     *              |	term
+     * expression	::=	expression + term
+     * |	expression - term
+     * |	term
+     *
      * @return
      * @throws ParserException
      */
     protected ExpressionNode evaluateExpression() throws ParserException {
         ExpressionNode term = evaluateSignedTerm();
         return evaluateAddSubOperation(term);
-
     }
 
     /**
      * BNF:
-     *  signed_term	::= + term
-     *              |	- term
-     *              |	term
+     * signed_term	::= + term
+     * |	- term
+     * |	term
+     *
      * @return
      * @throws ParserException
      */
@@ -122,9 +124,10 @@ public class FormulaEvaluator {
 
     /**
      * BNF:
-     *  term	    ::= + term
-     *              |	- term
-     *              |	term
+     * term	    ::= + term
+     * |	- term
+     * |	term
+     *
      * @return
      * @throws ParserException
      */
@@ -191,7 +194,25 @@ public class FormulaEvaluator {
             ExpressionNode nextExpression = evaluateSignedTerm();
             comparison.setRightArgument(nextExpression);
 
-            return comparison;
+            return evaluateLogicalOperation(comparison);
+        }
+
+        return expressionNode;
+
+    }
+
+    protected ExpressionNode evaluateLogicalOperation(ExpressionNode expressionNode) throws ParserException {
+
+        if (lookAhead.type == TokenType.BOOLEAN_OPERATOR) {
+
+            LogicalOperatorNode logicalOperatorNode = new LogicalOperatorNode(expressionNode, lookAhead.data, formulaEvalutationType);
+
+            nextToken();
+            ExpressionNode nextExpression = evaluateSignedTerm();
+            logicalOperatorNode.setRightArgument(nextExpression);
+
+            return evaluateLogicalOperation(logicalOperatorNode);
+
         }
 
         return expressionNode;
@@ -428,7 +449,6 @@ public class FormulaEvaluator {
             } else {
                 variable.setValue(formulaVariableParser.getStringVariableValue(variableName));
             }
-
 
 
             return variable;

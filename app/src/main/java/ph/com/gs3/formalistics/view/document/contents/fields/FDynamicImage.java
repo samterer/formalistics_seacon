@@ -18,14 +18,22 @@ import ph.com.gs3.formalistics.view.document.contents.FField;
  */
 public class FDynamicImage extends FField {
 
+    public enum ImageCurrentValueType {
+        LOCALLY_STORED, UPLOADED
+    }
+
     private final LinearLayout llActionsContainer;
     private final TextView tvNotificationMessage;
     private final ImageView ivDynamicImage;
     private final Button bBrowseImage;
     private final Button bTakeNewimage;
 
+    private ImageCurrentValueType imageCurrentValueType;
+
     private String imageLocalPath;
     private String imageURL;
+
+    private String oldValue;
 
     private final DynamicImageFieldActionListener listener;
 
@@ -72,12 +80,27 @@ public class FDynamicImage extends FField {
         tvNotificationMessage.setVisibility(VISIBLE);
     }
 
+    public ImageCurrentValueType getImageCurrentValueType() {
+        return imageCurrentValueType;
+    }
+
+    public void setImageCurrentValueType(ImageCurrentValueType imageCurrentValueType) {
+        this.imageCurrentValueType = imageCurrentValueType;
+    }
+
+    @Override
+    public String getOldValue() {
+        return oldValue;
+    }
+
     @Override
     public void setValue(String value) {
+        oldValue = getValue();
         imageURL = value;
 
         notifyValueChanged();
         listener.onFindImageOnLocalStorageCommand(this);
+        setImageCurrentValueType(ImageCurrentValueType.UPLOADED);
     }
 
     @Override
@@ -108,6 +131,7 @@ public class FDynamicImage extends FField {
 
     public void setImageLocalPath(String imageLocalPath) {
         this.imageLocalPath = imageLocalPath;
+        setImageCurrentValueType(ImageCurrentValueType.LOCALLY_STORED);
     }
 
     public void setBitmap(Bitmap bitmap) {

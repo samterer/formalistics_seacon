@@ -29,6 +29,10 @@ public class FCodeScannerField extends FField {
 
     private final CodeType codeType;
 
+    private String oldValue;
+
+
+
     public enum CodeType {
         BAR_CODE, QR_CODE
     }
@@ -51,14 +55,21 @@ public class FCodeScannerField extends FField {
     }
 
     @Override
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    @Override
     public void showError(String errorMessage) {
         etScannedCode.setError(errorMessage);
     }
 
     @Override
     public void setValue(String value) {
+        oldValue = getValue();
         etScannedCode.setText(value);
     }
+
 
     @Override
     public String getValue() {
@@ -101,6 +112,7 @@ public class FCodeScannerField extends FField {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                oldValue = getValue();
             }
 
             @Override

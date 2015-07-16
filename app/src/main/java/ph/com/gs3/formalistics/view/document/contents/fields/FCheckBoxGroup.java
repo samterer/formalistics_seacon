@@ -1,6 +1,7 @@
 package ph.com.gs3.formalistics.view.document.contents.fields;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
@@ -24,6 +25,8 @@ public class FCheckBoxGroup extends FField {
 
     private boolean enabled;
 
+    private String oldValue;
+
     public FCheckBoxGroup(Context context, FormFieldData formFieldData, List<String> options) {
         super(context, R.layout.field_checkbox_group, formFieldData);
         this.options = options;
@@ -43,6 +46,13 @@ public class FCheckBoxGroup extends FField {
                     cbField.getPaddingRight(),
                     cbField.getPaddingBottom());
             cbField.setTag(getFieldName() + "_" + i);
+            cbField.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    oldValue = getValue();
+                    notifyValueChanged();
+                }
+            });
 
             // Check if the option is a value label pair, if it is, set the label as the
             // text
@@ -70,6 +80,8 @@ public class FCheckBoxGroup extends FField {
             return;
         }
 
+        oldValue = getValue();
+
         String[] selectedOptionsRaw = value.split(MULTI_VALUE_SEPARATOR_ESCAPED);
         List<String> selectedOptions = new ArrayList<>(Arrays.asList(selectedOptionsRaw));
 
@@ -95,6 +107,11 @@ public class FCheckBoxGroup extends FField {
 
             }
         }
+    }
+
+    @Override
+    public String getOldValue() {
+        return oldValue;
     }
 
     @Override

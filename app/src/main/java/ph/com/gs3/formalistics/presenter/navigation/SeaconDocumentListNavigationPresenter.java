@@ -27,6 +27,8 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
 
     public static final NavigationDrawerItem viewApprovedForRepairDocuments = new NavigationDrawerItem(105, R.drawable.inbox, "Approved For Repair Containers");
     public static final NavigationDrawerItem viewViolationTicketDocuments = new NavigationDrawerItem(106, R.drawable.inbox, "Violation Tickets");
+    public static final NavigationDrawerItem viewPendingJobOrderDocuments = new NavigationDrawerItem(107, R.drawable.inbox, "Pending Job Orders");
+
 
     private final User activeUser;
     private final DocumentListNavigationPresenterEventsListener documentListNavigationPresenterEventsListener;
@@ -60,13 +62,17 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
             navItems.add(viewViolationTicketDocuments);
         }
 
-        if (activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID) {
-            navItems.add(viewApprovedForRepairDocuments);
-        }
-
         if (activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID) {
             navItems.add(viewJobOrderDocuments);
             navItems.add(viewOutgoingEIRDocuments);
+        }
+
+        if (activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID || activeUser.getPositionId() == SeaconSearchDataProvider.INSPECTOR_POSITION_ID) {
+            navItems.add(viewApprovedForRepairDocuments);
+        }
+
+        if (activeUser.getPositionId() == SeaconSearchDataProvider.CRANE_OPERATOR_ID) {
+            navItems.add(viewPendingJobOrderDocuments);
         }
 
         navItems.add(DefaultDocumentListNavigationPresenter.openOutboxNavItem);
@@ -119,6 +125,8 @@ public class SeaconDocumentListNavigationPresenter implements DocumentListNaviga
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_APPROVED_FOR_REPAIR_CONTAINERS));
         } else if (navigationDrawerItem.getId() == viewViolationTicketDocuments.getId()) {
             documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_VIOLATION_TICKET));
+        } else if (navigationDrawerItem.getId() == viewPendingJobOrderDocuments.getId()) {
+            documentListNavigationPresenterEventsListener.onDisplayDocumentSummaries(navigationDrawerItem, EnumSet.of(DocumentSearchType.SEACON_PENDING_JOB_ORDERS));
         }
 
         currentlySelectedNavigationDrawerItemPosition = position;
